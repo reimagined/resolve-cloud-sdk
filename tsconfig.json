@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "UMD",
+    "target": "ES2015",
+    "lib": ["ES2015", "DOM"],
+    "rootDir": "src",
+    "outDir": "lib",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "noUncheckedIndexedAccess": true,
+    "composite": true,
+    "types": ["node", "jest", "query-string"]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "resolve-cloud-sdk",
+  "version": "0.28.0-alpha.2",
+  "description": "",
+  "main": "./lib/index.js",
+  "typings": "lib/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/reimagined/resolve-cloud-sdk/issues"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "build": "echo || exit 0",
+    "test": "jest --config jest.config.unit.js --passWithNoTests",
+    "test:w": "jest --config ./jest.config.unit.js --passWithNoTests --watch",
+    "test:c": "jest --config ./jest.config.unit.js --passWithNoTests --coverage",
+    "test:f": "jest --config ./jest.config.func.js --passWithNoTests"
+  },
+  "repository": "https://github.com/reimagined/resolve-cloud-sdk.git",
+  "author": "reimagined team",
+  "license": "MIT",
+  "keywords": [
+    "cqrs",
+    "eventsourcing",
+    "es",
+    "ddd",
+    "resolve",
+    "cloud",
+    "sdk"
+  ],
+  "dependencies": {
+    "query-string": "5.1.1",
+    "io-ts": "2.2.13",
+    "fp-ts": "2.9.3"
+  }
+}
