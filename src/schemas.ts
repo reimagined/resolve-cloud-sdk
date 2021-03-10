@@ -72,7 +72,6 @@ export const CognitoJWTPayloadSchema = t.intersection([
   t.type({
     sub: t.string,
     aud: t.string,
-    email_verified: t.boolean,
     event_id: t.string,
     token_use: t.literal('id'),
     auth_time: t.number,
@@ -84,6 +83,7 @@ export const CognitoJWTPayloadSchema = t.intersection([
   }),
   t.partial({
     'cognito:groups': t.array(t.string),
+    email_verified: t.boolean,
   }),
 ])
 
