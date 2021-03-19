@@ -6,18 +6,12 @@ import { RDSUserSchema } from '../schemas'
 
 export const CreateEventStoreEventSchema = t.type({
   name: t.literal(FactoryEventNames.createEventStore),
-  payload: t.intersection([
-    t.type({
-      user: RDSUserSchema,
-      eventStoreClusterArn: t.string,
-      postgresAdminSecretArn: t.string,
-      assetsBucketName: t.string,
-    }),
-    t.partial({
-      prevEventStoreId: t.string,
-      mode: t.string,
-    }),
-  ]),
+  payload: t.type({
+    user: RDSUserSchema,
+    eventStoreClusterArn: t.string,
+    postgresAdminSecretArn: t.string,
+    assetsBucketName: t.string,
+  }),
 })
 
 export type CreateEventStoreEvent = t.TypeOf<typeof CreateEventStoreEventSchema>
