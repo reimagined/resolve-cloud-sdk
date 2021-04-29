@@ -47,6 +47,7 @@ import {
 import {
   CreateEventStoreEventSchema,
   DropEventStoreEventSchema,
+  DescribeEventStoreEventSchema,
   ListEventStoresEvent,
   GetEventStoreEvent,
 } from './commands/event-stores'
@@ -100,7 +101,12 @@ import {
 } from './commands/deployments/tracing'
 
 /* Logs */
-import { EnableLogsEvent, DisableLogsEvent, GetLogsEvent } from './commands/deployments/logs'
+import {
+  EnableLogsEvent,
+  DisableLogsEvent,
+  GetLogsEvent,
+  RemoveLogsEvent,
+} from './commands/deployments/logs'
 
 /* Certificates */
 import {
@@ -135,6 +141,8 @@ import {
   ExecuteFactoryEvent,
   DescribeExecutionEvent,
 } from './commands/cloud'
+
+import { DescribeRDSClustersEvent } from './commands/rds'
 
 export type InstallerLambdaEvent =
   | GetClientAppConfigEvent
@@ -173,6 +181,7 @@ export type InstallerLambdaEvent =
   | EnableLogsEvent
   | DisableLogsEvent
   | GetLogsEvent
+  | RemoveLogsEvent
   | UpdateEnvironmentVariablesEvent
   | ListEnvironmentVariablesEvent
   | EnableTracingEvent
@@ -203,8 +212,10 @@ export type InstallerLambdaEvent =
   | SetDeploymentTagEvent
   | UnsetDeploymentTagEvent
   | DescribeExecutionEvent
+  | DescribeRDSClustersEvent
 
 export const FactoryLambdaEventSchema = t.union([
+  DescribeEventStoreEventSchema,
   CreateEventStoreEventSchema,
   DropEventStoreEventSchema,
   LinkDeploymentEventSchema,

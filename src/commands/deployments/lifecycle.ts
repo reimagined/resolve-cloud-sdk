@@ -50,7 +50,6 @@ export const CreateDeploymentEventSchema = t.type({
       eventStoreId: t.string,
       eventStoreDatabaseName: t.string,
       eventBusLambdaArn: t.string,
-      eventBusDatabaseName: t.string,
     }),
     t.partial({
       domain: t.string,
@@ -89,11 +88,15 @@ export type DropDeploymentResult = t.TypeOf<typeof DropDeploymentResultSchema>
 
 export const GetDeploymentByApplicationNameEventSchema = t.type({
   name: t.literal(InstallerEventNames.getDeploymentByApplicationName),
-  payload: t.type({
-    userId: t.string,
-    applicationName: t.string,
-    version: t.string,
-  }),
+  payload: t.intersection([
+    t.type({
+      userId: t.string,
+      applicationName: t.string,
+    }),
+    t.partial({
+      version: t.string,
+    }),
+  ]),
 })
 
 export type GetDeploymentByApplicationNameEvent = t.TypeOf<

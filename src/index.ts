@@ -21,7 +21,9 @@ export * from './commands/domains'
 export * from './commands/event-stores'
 export * from './commands/stage-resources'
 export * from './commands/version-resources'
+export * from './commands/rds'
 export * from './lambda-events'
+export * from './format-version'
 
 const createCloudSdk = () => {
   let options: SetupOptions = {}
@@ -259,7 +261,6 @@ const createCloudSdk = () => {
       eventStoreId: string
       eventStoreDatabaseName: string
       eventBusLambdaArn: string
-      eventBusDatabaseName: string
       domain?: string
     }) =>
       request({

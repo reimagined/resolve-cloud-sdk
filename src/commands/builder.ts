@@ -8,7 +8,6 @@ export const BuildCodeEventSchema = t.type({
       region: t.string,
       bucketName: t.string,
       userId: t.string,
-      version: t.string,
       inputFileKey: t.string,
       outputFileKey: t.string,
     }),
@@ -22,6 +21,7 @@ export type BuildCodeEvent = t.TypeOf<typeof BuildCodeEventSchema>
 
 export const BuildCodeResultSchema = t.type({
   installLog: t.string,
+  version: t.string,
 })
 
 export type BuildCodeResult = t.TypeOf<typeof BuildCodeResultSchema>
@@ -33,7 +33,6 @@ export const DeployStaticEventSchema = t.type({
     inputBucketName: t.string,
     outputBucketName: t.string,
     userId: t.string,
-    version: t.string,
     fileKey: t.string,
     deploymentId: t.string,
   }),

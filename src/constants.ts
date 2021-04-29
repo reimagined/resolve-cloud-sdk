@@ -9,7 +9,6 @@ export const CERTIFICATE_ID_TAG_NAME = 'resolve-certificate-id'
 export const USER_ID_TAG_NAME = 'resolve-user-id'
 export const DOMAIN_USERS_TAG_NAME = 'resolve-users'
 export const EVENT_STORE_ID_TAG_NAME = 'resolve-event-store-id'
-export const REUSED_EVENT_STORE_ID_TAG_NAME = 'resolve-reused-event-store-id'
 export const LINKED_DEPLOYMENTS_TAG_NAME = 'resolve-linked-deployments'
 export const DEPLOYMENT_ID_TAG_NAME = 'resolve-deployment-id'
 export const APPLICATION_NAME_TAG_NAME = 'resolve-application-name'
@@ -47,8 +46,10 @@ export enum DomainCustomNames {
 export enum FactoryEventNames {
   installDeploymentLifecycle = 'installDeploymentLifecycle',
   uninstallDeploymentLifecycle = 'uninstallDeploymentLifecycle',
+  describeEventStore = 'describeEventStore',
   createEventStore = 'createEventStore',
   dropEventStore = 'dropEventStore',
+  cloneEventStore = 'cloneEventStore',
   createReadModel = 'createReadModel',
   dropReadModel = 'dropReadModel',
   listReadModels = 'listReadModels',
@@ -117,6 +118,7 @@ export enum InstallerEventNames {
   enableLogs = 'enableLogs',
   disableLogs = 'disableLogs',
   getLogs = 'getLogs',
+  removeLogs = 'removeLogs',
   updateEnvironmentVariables = 'updateEnvironmentVariables',
   listEnvironmentVariables = 'listEnvironmentVariables',
   enableTracing = 'enableTracing',
@@ -144,4 +146,5 @@ export enum InstallerEventNames {
   getEventStore = 'getEventStore',
   setDeploymentTag = 'setDeploymentTag',
   unsetDeploymentTag = 'unsetDeploymentTag',
+  describeRDSClusters = 'describeRDSClusters',
 }

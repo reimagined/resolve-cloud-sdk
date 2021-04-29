@@ -69,3 +69,19 @@ export type GetLogsEvent = t.TypeOf<typeof GetLogsEventSchema>
 export const GetLogsResultSchema = t.string
 
 export type GetLogsResult = t.TypeOf<typeof GetLogsResultSchema>
+
+/* RemoveLogs */
+
+export const RemoveLogsEventSchema = t.type({
+  name: t.literal(InstallerEventNames.removeLogs),
+  payload: t.type({
+    deploymentId: t.string,
+    userId: t.string,
+  }),
+})
+
+export type RemoveLogsEvent = t.TypeOf<typeof RemoveLogsEventSchema>
+
+export const RemoveLogsResultSchema = t.void
+
+export type RemoveLogsResult = t.TypeOf<typeof RemoveLogsResultSchema>

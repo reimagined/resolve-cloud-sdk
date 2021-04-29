@@ -48,10 +48,10 @@ export const DeploymentSchema = t.intersection([
     deploymentId: t.string,
     applicationName: t.string,
     version: t.string,
-    eventStoreId: t.string,
     domainName: t.string,
   }),
   t.partial({
+    eventStoreId: t.string,
     deploymentTag: t.string,
   }),
 ])
