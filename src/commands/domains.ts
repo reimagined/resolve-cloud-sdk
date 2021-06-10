@@ -190,11 +190,13 @@ export type SetVirtualHostResult = t.TypeOf<typeof SetVirtualHostResultSchema>
 
 export const UnsetVirtualHostEventSchema = t.type({
   name: t.literal(InstallerEventNames.unsetVirtualHost),
-  payload: t.type({
-    userId: t.string,
-    domainId: t.string,
-    virtualHost: t.string,
-  }),
+  payload: t.intersection([
+    t.type({
+      userId: t.string,
+      domainId: t.string,
+    }),
+    t.partial({ virtualHost: t.string, functionArn: t.string }),
+  ]),
 })
 
 export type UnsetVirtualHostEvent = t.TypeOf<typeof UnsetVirtualHostEventSchema>
@@ -218,3 +220,19 @@ export type VerifyDomainEvent = t.TypeOf<typeof VerifyDomainEventSchema>
 export const VerifyDomainResultSchema = t.void
 
 export type VerifyDomainResult = t.TypeOf<typeof VerifyDomainResultSchema>
+
+/* ReleaseDomain */
+
+export const ReleaseDomainEventSchema = t.type({
+  name: t.literal(InstallerEventNames.releaseDomain),
+  payload: t.type({
+    userId: t.string,
+    domain: t.string,
+  }),
+})
+
+export type ReleaseDomainEvent = t.TypeOf<typeof ReleaseDomainEventSchema>
+
+export const ReleaseDomainResultSchema = t.void
+
+export type ReleaseDomainResult = t.TypeOf<typeof ReleaseDomainResultSchema>

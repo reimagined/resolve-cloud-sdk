@@ -220,6 +220,7 @@ export const UnsetDeploymentDomainEventSchema = t.type({
   payload: t.type({
     userId: t.string,
     deploymentId: t.string,
+    domain: t.string,
   }),
 })
 

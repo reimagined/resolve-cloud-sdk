@@ -75,6 +75,7 @@ import {
   DropDomainEvent,
   GetDomainEvent,
   ListDomainsEvent,
+  ReleaseDomainEvent,
   /* Domain users */
   AddDomainUserEvent,
   RemoveDomainUserEvent,
@@ -167,6 +168,7 @@ export type InstallerLambdaEvent =
   | VerifyDomainEvent
   | GetVerificationCodeEvent
   | GetDomainEvent
+  | ReleaseDomainEvent
   | CreateUserEvent
   | DropUserEvent
   | GetUserEvent

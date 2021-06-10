@@ -99,6 +99,7 @@ export enum InstallerEventNames {
   setDomainUsers = 'setDomainUsers',
   addDomainUser = 'addDomainUser',
   removeDomainUser = 'removeDomainUser',
+  releaseDomain = 'releaseDomain',
   getDomain = 'getDomain',
   listDomains = 'listDomains',
   verifyDomain = 'verifyDomain',
