@@ -12,7 +12,11 @@ export type DescribeRDSClustersEvent = t.TypeOf<typeof DescribeRDSClustersEventS
 
 export const DescribeRDSClustersResultSchema = t.type({
   eventStoreClusterArn: t.union([t.string, t.null]),
+  eventStoreClusterEndpoint: t.union([t.string, t.null]),
+  eventStoreClusterPort: t.union([t.number, t.null]),
   readModelsClusterArn: t.union([t.string, t.null]),
+  readModelsClusterEndpoint: t.union([t.string, t.null]),
+  readModelsClusterPort: t.union([t.number, t.null]),
   systemClusterArn: t.union([t.string, t.null]),
   postgresAdminUsername: t.string,
   postgresAdminPassword: t.string,

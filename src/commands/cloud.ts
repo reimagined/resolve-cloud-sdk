@@ -61,11 +61,15 @@ export type EnsureRdsUserEvent = t.TypeOf<typeof EnsureRdsUserEventSchema>
 export const EnsureRdsUserResultSchema = t.type({
   user: RDSUserSchema,
   eventStoreClusterArn: t.string,
+  eventStoreClusterEndpoint: t.string,
+  eventStoreClusterPort: t.number,
+  readModelsClusterArn: t.string,
+  readModelsClusterEndpoint: t.string,
+  readModelsClusterPort: t.number,
   postgresAdminPassword: t.string,
   postgresAdminSecretArn: t.string,
   postgresAdminSecretName: t.string,
   postgresAdminUsername: t.string,
-  readModelsClusterArn: t.string,
 })
 
 export type EnsureRdsUserResult = t.TypeOf<typeof EnsureRdsUserResultSchema>
