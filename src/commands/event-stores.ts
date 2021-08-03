@@ -84,6 +84,7 @@ export const DescribeEventStoreResultSchema = t.type({
   secrets: t.union([t.number, t.null]),
   modifiedAt: t.union([t.number, t.null]),
   createdAt: t.union([t.number, t.null]),
+  isFrozen: t.boolean,
 })
 
 export type DescribeEventStoreResult = t.TypeOf<typeof DescribeEventStoreResultSchema>
@@ -112,6 +113,7 @@ export const ListEventStoresResultSchema = t.array(
     secrets: t.union([t.number, t.null]),
     modifiedAt: t.union([t.number, t.null]),
     createdAt: t.union([t.number, t.null]),
+    isFrozen: t.union([t.boolean, t.null]),
   })
 )
 
