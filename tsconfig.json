@@ -17,6 +17,7 @@
     "removeComments": false,
     "noUncheckedIndexedAccess": true,
     "composite": true,
+    "useUnknownInCatchVariables": false,
     "types": ["node", "jest", "query-string"]
   }
 }

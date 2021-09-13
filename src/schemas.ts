@@ -1,6 +1,7 @@
 import * as t from 'io-ts'
 
-import { BuildCodeEvent, DeployStaticEvent } from './commands/builder'
+import { RequestMethod, RequestMode } from './constants'
+import { BuildCode, DeployStatic } from './commands/builder'
 
 export type LambdaContext = {
   functionName: string
@@ -131,7 +132,7 @@ export const CertificateSchema = t.intersection([
 
 export type Certificate = t.TypeOf<typeof CertificateSchema>
 
-export type BuilderLambdaEvent = BuildCodeEvent | DeployStaticEvent
+export type BuilderLambdaEvent = BuildCode['Event'] | DeployStatic['Event']
 
 export const RDSUserSchema = t.type({
   userId: t.string,
@@ -140,4 +141,86 @@ export const RDSUserSchema = t.type({
   secretArn: t.string,
 })
 
+export const IS_RESOLVE_CLOUD_SDK_SCHEMA = Symbol('IS_RESOLVE_CLOUD_SDK_SCHEMA')
+
 export declare type RDSUser = t.TypeOf<typeof RDSUserSchema>
+
+export const defineSchema = <
+  EventSchema extends t.Any,
+  ResultSchema extends t.Any,
+  Path extends string = never,
+  Method extends RequestMethod = never,
+  Mode extends RequestMode = never,
+  ParamsSchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never,
+  BodySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never,
+  QuerySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never
+>(
+  route:
+    | {
+        Event: EventSchema
+        Result: ResultSchema
+      }
+    | {
+        Event: EventSchema
+        Result: ResultSchema
+        Path: Path
+        Method: Method
+        Mode: Mode
+        Params: ParamsSchema
+        Body: BodySchema
+        Query: QuerySchema
+        ArgumentsTransformer: (
+          args: t.TypeOf<ParamsSchema> & t.TypeOf<BodySchema> & t.TypeOf<QuerySchema>
+        ) => {
+          params: t.TypeOf<ParamsSchema>
+          body: t.TypeOf<BodySchema>
+          query: t.TypeOf<QuerySchema>
+        }
+      }
+): {
+  Path: Path
+  Method: Method
+  Mode: Mode
+  Params: ParamsSchema
+  Body: BodySchema
+  Query: QuerySchema
+  Event: EventSchema
+  Result: ResultSchema
+  ArgumentsTransformer: ParamsSchema extends never
+    ? never
+    : BodySchema extends never
+    ? never
+    : QuerySchema extends never
+    ? never
+    : (args: t.TypeOf<ParamsSchema> & t.TypeOf<BodySchema> & t.TypeOf<QuerySchema>) => {
+        params: t.TypeOf<ParamsSchema>
+        body: t.TypeOf<BodySchema>
+        query: t.TypeOf<QuerySchema>
+      }
+} => {
+  Object.assign(route, { [IS_RESOLVE_CLOUD_SDK_SCHEMA]: true })
+  return route as any
+}
+
+export type ExtractSchemaTypes<
+  T extends {
+    Event: t.Any
+    Result: t.Any
+    Path: string | never
+    Method: RequestMethod | never
+    Mode: RequestMode | never
+    Params: t.Any | never
+    Body: t.Any | never
+    Query: t.Any | never
+    ArgumentsTransformer: any | never
+  }
+> = {
+  Path: T['Path']
+  Method: T['Method']
+  Mode: T['Mode']
+  Params: T['Params'] extends never ? never : t.TypeOf<T['Params']>
+  Body: T['Body'] extends never ? never : t.TypeOf<T['Body']>
+  Query: T['Query'] extends never ? never : t.TypeOf<T['Query']>
+  Event: t.TypeOf<T['Event']>
+  Result: t.TypeOf<T['Result']>
+}

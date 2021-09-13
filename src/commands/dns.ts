@@ -1,52 +1,54 @@
 import * as t from 'io-ts'
 import { InstallerEventNames } from '../constants'
+import { defineSchema, ExtractSchemaTypes } from '../schemas'
 
 /* CreateDnsRecord */
 
-export const CreateDnsRecordEventSchema = t.type({
-  name: t.literal(InstallerEventNames.createDnsRecord),
-  payload: t.type({
-    userId: t.string,
-    records: t.array(
-      t.type({
-        alias: t.string,
-        domainId: t.string,
-      })
-    ),
+export const CreateDnsRecordSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.createDnsRecord),
+    payload: t.type({
+      userId: t.string,
+      records: t.array(
+        t.type({
+          alias: t.string,
+          domainId: t.string,
+        })
+      ),
+    }),
   }),
+  Result: t.void,
 })
 
-export type CreateDnsRecordEvent = t.TypeOf<typeof CreateDnsRecordEventSchema>
-
-export const CreateDnsRecordResultSchema = t.void
-
-export type CreateDnsRecordResult = t.TypeOf<typeof CreateDnsRecordResultSchema>
+export type CreateDnsRecord = ExtractSchemaTypes<typeof CreateDnsRecordSchema>
 
 /* DeleteDnsRecord */
 
-export const DeleteDnsRecordEventSchema = t.type({
-  name: t.literal(InstallerEventNames.deleteDnsRecord),
-  payload: t.type({
-    userId: t.string,
-    records: t.array(
-      t.type({
-        alias: t.string,
-      })
-    ),
+export const DeleteDnsRecordSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.deleteDnsRecord),
+    payload: t.type({
+      userId: t.string,
+      records: t.array(
+        t.type({
+          alias: t.string,
+        })
+      ),
+    }),
   }),
+  Result: t.void,
 })
 
-export type DeleteDnsRecordEvent = t.TypeOf<typeof DeleteDnsRecordEventSchema>
-
-export const DeleteDnsRecordResultSchema = t.void
-
-export type DeleteDnsRecordResult = t.TypeOf<typeof CreateDnsRecordResultSchema>
+export type DeleteDnsRecord = ExtractSchemaTypes<typeof DeleteDnsRecordSchema>
 
 /* ListDnsRecords */
 
-export const ListDnsRecordsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.listDnsRecords),
-  payload: t.UnknownRecord,
+export const ListDnsRecordsSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.listDnsRecords),
+    payload: t.UnknownRecord,
+  }),
+  Result: t.any,
 })
 
-export type ListDnsRecordsEvent = t.TypeOf<typeof ListDnsRecordsEventSchema>
+export type ListDnsRecords = ExtractSchemaTypes<typeof ListDnsRecordsSchema>

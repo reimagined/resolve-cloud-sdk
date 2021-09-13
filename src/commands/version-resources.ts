@@ -1,118 +1,106 @@
 import * as t from 'io-ts'
 import { InstallerEventNames } from '../constants'
+import { defineSchema, ExtractSchemaTypes } from '../schemas'
 
 /* GetAssetsStageBucketUploadSignedUrls */
 
-export const GetAssetsStageBucketUploadSignedUrlsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getAssetsStageBucketUploadSignedUrls),
-  payload: t.type({
-    assets: t.array(t.string),
+export const GetAssetsStageBucketUploadSignedUrlsSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getAssetsStageBucketUploadSignedUrls),
+    payload: t.type({
+      assets: t.array(t.string),
+    }),
   }),
+  Result: t.record(t.string, t.string),
 })
 
-export type GetAssetsStageBucketUploadSignedUrlsEvent = t.TypeOf<
-  typeof GetAssetsStageBucketUploadSignedUrlsEventSchema
->
-
-export const GetAssetsStageBucketUploadSignedUrlsResultSchema = t.record(t.string, t.string)
-
-export type GetAssetsStageBucketUploadSignedUrlsResult = t.TypeOf<
-  typeof GetAssetsStageBucketUploadSignedUrlsResultSchema
+export type GetAssetsStageBucketUploadSignedUrls = ExtractSchemaTypes<
+  typeof GetAssetsStageBucketUploadSignedUrlsSchema
 >
 
 /* GetAssetsVersionBucketUploadSignedUrls */
 
-export const GetAssetsVersionBucketUploadSignedUrlsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getAssetsVersionBucketUploadSignedUrls),
-  payload: t.type({
-    version: t.string,
-    assets: t.array(t.string),
+export const GetAssetsVersionBucketUploadSignedUrlsSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getAssetsVersionBucketUploadSignedUrls),
+    payload: t.type({
+      version: t.string,
+      assets: t.array(t.string),
+    }),
   }),
+  Result: t.record(t.string, t.string),
 })
 
-export type GetAssetsVersionBucketUploadSignedUrlsEvent = t.TypeOf<
-  typeof GetAssetsVersionBucketUploadSignedUrlsEventSchema
->
-
-export const GetAssetsVersionBucketUploadSignedUrlsResultSchema = t.record(t.string, t.string)
-
-export type GetAssetsVersionBucketUploadSignedUrlsResult = t.TypeOf<
-  typeof GetAssetsVersionBucketUploadSignedUrlsResultSchema
+export type GetAssetsVersionBucketUploadSignedUrls = ExtractSchemaTypes<
+  typeof GetAssetsVersionBucketUploadSignedUrlsSchema
 >
 
 /* InstallAssetsBucket */
 
-export const InstallAssetsBucketEventSchema = t.type({
-  name: t.literal(InstallerEventNames.installAssetsBucket),
-  payload: t.UnknownRecord,
+export const InstallAssetsBucketSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.installAssetsBucket),
+    payload: t.UnknownRecord,
+  }),
+  Result: t.void,
 })
 
-export type InstallAssetsBucketEvent = t.TypeOf<typeof InstallAssetsBucketEventSchema>
-
-export const InstallAssetsBucketResultSchema = t.void
-
-export type InstallAssetsBucketResult = t.TypeOf<typeof InstallAssetsBucketResultSchema>
+export type InstallAssetsBucket = ExtractSchemaTypes<typeof InstallAssetsBucketSchema>
 
 /* InstallVersionResources */
 
-export const InstallVersionResourcesEventSchema = t.type({
-  name: t.literal(InstallerEventNames.installVersionResources),
-  payload: t.type({
-    version: t.string,
+export const InstallVersionResourcesSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.installVersionResources),
+    payload: t.type({
+      version: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type InstallVersionResourcesEvent = t.TypeOf<typeof InstallVersionResourcesEventSchema>
-
-export const InstallVersionResourcesResultSchema = t.void
-
-export type InstallVersionResourcesResult = t.TypeOf<typeof InstallVersionResourcesResultSchema>
+export type InstallVersionResources = ExtractSchemaTypes<typeof InstallVersionResourcesSchema>
 
 /* UninstallAssetsBucket */
 
-export const UninstallAssetsBucketEventSchema = t.type({
-  name: t.literal(InstallerEventNames.uninstallAssetsBucket),
-  payload: t.type({
-    skipS3: t.boolean,
+export const UninstallAssetsBucketSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.uninstallAssetsBucket),
+    payload: t.type({
+      skipS3: t.boolean,
+    }),
   }),
+  Result: t.void,
 })
 
-export type UninstallAssetsBucketEvent = t.TypeOf<typeof UninstallAssetsBucketEventSchema>
-
-export const UninstallAssetsBucketResultSchema = t.void
-
-export type UninstallAssetsBucketResult = t.TypeOf<typeof UninstallAssetsBucketResultSchema>
+export type UninstallAssetsBucket = ExtractSchemaTypes<typeof UninstallAssetsBucketSchema>
 
 /* UninstallVersionAssetsFolder */
 
-export const UninstallVersionAssetsFolderEventSchema = t.type({
-  name: t.literal(InstallerEventNames.uninstallVersionAssetsFolder),
-  payload: t.type({
-    version: t.string,
+export const UninstallVersionAssetsFolderSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.uninstallVersionAssetsFolder),
+    payload: t.type({
+      version: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type UninstallVersionAssetsFolderEvent = t.TypeOf<
-  typeof UninstallVersionAssetsFolderEventSchema
->
-
-export const UninstallVersionAssetsFolderResultSchema = t.void
-
-export type UninstallVersionAssetsFolderResult = t.TypeOf<
-  typeof UninstallVersionAssetsFolderResultSchema
+export type UninstallVersionAssetsFolder = ExtractSchemaTypes<
+  typeof UninstallVersionAssetsFolderSchema
 >
 
 /* UninstallVersionResources */
 
-export const UninstallVersionResourcesEventSchema = t.type({
-  name: t.literal(InstallerEventNames.uninstallVersionResources),
-  payload: t.type({
-    version: t.string,
+export const UninstallVersionResourcesSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.uninstallVersionResources),
+    payload: t.type({
+      version: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type UninstallVersionResourcesEvent = t.TypeOf<typeof UninstallVersionResourcesEventSchema>
-
-export const UninstallVersionResourcesResultSchema = t.void
-
-export type UninstallVersionResourcesResult = t.TypeOf<typeof UninstallVersionResourcesResultSchema>
+export type UninstallVersionResources = ExtractSchemaTypes<typeof UninstallVersionResourcesSchema>

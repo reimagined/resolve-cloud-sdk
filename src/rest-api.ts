@@ -1,9 +1,4 @@
-import {
-  GetClientAppConfigParamsSchema,
-  GetClientAppConfigQuerySchema,
-  GetClientAppConfigBodySchema,
-  GetClientAppConfigResultSchema,
-} from './commands/cloud'
+import { GetClientAppConfigSchema } from './commands/cloud'
 import { RestApiRoutes, SetupOptions } from './sdk'
 import request from './request'
 
@@ -13,10 +8,10 @@ const getClientAppConfig = {
   method: 'GET',
   mode: 'SYNC',
   isUserIdRequired: false,
-  paramsSchema: GetClientAppConfigQuerySchema,
-  querySchema: GetClientAppConfigParamsSchema,
-  bodySchema: GetClientAppConfigBodySchema,
-  resultSchema: GetClientAppConfigResultSchema,
+  paramsSchema: GetClientAppConfigSchema.Params,
+  querySchema: GetClientAppConfigSchema.Query,
+  bodySchema: GetClientAppConfigSchema.Body,
+  resultSchema: GetClientAppConfigSchema.Result,
 }
 
 const restApiRoutes = {
@@ -42,7 +37,7 @@ export const createCloudSdk = (): CloudSdk => {
     getClientAppConfig: () =>
       request({
         method: 'GET',
-        url: '/client-app-config',
+        path: '/client-app-config',
         mode: 'SYNC',
         ...options,
       }),

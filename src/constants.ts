@@ -14,6 +14,7 @@ export const DEPLOYMENT_ID_TAG_NAME = 'resolve-deployment-id'
 export const APPLICATION_NAME_TAG_NAME = 'resolve-application-name'
 export const RDS_CLUSTER_NAME_TAG_NAME = 'resolve-rds-cluster-name'
 export const DEPLOYMENT_TAG_TAG_NAME = 'resolve-deployment-tag'
+export const CREATED_AT_TAG_NAME = 'resolve-created-at'
 
 export const EDGE_REGION = 'us-east-1'
 
@@ -44,18 +45,24 @@ export enum DomainCustomNames {
 }
 
 export enum FactoryEventNames {
-  installDeploymentLifecycle = 'installDeploymentLifecycle',
-  uninstallDeploymentLifecycle = 'uninstallDeploymentLifecycle',
-  describeEventStore = 'describeEventStore',
+  /* EventStore */
   createEventStore = 'createEventStore',
   dropEventStore = 'dropEventStore',
+  describeEventStore = 'describeEventStore',
   cloneEventStore = 'cloneEventStore',
+  linkDeployment = 'linkDeployment',
+  unlinkDeployment = 'unlinkDeployment',
+  clearEventStore = 'clearEventStore',
+  freezeEventStore = 'freezeEventStore',
+  unfreezeEventStore = 'unfreezeEventStore',
+  /* ReadModel */
   createReadModel = 'createReadModel',
   dropReadModel = 'dropReadModel',
   listReadModels = 'listReadModels',
   pauseReadModel = 'pauseReadModel',
   resetReadModel = 'resetReadModel',
   resumeReadModel = 'resumeReadModel',
+  /* Saga */
   listSagas = 'listSagas',
   pauseSaga = 'pauseSaga',
   resetSaga = 'resetSaga',
@@ -64,10 +71,10 @@ export enum FactoryEventNames {
   setSagaProperty = 'setSagaProperty',
   deleteSagaProperty = 'deleteSagaProperty',
   getSagaProperty = 'getSagaProperty',
-  linkDeployment = 'linkDeployment',
-  unlinkDeployment = 'unlinkDeployment',
+  /* Lifecycle */
   bootstrapDeployment = 'bootstrapDeployment',
   shutdownDeployment = 'shutdownDeployment',
+  dropEventSubscribers = 'dropEventSubscribers',
 }
 
 export enum BuilderEventNames {
@@ -76,6 +83,7 @@ export enum BuilderEventNames {
 }
 
 export enum InstallerEventNames {
+  heartbeat = 'heartbeat',
   installStageResources = 'installStageResources',
   uninstallStageResources = 'uninstallStageResources',
   installVersionResources = 'installVersionResources',
@@ -124,7 +132,7 @@ export enum InstallerEventNames {
   listEnvironmentVariables = 'listEnvironmentVariables',
   enableTracing = 'enableTracing',
   disableTracing = 'disableTracing',
-  getTrace = 'getTrace',
+  getTracingDetails = 'getTracingDetails',
   getSummaries = 'getSummaries',
   getTracingStatus = 'getTracingStatus',
   describeDeployment = 'describeDeployment',
@@ -148,4 +156,10 @@ export enum InstallerEventNames {
   setDeploymentTag = 'setDeploymentTag',
   unsetDeploymentTag = 'unsetDeploymentTag',
   describeRDSClusters = 'describeRDSClusters',
+  addNotificationsWebhook = 'addNotificationsWebhook',
+  deleteNotificationsWebhook = 'deleteNotificationsWebhook',
+  listNotificationsWebhooks = 'listNotificationsWebhooks',
 }
+
+export type RequestMode = 'SYNC' | 'ASYNC'
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'

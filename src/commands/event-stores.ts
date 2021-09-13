@@ -1,147 +1,285 @@
 import * as t from 'io-ts'
 import { InstallerEventNames, FactoryEventNames } from '../constants'
-import { RDSUserSchema } from '../schemas'
+import { defineSchema, ExtractSchemaTypes, RDSUserSchema } from '../schemas'
 
 /* CreateEventStore */
 
-export const CreateEventStoreEventSchema = t.type({
-  name: t.literal(FactoryEventNames.createEventStore),
-  payload: t.type({
-    user: RDSUserSchema,
-    eventStoreClusterArn: t.string,
-    postgresAdminSecretArn: t.string,
-    assetsBucketName: t.string,
+export const CreateEventStoreSchema = defineSchema({
+  Path: '/event-stores',
+  Method: 'POST',
+  Mode: 'ASYNC',
+  Params: t.type({}),
+  Body: t.type({
+    version: t.string,
+  }),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.createEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      assetsBucketName: t.string,
+    }),
+  }),
+  Result: t.type({
+    eventStoreId: t.string,
+    eventStoreDatabaseName: t.string,
+  }),
+  ArgumentsTransformer: ({ version }) => ({
+    params: {},
+    body: { version },
+    query: {},
   }),
 })
 
-export type CreateEventStoreEvent = t.TypeOf<typeof CreateEventStoreEventSchema>
-
-export const CreateEventStoreResultSchema = t.type({
-  eventStoreId: t.string,
-  eventStoreDatabaseName: t.string,
-  eventBusLambdaArn: t.string,
-})
-
-export type CreateEventStoreResult = t.TypeOf<typeof CreateEventStoreResultSchema>
+export type CreateEventStore = ExtractSchemaTypes<typeof CreateEventStoreSchema>
 
 /* CloneEventStore */
 
-export const CloneEventStoreEventSchema = t.type({
-  name: t.literal(FactoryEventNames.cloneEventStore),
-  payload: t.type({
-    user: RDSUserSchema,
-    eventStoreClusterArn: t.string,
-    postgresAdminSecretArn: t.string,
-    assetsBucketName: t.string,
+export const CloneEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/clone',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.cloneEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      assetsBucketName: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.type({
     eventStoreId: t.string,
+    eventStoreDatabaseName: t.string,
+  }),
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
   }),
 })
 
-export type CloneEventStoreEvent = t.TypeOf<typeof CloneEventStoreEventSchema>
+export type CloneEventStore = ExtractSchemaTypes<typeof CloneEventStoreSchema>
 
-export const CloneEventStoreResultSchema = t.type({
-  eventStoreId: t.string,
-  eventStoreDatabaseName: t.string,
-  eventBusLambdaArn: t.string,
+/* ClearEventStore */
+
+export const ClearEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/clear',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.clearEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
+  }),
 })
+export type ClearEventStore = ExtractSchemaTypes<typeof ClearEventStoreSchema>
 
-export type CloneEventStoreResult = t.TypeOf<typeof CloneEventStoreResultSchema>
+/* FreezeEventStore */
+
+export const FreezeEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/freeze',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.freezeEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
+  }),
+})
+export type FreezeEventStore = ExtractSchemaTypes<typeof FreezeEventStoreSchema>
+
+/* UnfreezeEventStore */
+
+export const UnfreezeEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/unfreeze',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.unfreezeEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
+  }),
+})
+export type UnfreezeEventStore = ExtractSchemaTypes<typeof UnfreezeEventStoreSchema>
 
 /* DropEventStore */
 
-export const DropEventStoreEventSchema = t.type({
-  name: t.literal(FactoryEventNames.dropEventStore),
-  payload: t.type({
-    user: RDSUserSchema,
-    eventStoreClusterArn: t.string,
-    postgresAdminSecretArn: t.string,
-    eventStoreId: t.string,
+export const DropEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId',
+  Method: 'DELETE',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.dropEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
   }),
 })
 
-export type DropEventStoreEvent = t.TypeOf<typeof DropEventStoreEventSchema>
-
-export const DropEventStoreResultSchema = t.void
-
-export type DropEventStoreResult = t.TypeOf<typeof DropEventStoreResultSchema>
-
-/* DescribeEventStore */
-
-export const DescribeEventStoreEventSchema = t.type({
-  name: t.literal(FactoryEventNames.describeEventStore),
-  payload: t.type({
-    user: RDSUserSchema,
-    eventStoreClusterArn: t.string,
-    postgresAdminSecretArn: t.string,
-    eventStoreId: t.string,
-  }),
-})
-
-export type DescribeEventStoreEvent = t.TypeOf<typeof DescribeEventStoreEventSchema>
-
-export const DescribeEventStoreResultSchema = t.type({
-  events: t.union([t.number, t.null]),
-  secrets: t.union([t.number, t.null]),
-  modifiedAt: t.union([t.number, t.null]),
-  createdAt: t.union([t.number, t.null]),
-  isFrozen: t.boolean,
-})
-
-export type DescribeEventStoreResult = t.TypeOf<typeof DescribeEventStoreResultSchema>
+export type DropEventStore = ExtractSchemaTypes<typeof DropEventStoreSchema>
 
 /* ListEventStores */
 
-export const ListEventStoresEventSchema = t.type({
-  name: t.literal(InstallerEventNames.listEventStores),
-  payload: t.type({
-    user: RDSUserSchema,
-    eventStoreClusterArn: t.string,
-    postgresAdminSecretArn: t.string,
+export const ListEventStoresSchema = defineSchema({
+  Path: '/event-stores',
+  Method: 'GET',
+  Mode: 'ASYNC',
+  Params: t.type({}),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.listEventStores),
+    payload: t.type({
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+    }),
+  }),
+  Result: t.array(
+    t.type({
+      version: t.string,
+      eventStoreId: t.string,
+      linkedDeployments: t.array(t.string),
+      eventStoreDatabaseName: t.string,
+      events: t.union([t.number, t.null]),
+      secrets: t.union([t.number, t.null]),
+      modifiedAt: t.union([t.number, t.null]),
+      createdAt: t.union([t.number, t.null]),
+      isFrozen: t.union([t.boolean, t.null]),
+    })
+  ),
+  ArgumentsTransformer: (args = {}) => ({
+    params: {},
+    body: {},
+    query: {},
   }),
 })
 
-export type ListEventStoresEvent = t.TypeOf<typeof ListEventStoresEventSchema>
+export type ListEventStores = ExtractSchemaTypes<typeof ListEventStoresSchema>
 
-export const ListEventStoresResultSchema = t.array(
-  t.type({
-    eventStoreId: t.string,
-    version: t.string,
-    linkedDeployments: t.array(t.string),
+/* GetEventStore */
+
+export const GetEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId',
+  Method: 'GET',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getEventStore),
+    payload: t.type({
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.type({
+    eventStoreClusterArn: t.string,
+    eventStoreSecretArn: t.string,
     eventStoreDatabaseName: t.string,
-    eventBusLambdaArn: t.string,
+    version: t.string,
+    eventStoreId: t.string,
+    linkedDeployments: t.array(t.string),
+    region: t.string,
+    accessKeyId: t.string,
+    secretAccessKey: t.string,
+    sessionToken: t.string,
+  }),
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
+  }),
+})
+
+export type GetEventStore = ExtractSchemaTypes<typeof GetEventStoreSchema>
+
+/* DescribeEventStore */
+
+export const DescribeEventStoreSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(FactoryEventNames.describeEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreClusterArn: t.string,
+      postgresAdminSecretArn: t.string,
+      eventStoreId: t.string,
+    }),
+  }),
+  Result: t.type({
     events: t.union([t.number, t.null]),
     secrets: t.union([t.number, t.null]),
     modifiedAt: t.union([t.number, t.null]),
     createdAt: t.union([t.number, t.null]),
-    isFrozen: t.union([t.boolean, t.null]),
-  })
-)
-
-export type ListEventStoresResult = t.TypeOf<typeof ListEventStoresResultSchema>
-
-/* GetEventStore */
-
-export const GetEventStoreEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getEventStore),
-  payload: t.type({
-    userId: t.string,
-    eventStoreId: t.string,
+    isFrozen: t.boolean,
   }),
 })
 
-export type GetEventStoreEvent = t.TypeOf<typeof GetEventStoreEventSchema>
-
-export const GetEventStoreResultSchema = t.type({
-  eventStoreClusterArn: t.string,
-  eventStoreSecretArn: t.string,
-  eventStoreDatabaseName: t.string,
-  version: t.string,
-  eventStoreId: t.string,
-  linkedDeployments: t.array(t.string),
-  region: t.string,
-  accessKeyId: t.string,
-  secretAccessKey: t.string,
-  sessionToken: t.string,
-})
-
-export type GetEventStoreResult = t.TypeOf<typeof GetEventStoreResultSchema>
+export type DescribeEventStore = ExtractSchemaTypes<typeof DescribeEventStoreSchema>

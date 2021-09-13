@@ -19,6 +19,7 @@ export * from './commands/deployments/tracing'
 export * from './commands/dns'
 export * from './commands/domains'
 export * from './commands/event-stores'
+export * from './commands/monitoring'
 export * from './commands/stage-resources'
 export * from './commands/version-resources'
 export * from './commands/rds'
@@ -38,14 +39,14 @@ const createCloudSdk = () => {
     getClientAppConfig: () =>
       request({
         method: 'GET',
-        url: '/client-app-config',
+        path: '/client-app-config',
         mode: 'SYNC',
         ...options,
       }),
     describeExecution: (params: { executionId: string }) =>
       request({
         method: 'GET',
-        url: `/describe-execution/${params.executionId}`,
+        path: `/describe-execution/${params.executionId}`,
         mode: 'SYNC',
         ...options,
       }),
@@ -59,7 +60,7 @@ const createCloudSdk = () => {
     }) =>
       request({
         method: 'PUT',
-        url: `/certificates`,
+        path: `/certificates`,
         body: {
           certificate: params.certificateId,
           key: params.key,
@@ -72,14 +73,14 @@ const createCloudSdk = () => {
     listCertificates: () =>
       request({
         method: 'GET',
-        url: '/certificates',
+        path: '/certificates',
         mode: 'ASYNC',
         ...options,
       }),
     dropCertificate: (params: { certificateId: string }) =>
       request({
         method: 'DELETE',
-        url: `/certificates/${params.certificateId}`,
+        path: `/certificates/${params.certificateId}`,
         mode: 'ASYNC',
         ...options,
       }),
@@ -88,7 +89,7 @@ const createCloudSdk = () => {
     createDomain: (params: { domainId: string; certificateId: string; aliases: Array<string> }) =>
       request({
         method: 'POST',
-        url: '/domains',
+        path: '/domains',
         body: {
           domainId: params.domainId,
           certificateId: params.certificateId,
@@ -99,25 +100,25 @@ const createCloudSdk = () => {
     listDomains: (params: Record<string, any>) =>
       request({
         method: 'GET',
-        url: `/domains`,
+        path: `/domains`,
         mode: 'ASYNC',
       }),
     dropDomain: (params: { domainId: string }) =>
       request({
         method: 'DELETE',
-        url: `/domains/${params.domainId}`,
+        path: `/domains/${params.domainId}`,
         mode: 'ASYNC',
       }),
     verifyDomain: (params: { domainId: string }) =>
       request({
         method: 'PATCH',
-        url: `/domains/${params.domainId}/verify`,
+        path: `/domains/${params.domainId}/verify`,
         mode: 'ASYNC',
       }),
     setDomainUsers: (params: { domainId: string; users: '*' | Array<string> }) =>
       request({
         method: 'PUT',
-        url: `/domains/${params.domainId}/users`,
+        path: `/domains/${params.domainId}/users`,
         body: {
           users: params.users,
         },
@@ -127,7 +128,7 @@ const createCloudSdk = () => {
     addDomainUser: (params: { domainId: string; userId: string }) =>
       request({
         method: 'POST',
-        url: `/domains/${params.domainId}/users`,
+        path: `/domains/${params.domainId}/users`,
         body: {
           userId: params.userId,
         },
@@ -137,13 +138,13 @@ const createCloudSdk = () => {
     removeDomainUser: (params: { domainId: string; userId: string }) =>
       request({
         method: 'DELETE',
-        url: `/domains/${params.domainId}/users/${params.userId}`,
+        path: `/domains/${params.domainId}/users/${params.userId}`,
         mode: 'ASYNC',
       }),
     getVerificationCode: (params: { domainId: string }) =>
       request({
         method: 'GET',
-        url: `/domains/${params.domainId}/verification-code`,
+        path: `/domains/${params.domainId}/verification-code`,
         mode: 'ASYNC',
       }),
 
@@ -155,7 +156,7 @@ const createCloudSdk = () => {
     }) =>
       request({
         method: 'POST',
-        url: `/event-stores`,
+        path: `/event-stores`,
         body: {
           version: params.version,
           eventStoreId: params.eventStoreId,
@@ -166,13 +167,13 @@ const createCloudSdk = () => {
     dropEventStore: (params: { eventStoreId: string }) =>
       request({
         method: 'DELETE',
-        url: `/event-stores/${params.eventStoreId}`,
+        path: `/event-stores/${params.eventStoreId}`,
         mode: 'ASYNC',
       }),
     listEventStores: () =>
       request({
         method: 'GET',
-        url: `/event-stores`,
+        path: `/event-stores`,
         mode: 'ASYNC',
       }),
 
@@ -180,25 +181,25 @@ const createCloudSdk = () => {
     listReadModels: (params: { deploymentId: string }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/read-models`,
+        path: `/deployments/${params.deploymentId}/read-models`,
         mode: 'ASYNC',
       }),
     pauseReadModel: (params: { deploymentId: string; readModelName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/pause`,
+        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/pause`,
         mode: 'ASYNC',
       }),
     resetReadModel: (params: { deploymentId: string; readModelName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/reset`,
+        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/reset`,
         mode: 'ASYNC',
       }),
     resumeReadModel: (params: { deploymentId: string; readModelName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/resume`,
+        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/resume`,
         mode: 'ASYNC',
       }),
 
@@ -206,25 +207,25 @@ const createCloudSdk = () => {
     listSagas: (params: { deploymentId: string }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/sagas`,
+        path: `/deployments/${params.deploymentId}/sagas`,
         mode: 'ASYNC',
       }),
     pauseSaga: (params: { deploymentId: string; sagaName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/pause`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/pause`,
         mode: 'ASYNC',
       }),
     resetSaga: (params: { deploymentId: string; sagaName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/reset`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/reset`,
         mode: 'ASYNC',
       }),
     resumeSaga: (params: { deploymentId: string; sagaName: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/resume`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/resume`,
         mode: 'ASYNC',
       }),
     setSagaProperty: (params: {
@@ -235,7 +236,7 @@ const createCloudSdk = () => {
     }) =>
       request({
         method: 'PUT',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
         body: {
           value: params.value,
         },
@@ -244,13 +245,13 @@ const createCloudSdk = () => {
     deleteSagaProperty: (params: { deploymentId: string; sagaName: string; key: string }) =>
       request({
         method: 'DELETE',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
         mode: 'ASYNC',
       }),
     listSagaProperties: (params: { deploymentId: string; sagaName: string }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties`,
+        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties`,
         mode: 'ASYNC',
       }),
 
@@ -260,24 +261,23 @@ const createCloudSdk = () => {
       version: string
       eventStoreId: string
       eventStoreDatabaseName: string
-      eventBusLambdaArn: string
       domain?: string
     }) =>
       request({
         method: 'POST',
-        url: `/deployments`,
+        path: `/deployments`,
         mode: 'ASYNC',
       }),
     listDeployments: () =>
       request({
         method: 'GET',
-        url: `/deployments`,
+        path: `/deployments`,
         mode: 'ASYNC',
       }),
     getDeploymentByApplicationName: (params: { applicationName: string }) =>
       request({
         method: 'GET',
-        url: `/deployments`,
+        path: `/deployments`,
         query: {
           applicationName: params.applicationName,
         },
@@ -286,31 +286,31 @@ const createCloudSdk = () => {
     getDeploymentUploadSignedUrl: (params: { deploymentId: string }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/upload`,
+        path: `/deployments/${params.deploymentId}/upload`,
         mode: 'ASYNC',
       }),
     buildDeployment: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/upload`,
+        path: `/deployments/${params.deploymentId}/upload`,
         mode: 'ASYNC',
       }),
     bootstrapDeployment: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/bootstrap`,
+        path: `/deployments/${params.deploymentId}/bootstrap`,
         mode: 'ASYNC',
       }),
     shutdownDeployment: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/shutdown`,
+        path: `/deployments/${params.deploymentId}/shutdown`,
         mode: 'ASYNC',
       }),
     dropDeployment: (params: { deploymentId: string }) =>
       request({
         method: 'DELETE',
-        url: `/deployments/${params.deploymentId}`,
+        path: `/deployments/${params.deploymentId}`,
         mode: 'ASYNC',
       }),
 
@@ -318,14 +318,14 @@ const createCloudSdk = () => {
     setEnv: (params: { deploymentId: string; variables: Record<string, string> }) =>
       request({
         method: 'PUT',
-        url: `/deployments/${params.deploymentId}/environment`,
+        path: `/deployments/${params.deploymentId}/environment`,
         body: { variables: params.variables },
         mode: 'ASYNC',
       }),
     removeEnv: (params: { deploymentId: string; variables: Array<string> }) =>
       request({
         method: 'DELETE',
-        url: `/deployments/${params.deploymentId}/environment`,
+        path: `/deployments/${params.deploymentId}/environment`,
         mode: 'ASYNC',
       }),
 
@@ -333,13 +333,13 @@ const createCloudSdk = () => {
     disableLogs: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/logs/disable`,
+        path: `/deployments/${params.deploymentId}/logs/disable`,
         mode: 'ASYNC',
       }),
     enableLogs: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/logs/enable`,
+        path: `/deployments/${params.deploymentId}/logs/enable`,
         mode: 'ASYNC',
       }),
     getLogs: (params: {
@@ -351,7 +351,7 @@ const createCloudSdk = () => {
     }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/logs`,
+        path: `/deployments/${params.deploymentId}/logs`,
         mode: 'ASYNC',
       }),
 
@@ -359,19 +359,19 @@ const createCloudSdk = () => {
     enableTracing: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/tracing/enable`,
+        path: `/deployments/${params.deploymentId}/tracing/enable`,
         mode: 'ASYNC',
       }),
     disableTracing: (params: { deploymentId: string }) =>
       request({
         method: 'PATCH',
-        url: `/deployments/${params.deploymentId}/tracing/disable`,
+        path: `/deployments/${params.deploymentId}/tracing/disable`,
         mode: 'ASYNC',
       }),
     getTracingDetails: (params: { deploymentId: string; traceIds: Array<string> }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/tracing/details`,
+        path: `/deployments/${params.deploymentId}/tracing/details`,
         mode: 'ASYNC',
       }),
     getTracingSummary: (params: {
@@ -382,13 +382,13 @@ const createCloudSdk = () => {
     }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/tracing/summary`,
+        path: `/deployments/${params.deploymentId}/tracing/summary`,
         mode: 'ASYNC',
       }),
     getTracingStatus: (params: { deploymentId: string }) =>
       request({
         method: 'GET',
-        url: `/deployments/${params.deploymentId}/tracing/status`,
+        path: `/deployments/${params.deploymentId}/tracing/status`,
         mode: 'ASYNC',
       }),
   }

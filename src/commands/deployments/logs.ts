@@ -1,87 +1,143 @@
 import * as t from 'io-ts'
 import { InstallerEventNames } from '../../constants'
+import { defineSchema, ExtractSchemaTypes } from '../../schemas'
 
 /* DisableLogs */
 
-export const DisableLogsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.disableLogs),
-  payload: t.type({
-    deploymentId: t.string,
-    userId: t.string,
+export const DisableLogsSchema = defineSchema({
+  Path: '/deployments/:deploymentId/logs/disable',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.disableLogs),
+    payload: t.type({
+      deploymentId: t.string,
+      userId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId }) => ({
+    params: { deploymentId },
+    body: {},
+    query: {},
   }),
 })
 
-export type DisableLogsEvent = t.TypeOf<typeof DisableLogsEventSchema>
-
-export const DisableLogsResultSchema = t.void
-
-export type DisableLogsResult = t.TypeOf<typeof DisableLogsResultSchema>
+export type DisableLogs = ExtractSchemaTypes<typeof DisableLogsSchema>
 
 /* EnableLogs */
 
-export const EnableLogsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.enableLogs),
-  payload: t.intersection([
-    t.type({
-      deploymentId: t.string,
-      userId: t.string,
-    }),
-    t.partial({
-      logLevel: t.union([
-        t.literal('log'),
-        t.literal('error'),
-        t.literal('warn'),
-        t.literal('debug'),
-        t.literal('info'),
-        t.literal('verbose'),
-      ]),
-      scope: t.string,
-    }),
-  ]),
-})
+const LogLevelSchema = t.union([
+  t.literal('log'),
+  t.literal('error'),
+  t.literal('warn'),
+  t.literal('debug'),
+  t.literal('info'),
+  t.literal('verbose'),
+])
 
-export type EnableLogsEvent = t.TypeOf<typeof EnableLogsEventSchema>
-
-export const EnableLogsResultSchema = t.void
-
-export type EnableLogsResult = t.TypeOf<typeof EnableLogsResultSchema>
-
-/* GetLogs */
-
-export const GetLogsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getLogs),
-  payload: t.intersection([
-    t.type({
-      deploymentId: t.string,
-      userId: t.string,
-    }),
-    t.partial({
-      streamLimit: t.number,
-      startTime: t.number,
-      endTime: t.number,
-      filterPattern: t.string,
-    }),
-  ]),
-})
-
-export type GetLogsEvent = t.TypeOf<typeof GetLogsEventSchema>
-
-export const GetLogsResultSchema = t.string
-
-export type GetLogsResult = t.TypeOf<typeof GetLogsResultSchema>
-
-/* RemoveLogs */
-
-export const RemoveLogsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.removeLogs),
-  payload: t.type({
-    deploymentId: t.string,
-    userId: t.string,
+export const EnableLogsSchema = defineSchema({
+  Path: '/deployments/:deploymentId/logs/enable',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string }),
+  Body: t.partial({
+    logLevel: LogLevelSchema,
+    scope: t.string,
+  }),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.enableLogs),
+    payload: t.intersection([
+      t.type({
+        deploymentId: t.string,
+        userId: t.string,
+      }),
+      t.partial({
+        logLevel: LogLevelSchema,
+        scope: t.string,
+      }),
+    ]),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId, scope, logLevel }) => ({
+    params: { deploymentId },
+    body: { scope, logLevel },
+    query: {},
   }),
 })
 
-export type RemoveLogsEvent = t.TypeOf<typeof RemoveLogsEventSchema>
+export type EnableLogs = ExtractSchemaTypes<typeof EnableLogsSchema>
 
-export const RemoveLogsResultSchema = t.void
+/* GetLogs */
 
-export type RemoveLogsResult = t.TypeOf<typeof RemoveLogsResultSchema>
+export const GetLogsSchema = defineSchema({
+  Path: '/deployments/:deploymentId/logs',
+  Method: 'GET',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string }),
+  Body: t.type({}),
+  Query: t.partial({
+    startTime: t.string,
+    endTime: t.string,
+    filterPattern: t.string,
+    streamLimit: t.string,
+  }),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getLogs),
+    payload: t.intersection([
+      t.type({
+        deploymentId: t.string,
+        userId: t.string,
+      }),
+      t.partial({
+        streamLimit: t.number,
+        startTime: t.number,
+        endTime: t.number,
+        filterPattern: t.string,
+      }),
+    ]),
+  }),
+  Result: t.string,
+  ArgumentsTransformer: ({ deploymentId, streamLimit, startTime, endTime, filterPattern }) => ({
+    params: { deploymentId },
+    body: {},
+    query: {
+      streamLimit,
+      startTime,
+      endTime,
+      filterPattern,
+    },
+  }),
+})
+
+export type GetLogs = ExtractSchemaTypes<typeof GetLogsSchema>
+
+/* RemoveLogs */
+
+export const RemoveLogsSchema = defineSchema({
+  Path: '/deployments/:deploymentId/logs',
+  Method: 'DELETE',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.removeLogs),
+    payload: t.type({
+      deploymentId: t.string,
+      userId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId }) => ({
+    params: { deploymentId },
+    body: {},
+    query: {},
+  }),
+})
+
+export type RemoveLogs = ExtractSchemaTypes<typeof RemoveLogsSchema>

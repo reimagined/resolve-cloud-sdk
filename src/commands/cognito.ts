@@ -1,119 +1,112 @@
 import * as t from 'io-ts'
 import { InstallerEventNames } from '../constants'
-import { CognitoUserSchema } from '../schemas'
+import { defineSchema, ExtractSchemaTypes, CognitoUserSchema } from '../schemas'
 
 /* AttachClientAppUrls */
 
-export const AttachClientAppUrlsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.attachClientAppUrls),
-  payload: t.type({
-    callbackUrl: t.string,
-    logoutUrl: t.string,
+export const AttachClientAppUrlsSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.attachClientAppUrls),
+    payload: t.type({
+      callbackUrl: t.string,
+      logoutUrl: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type AttachClientAppUrlsEvent = t.TypeOf<typeof AttachClientAppUrlsEventSchema>
-
-export const AttachClientAppUrlsResultSchema = t.void
-
-export type AttachClientAppUrlsResult = t.TypeOf<typeof AttachClientAppUrlsResultSchema>
+export type AttachClientAppUrls = ExtractSchemaTypes<typeof AttachClientAppUrlsSchema>
 
 /* CreateUser */
 
-export const CreateUserEventSchema = t.type({
-  name: t.literal(InstallerEventNames.createUser),
-  payload: t.intersection([
-    t.type({
-      email: t.string,
-      temporaryPassword: t.string,
-    }),
-    t.partial({
-      forceAliasCreation: t.boolean,
-      messageAction: t.union([t.literal('RESEND'), t.literal('SUPPRESS')]),
-      clientMetadata: t.record(t.string, t.string),
-      userAttributes: t.array(t.type({ Name: t.string, Value: t.string })),
-      validationData: t.array(t.type({ Name: t.string, Value: t.string })),
-      isAdmin: t.boolean,
-    }),
-  ]),
+export const CreateUserSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.createUser),
+    payload: t.intersection([
+      t.type({
+        email: t.string,
+        temporaryPassword: t.string,
+      }),
+      t.partial({
+        forceAliasCreation: t.boolean,
+        messageAction: t.union([t.literal('RESEND'), t.literal('SUPPRESS')]),
+        clientMetadata: t.record(t.string, t.string),
+        userAttributes: t.array(t.type({ Name: t.string, Value: t.string })),
+        validationData: t.array(t.type({ Name: t.string, Value: t.string })),
+        isAdmin: t.boolean,
+      }),
+    ]),
+  }),
+  Result: CognitoUserSchema,
 })
 
-export type CreateUserEvent = t.TypeOf<typeof CreateUserEventSchema>
-
-export const CreateUserResultSchema = CognitoUserSchema
-
-export type CreateUserResult = t.TypeOf<typeof CreateUserResultSchema>
+export type CreateUser = ExtractSchemaTypes<typeof CreateUserSchema>
 
 /* DetachClientAppUrls */
 
-export const DetachClientAppUrlsEventSchema = t.type({
-  name: t.literal(InstallerEventNames.detachClientAppUrls),
-  payload: t.type({
-    callbackUrl: t.string,
-    logoutUrl: t.string,
+export const DetachClientAppUrlsSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.detachClientAppUrls),
+    payload: t.type({
+      callbackUrl: t.string,
+      logoutUrl: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type DetachClientAppUrlsEvent = t.TypeOf<typeof DetachClientAppUrlsEventSchema>
-
-export const DetachClientAppUrlsResultSchema = t.void
-
-export type DetachClientAppUrlsResult = t.TypeOf<typeof DetachClientAppUrlsResultSchema>
+export type DetachClientAppUrls = ExtractSchemaTypes<typeof DetachClientAppUrlsSchema>
 
 /* DropUser */
 
-export const DropUserEventSchema = t.type({
-  name: t.literal(InstallerEventNames.dropUser),
-  payload: t.type({
-    userId: t.string,
+export const DropUserSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.dropUser),
+    payload: t.type({
+      userId: t.string,
+    }),
   }),
+  Result: t.void,
 })
 
-export type DropUserEvent = t.TypeOf<typeof DropUserEventSchema>
-
-export const DropUserResultSchema = t.void
-
-export type DropUserResult = t.TypeOf<typeof DropUserResultSchema>
+export type DropUser = ExtractSchemaTypes<typeof DropUserSchema>
 
 /* GetUser */
 
-export const GetUserEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getUser),
-  payload: t.type({
-    userId: t.string,
+export const GetUserSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getUser),
+    payload: t.type({
+      userId: t.string,
+    }),
   }),
+  Result: CognitoUserSchema,
 })
 
-export type GetUserEvent = t.TypeOf<typeof GetUserEventSchema>
-
-export const GetUserResultSchema = CognitoUserSchema
-
-export type GetUserResult = t.TypeOf<typeof GetUserResultSchema>
+export type GetUser = ExtractSchemaTypes<typeof GetUserSchema>
 
 /* GetUserIdByEmail */
 
-export const GetUserIdByEmailEventSchema = t.type({
-  name: t.literal(InstallerEventNames.getUserIdByEmail),
-  payload: t.type({
-    email: t.string,
+export const GetUserIdByEmailSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.getUserIdByEmail),
+    payload: t.type({
+      email: t.string,
+    }),
   }),
+  Result: t.string,
 })
 
-export type GetUserIdByEmailEvent = t.TypeOf<typeof GetUserIdByEmailEventSchema>
-
-export const GetUserIdByEmailResultSchema = t.string
-
-export type GetUserIdByEmailResult = t.TypeOf<typeof GetUserIdByEmailResultSchema>
+export type GetUserIdByEmail = ExtractSchemaTypes<typeof GetUserIdByEmailSchema>
 
 /* ListUsers */
 
-export const ListUsersEventSchema = t.type({
-  name: t.literal(InstallerEventNames.listUsers),
-  payload: t.UnknownRecord,
+export const ListUsersSchema = defineSchema({
+  Event: t.type({
+    name: t.literal(InstallerEventNames.listUsers),
+    payload: t.UnknownRecord,
+  }),
+  Result: t.array(CognitoUserSchema),
 })
 
-export type ListUsersEvent = t.TypeOf<typeof ListUsersEventSchema>
-
-export const ListUsersResultSchema = t.array(CognitoUserSchema)
-
-export type ListUsersResult = t.TypeOf<typeof ListUsersResultSchema>
+export type ListUsers = ExtractSchemaTypes<typeof ListUsersSchema>

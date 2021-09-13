@@ -1,14 +1,19 @@
 import * as t from 'io-ts'
 
-type Fetch = typeof fetch
+import { RequestMethod, RequestMode } from './constants'
 
-export type RequestMode = 'SYNC' | 'ASYNC'
-export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS'
+type Fetch = typeof fetch
 
 export type SetupOptions = {
   fetch?: Fetch
-  log?: (...ars: Array<any>) => any
+  logger?: {
+    debug: (...ars: Array<any>) => any
+    trace: (...ars: Array<any>) => any
+    log: (...ars: Array<any>) => any
+  }
+  baseHeaders?: Record<string, string>
   baseUrl?: string
+  token?: string
   retryTimeout?: number
 }
 

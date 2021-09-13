@@ -1,4 +1,4 @@
-const formatUrl = (urlPattern: string, params: Record<string, string>): string => {
+const formatPath = (urlPattern: string, params: Record<string, string>): string => {
   let result = urlPattern
   const urlKeys = urlPattern.match(/:[a-z0-9-]+/gi) ?? []
   if (urlKeys.length !== Object.keys(params).length) {
@@ -17,4 +17,4 @@ const formatUrl = (urlPattern: string, params: Record<string, string>): string =
   return result
 }
 
-export default formatUrl
+export default formatPath
