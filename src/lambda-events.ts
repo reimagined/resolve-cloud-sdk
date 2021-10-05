@@ -46,6 +46,14 @@ import {
   DescribeEventStore,
   ListEventStores,
   GetEventStore,
+  ImportEventStore,
+  ExportEventStore,
+  GetImportUrls,
+  GetExportUrls,
+  UploadEventsToS3,
+  ClearEventStore,
+  FreezeEventStore,
+  UnfreezeEventStore,
 } from './commands/event-stores'
 
 /* Envs */
@@ -221,3 +229,11 @@ export type InstallerLambdaEvent =
   | SetSagaProperty['Event']
   | BootstrapDeployment['Event']
   | ShutdownDeployment['Event']
+  | ImportEventStore['Event']
+  | ExportEventStore['Event']
+  | GetImportUrls['Event']
+  | GetExportUrls['Event']
+  | UploadEventsToS3['Event']
+  | ClearEventStore['Event']
+  | FreezeEventStore['Event']
+  | UnfreezeEventStore['Event']

@@ -7,6 +7,7 @@ export type LambdaContext = {
   functionName: string
   invokedFunctionArn: string
   callbackWaitsForEmptyEventLoop: boolean
+  getRemainingTimeInMillis: () => number
 }
 
 export const VirtualHostsSchema = t.array(

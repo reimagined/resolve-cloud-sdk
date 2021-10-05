@@ -55,6 +55,11 @@ export enum FactoryEventNames {
   clearEventStore = 'clearEventStore',
   freezeEventStore = 'freezeEventStore',
   unfreezeEventStore = 'unfreezeEventStore',
+  importEventStore = 'importEventStore',
+  exportEventStore = 'exportEventStore',
+  getImportUrls = 'getImportUrls',
+  getExportUrls = 'getExportUrls',
+  uploadEventsToS3 = 'uploadEventsToS3',
   /* ReadModel */
   createReadModel = 'createReadModel',
   dropReadModel = 'dropReadModel',

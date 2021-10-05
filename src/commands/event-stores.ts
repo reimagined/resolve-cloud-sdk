@@ -69,6 +69,174 @@ export const CloneEventStoreSchema = defineSchema({
 
 export type CloneEventStore = ExtractSchemaTypes<typeof CloneEventStoreSchema>
 
+/* ImportEventStore */
+
+export const ImportEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/import',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({ partIndex: t.number }),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.importEventStore),
+    payload: t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreId: t.string,
+      eventStoreDatabaseName: t.string,
+      eventStoreClusterEndpoint: t.string,
+      eventStoreClusterPort: t.number,
+      bucketName: t.string,
+      partIndex: t.number,
+      accessKeyId: t.string,
+      secretAccessKey: t.string,
+      sessionToken: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId, partIndex }) => ({
+    params: { eventStoreId },
+    body: { partIndex },
+    query: {},
+  }),
+})
+
+export type ImportEventStore = ExtractSchemaTypes<typeof ImportEventStoreSchema>
+
+/* ExportEventStore */
+
+export const ExportEventStoreSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/export',
+  Method: 'PATCH',
+  Mode: 'ASYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.partial({ cursor: t.string }),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.exportEventStore),
+    payload: t.intersection([
+      t.type({
+        version: t.string,
+        user: RDSUserSchema,
+        eventStoreId: t.string,
+        eventStoreDatabaseName: t.string,
+        eventStoreClusterEndpoint: t.string,
+        eventStoreClusterPort: t.number,
+        bucketName: t.string,
+        importExportStepFunctionArn: t.string,
+      }),
+      t.partial({
+        cursor: t.string,
+      }),
+    ]),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ eventStoreId, cursor }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: { cursor },
+  }),
+})
+
+export type ExportEventStore = ExtractSchemaTypes<typeof ExportEventStoreSchema>
+
+/* GetImportUrls */
+
+export const GetImportUrlsSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/import',
+  Method: 'GET',
+  Mode: 'SYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({ eventsPartCount: t.string, secretsPartCount: t.string }),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.getImportUrls),
+    payload: t.type({
+      version: t.string,
+      userId: t.string,
+      eventStoreId: t.string,
+      bucketName: t.string,
+      eventsPartCount: t.string,
+      secretsPartCount: t.string,
+    }),
+  }),
+  Result: t.type({
+    eventsImportUrls: t.array(t.string),
+    secretsImportUrls: t.array(t.string),
+  }),
+  ArgumentsTransformer: ({ eventStoreId, eventsPartCount, secretsPartCount }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: { eventsPartCount, secretsPartCount },
+  }),
+})
+
+export type GetImportUrls = ExtractSchemaTypes<typeof GetImportUrlsSchema>
+
+/* GetExportUrls */
+
+export const GetExportUrlsSchema = defineSchema({
+  Path: '/event-stores/:eventStoreId/export',
+  Method: 'GET',
+  Mode: 'SYNC',
+  Params: t.type({ eventStoreId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.getExportUrls),
+    payload: t.type({
+      version: t.string,
+      userId: t.string,
+      eventStoreId: t.string,
+      bucketName: t.string,
+    }),
+  }),
+  Result: t.type({
+    eventsExportUrl: t.string,
+    secretsExportUrl: t.string,
+    statusFileUrl: t.string,
+  }),
+  ArgumentsTransformer: ({ eventStoreId }) => ({
+    params: { eventStoreId },
+    body: {},
+    query: {},
+  }),
+})
+
+export type GetExportUrls = ExtractSchemaTypes<typeof GetExportUrlsSchema>
+
+/* UploadEventsToS3 */
+
+const UploadEventsToS3EventSchema = t.type({
+  name: t.literal(FactoryEventNames.uploadEventsToS3),
+  payload: t.intersection([
+    t.type({
+      version: t.string,
+      user: RDSUserSchema,
+      eventStoreId: t.string,
+      eventStoreClusterEndpoint: t.string,
+      eventStoreClusterPort: t.number,
+      bucketName: t.string,
+      databaseName: t.string,
+    }),
+    t.partial({
+      cursor: t.union([t.string, t.null]),
+      uploadId: t.union([t.string, t.null]),
+      parts: t.array(t.any),
+      partNumber: t.number,
+      done: t.boolean,
+    }),
+  ]),
+})
+
+export const UploadEventsToS3Schema = defineSchema({
+  Event: UploadEventsToS3EventSchema,
+  Result: UploadEventsToS3EventSchema,
+})
+
+export type UploadEventsToS3 = ExtractSchemaTypes<typeof UploadEventsToS3Schema>
+
 /* ClearEventStore */
 
 export const ClearEventStoreSchema = defineSchema({
