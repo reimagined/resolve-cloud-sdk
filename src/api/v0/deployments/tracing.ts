@@ -1,11 +1,16 @@
 import * as t from 'io-ts'
-import { InstallerEventNames } from '../../constants'
-import { defineSchema, ExtractSchemaTypes } from '../../schemas'
+
+import { InstallerEventNames } from '../../../constants'
+import { defineSchema, ExtractSchemaTypes } from '../../../schemas'
+
+const Namespace = 'Deployments / Tracing'
 
 /* DisableTracing */
 
 export const DisableTracingSchema = defineSchema({
-  Path: '/deployments/:deploymentId/tracing/disable',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/tracing/disable',
   Method: 'PATCH',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -31,7 +36,9 @@ export type DisableTracing = ExtractSchemaTypes<typeof DisableTracingSchema>
 /* EnableTracing */
 
 export const EnableTracingSchema = defineSchema({
-  Path: '/deployments/:deploymentId/tracing/enable',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/tracing/enable',
   Method: 'PATCH',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -57,7 +64,9 @@ export type EnableTracing = ExtractSchemaTypes<typeof EnableTracingSchema>
 /* GetSummaries */
 
 export const GetSummariesSchema = defineSchema({
-  Path: '/deployments/:deploymentId/tracing/summary',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/tracing/summary',
   Method: 'GET',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -83,14 +92,14 @@ export const GetSummariesSchema = defineSchema({
   Result: t.array(
     t.intersection([
       t.partial({
-        Id: t.string,
-        ResponseTime: t.number,
-        Http: t.partial({
-          HttpURL: t.string,
-          HttpStatus: t.number,
-          HttpMethod: t.string,
-          UserAgent: t.string,
-          ClientIp: t.string,
+        id: t.string,
+        responseTime: t.number,
+        http: t.partial({
+          httpURL: t.string,
+          httpStatus: t.number,
+          httpMethod: t.string,
+          userAgent: t.string,
+          clientIp: t.string,
         }),
       }),
       t.record(t.string, t.any),
@@ -108,13 +117,15 @@ export type GetSummaries = ExtractSchemaTypes<typeof GetSummariesSchema>
 /* GetTrace */
 
 export const GetTracingDetailsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/tracing/details',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/tracing/details',
   Method: 'GET',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
   Body: t.type({}),
   Query: t.type({
-    traceIds: t.string,
+    traceIds: t.array(t.string),
   }),
   Event: t.type({
     name: t.literal(InstallerEventNames.getTracingDetails),
@@ -137,7 +148,9 @@ export type GetTracingDetails = ExtractSchemaTypes<typeof GetTracingDetailsSchem
 /* GetTracing */
 
 export const GetTracingStatusSchema = defineSchema({
-  Path: '/deployments/:deploymentId/tracing/status',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/tracing/status',
   Method: 'GET',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),

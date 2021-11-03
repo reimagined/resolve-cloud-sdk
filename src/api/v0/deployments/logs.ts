@@ -1,34 +1,9 @@
 import * as t from 'io-ts'
-import { InstallerEventNames } from '../../constants'
-import { defineSchema, ExtractSchemaTypes } from '../../schemas'
 
-/* DisableLogs */
+import { InstallerEventNames } from '../../../constants'
+import { defineSchema, ExtractSchemaTypes } from '../../../schemas'
 
-export const DisableLogsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/logs/disable',
-  Method: 'PATCH',
-  Mode: 'SYNC',
-  Params: t.type({ deploymentId: t.string }),
-  Body: t.type({}),
-  Query: t.type({}),
-  Event: t.type({
-    name: t.literal(InstallerEventNames.disableLogs),
-    payload: t.type({
-      deploymentId: t.string,
-      userId: t.string,
-    }),
-  }),
-  Result: t.void,
-  ArgumentsTransformer: ({ deploymentId }) => ({
-    params: { deploymentId },
-    body: {},
-    query: {},
-  }),
-})
-
-export type DisableLogs = ExtractSchemaTypes<typeof DisableLogsSchema>
-
-/* EnableLogs */
+const Namespace = 'Deployments / Logs'
 
 const LogLevelSchema = t.union([
   t.literal('log'),
@@ -39,8 +14,12 @@ const LogLevelSchema = t.union([
   t.literal('verbose'),
 ])
 
+/* EnableLogs */
+
 export const EnableLogsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/logs/enable',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/logs/enable',
   Method: 'PATCH',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -72,10 +51,40 @@ export const EnableLogsSchema = defineSchema({
 
 export type EnableLogs = ExtractSchemaTypes<typeof EnableLogsSchema>
 
+/* DisableLogs */
+
+export const DisableLogsSchema = defineSchema({
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/logs/disable',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(InstallerEventNames.disableLogs),
+    payload: t.type({
+      deploymentId: t.string,
+      userId: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId }) => ({
+    params: { deploymentId },
+    body: {},
+    query: {},
+  }),
+})
+
+export type DisableLogs = ExtractSchemaTypes<typeof DisableLogsSchema>
+
 /* GetLogs */
 
 export const GetLogsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/logs',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/logs',
   Method: 'GET',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -119,7 +128,9 @@ export type GetLogs = ExtractSchemaTypes<typeof GetLogsSchema>
 /* RemoveLogs */
 
 export const RemoveLogsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/logs',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/logs',
   Method: 'DELETE',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),

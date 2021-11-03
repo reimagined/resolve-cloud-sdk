@@ -1,397 +1,42 @@
-import request from './request'
-import { SetupOptions } from './sdk'
-
 export * from './constants'
 export * from './generate-id'
 export * from './validate'
 export * from './schemas'
-export * from './commands/builder'
-export * from './commands/certificates'
-export * from './commands/cloud'
-export * from './commands/cognito'
-export * from './commands/deployments/lifecycle'
-export * from './commands/deployments/envs'
-export * from './commands/deployments/event-stores'
-export * from './commands/deployments/logs'
-export * from './commands/deployments/read-models'
-export * from './commands/deployments/sagas'
-export * from './commands/deployments/tracing'
-export * from './commands/dns'
-export * from './commands/domains'
-export * from './commands/event-stores'
-export * from './commands/monitoring'
-export * from './commands/stage-resources'
-export * from './commands/version-resources'
-export * from './commands/rds'
 export * from './lambda-events'
 export * from './format-version'
+export * from './is-retryable'
+export * from './fatal-error'
+export * from './create-cloud-sdk'
+export * from './cloud-sdk-setup-options'
 
-const createCloudSdk = () => {
-  let options: SetupOptions = {}
+/* API Lambda */
 
-  return {
-    /* Setup */
-    setup(params: SetupOptions) {
-      options = params
-    },
+export * from './api/builder'
+export * from './api/certificates'
+export * from './api/cognito'
+export * from './api/dns'
+export * from './api/domain-users'
+export * from './api/domain-virtual-hosts'
+export * from './api/domains'
+export * from './api/envs'
+export * from './api/event-stores'
+export * from './api/event-subscribers'
+export * from './api/monitoring'
+export * from './api/rds'
+export * from './api/stage-resources'
+export * from './api/version-resources'
 
-    /* System */
-    getClientAppConfig: () =>
-      request({
-        method: 'GET',
-        path: '/client-app-config',
-        mode: 'SYNC',
-        ...options,
-      }),
-    describeExecution: (params: { executionId: string }) =>
-      request({
-        method: 'GET',
-        path: `/describe-execution/${params.executionId}`,
-        mode: 'SYNC',
-        ...options,
-      }),
+/* API v0 */
 
-    /* Certificates */
-    ensureCertificate: (params: {
-      certificate: string
-      key: string
-      chain: string
-      certificateId?: string | null
-    }) =>
-      request({
-        method: 'PUT',
-        path: `/certificates`,
-        body: {
-          certificate: params.certificateId,
-          key: params.key,
-          chain: params.chain,
-          id: params.certificateId,
-        },
-        mode: 'ASYNC',
-        ...options,
-      }),
-    listCertificates: () =>
-      request({
-        method: 'GET',
-        path: '/certificates',
-        mode: 'ASYNC',
-        ...options,
-      }),
-    dropCertificate: (params: { certificateId: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/certificates/${params.certificateId}`,
-        mode: 'ASYNC',
-        ...options,
-      }),
-
-    /* Domains */
-    createDomain: (params: { domainId: string; certificateId: string; aliases: Array<string> }) =>
-      request({
-        method: 'POST',
-        path: '/domains',
-        body: {
-          domainId: params.domainId,
-          certificateId: params.certificateId,
-          aliases: params.aliases,
-        },
-        mode: 'ASYNC',
-      }),
-    listDomains: (params: Record<string, any>) =>
-      request({
-        method: 'GET',
-        path: `/domains`,
-        mode: 'ASYNC',
-      }),
-    dropDomain: (params: { domainId: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/domains/${params.domainId}`,
-        mode: 'ASYNC',
-      }),
-    verifyDomain: (params: { domainId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/domains/${params.domainId}/verify`,
-        mode: 'ASYNC',
-      }),
-    setDomainUsers: (params: { domainId: string; users: '*' | Array<string> }) =>
-      request({
-        method: 'PUT',
-        path: `/domains/${params.domainId}/users`,
-        body: {
-          users: params.users,
-        },
-        mode: 'ASYNC',
-        ...options,
-      }),
-    addDomainUser: (params: { domainId: string; userId: string }) =>
-      request({
-        method: 'POST',
-        path: `/domains/${params.domainId}/users`,
-        body: {
-          userId: params.userId,
-        },
-        mode: 'ASYNC',
-        ...options,
-      }),
-    removeDomainUser: (params: { domainId: string; userId: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/domains/${params.domainId}/users/${params.userId}`,
-        mode: 'ASYNC',
-      }),
-    getVerificationCode: (params: { domainId: string }) =>
-      request({
-        method: 'GET',
-        path: `/domains/${params.domainId}/verification-code`,
-        mode: 'ASYNC',
-      }),
-
-    /* Event Stores */
-    createEventStore: (params: {
-      version: string
-      eventStoreId: string
-      mode: 'clone' | 'reuse'
-    }) =>
-      request({
-        method: 'POST',
-        path: `/event-stores`,
-        body: {
-          version: params.version,
-          eventStoreId: params.eventStoreId,
-          mode: params.mode,
-        },
-        mode: 'ASYNC',
-      }),
-    dropEventStore: (params: { eventStoreId: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/event-stores/${params.eventStoreId}`,
-        mode: 'ASYNC',
-      }),
-    listEventStores: () =>
-      request({
-        method: 'GET',
-        path: `/event-stores`,
-        mode: 'ASYNC',
-      }),
-
-    /* Read Models */
-    listReadModels: (params: { deploymentId: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/read-models`,
-        mode: 'ASYNC',
-      }),
-    pauseReadModel: (params: { deploymentId: string; readModelName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/pause`,
-        mode: 'ASYNC',
-      }),
-    resetReadModel: (params: { deploymentId: string; readModelName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/reset`,
-        mode: 'ASYNC',
-      }),
-    resumeReadModel: (params: { deploymentId: string; readModelName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/read-models/${params.readModelName}/resume`,
-        mode: 'ASYNC',
-      }),
-
-    /* Sagas */
-    listSagas: (params: { deploymentId: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/sagas`,
-        mode: 'ASYNC',
-      }),
-    pauseSaga: (params: { deploymentId: string; sagaName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/pause`,
-        mode: 'ASYNC',
-      }),
-    resetSaga: (params: { deploymentId: string; sagaName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/reset`,
-        mode: 'ASYNC',
-      }),
-    resumeSaga: (params: { deploymentId: string; sagaName: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/resume`,
-        mode: 'ASYNC',
-      }),
-    setSagaProperty: (params: {
-      deploymentId: string
-      sagaName: string
-      key: string
-      value: any
-    }) =>
-      request({
-        method: 'PUT',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
-        body: {
-          value: params.value,
-        },
-        mode: 'ASYNC',
-      }),
-    deleteSagaProperty: (params: { deploymentId: string; sagaName: string; key: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties/${params.key}`,
-        mode: 'ASYNC',
-      }),
-    listSagaProperties: (params: { deploymentId: string; sagaName: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/sagas/${params.sagaName}/properties`,
-        mode: 'ASYNC',
-      }),
-
-    /* Deployments */
-    createDeployment: (params: {
-      applicationName: string
-      version: string
-      eventStoreId: string
-      eventStoreDatabaseName: string
-      domain?: string
-    }) =>
-      request({
-        method: 'POST',
-        path: `/deployments`,
-        mode: 'ASYNC',
-      }),
-    listDeployments: () =>
-      request({
-        method: 'GET',
-        path: `/deployments`,
-        mode: 'ASYNC',
-      }),
-    getDeploymentByApplicationName: (params: { applicationName: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments`,
-        query: {
-          applicationName: params.applicationName,
-        },
-        mode: 'ASYNC',
-      }),
-    getDeploymentUploadSignedUrl: (params: { deploymentId: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/upload`,
-        mode: 'ASYNC',
-      }),
-    buildDeployment: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/upload`,
-        mode: 'ASYNC',
-      }),
-    bootstrapDeployment: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/bootstrap`,
-        mode: 'ASYNC',
-      }),
-    shutdownDeployment: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/shutdown`,
-        mode: 'ASYNC',
-      }),
-    dropDeployment: (params: { deploymentId: string }) =>
-      request({
-        method: 'DELETE',
-        path: `/deployments/${params.deploymentId}`,
-        mode: 'ASYNC',
-      }),
-
-    /* Environment Variables */
-    setEnv: (params: { deploymentId: string; variables: Record<string, string> }) =>
-      request({
-        method: 'PUT',
-        path: `/deployments/${params.deploymentId}/environment`,
-        body: { variables: params.variables },
-        mode: 'ASYNC',
-      }),
-    removeEnv: (params: { deploymentId: string; variables: Array<string> }) =>
-      request({
-        method: 'DELETE',
-        path: `/deployments/${params.deploymentId}/environment`,
-        mode: 'ASYNC',
-      }),
-
-    /* Logs */
-    disableLogs: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/logs/disable`,
-        mode: 'ASYNC',
-      }),
-    enableLogs: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/logs/enable`,
-        mode: 'ASYNC',
-      }),
-    getLogs: (params: {
-      deploymentId: string
-      startTime?: number
-      endTime?: number
-      filterPattern?: string
-      streamLimit?: number
-    }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/logs`,
-        mode: 'ASYNC',
-      }),
-
-    /* Tracing */
-    enableTracing: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/tracing/enable`,
-        mode: 'ASYNC',
-      }),
-    disableTracing: (params: { deploymentId: string }) =>
-      request({
-        method: 'PATCH',
-        path: `/deployments/${params.deploymentId}/tracing/disable`,
-        mode: 'ASYNC',
-      }),
-    getTracingDetails: (params: { deploymentId: string; traceIds: Array<string> }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/tracing/details`,
-        mode: 'ASYNC',
-      }),
-    getTracingSummary: (params: {
-      deploymentId: string
-      startTime: string
-      endTime: string
-      filterExpression?: string
-    }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/tracing/summary`,
-        mode: 'ASYNC',
-      }),
-    getTracingStatus: (params: { deploymentId: string }) =>
-      request({
-        method: 'GET',
-        path: `/deployments/${params.deploymentId}/tracing/status`,
-        mode: 'ASYNC',
-      }),
-  }
-}
-
-export default createCloudSdk
+export * from './api/v0/deployments/domains'
+export * from './api/v0/deployments/envs'
+export * from './api/v0/deployments/lifecycle'
+export * from './api/v0/deployments/logs'
+export * from './api/v0/deployments/read-models'
+export * from './api/v0/deployments/saga-properties'
+export * from './api/v0/deployments/sagas'
+export * from './api/v0/deployments/tracing'
+export * from './api/v0/certificates'
+export * from './api/v0/cloud'
+export * from './api/v0/domains'
+export * from './api/v0/event-stores'

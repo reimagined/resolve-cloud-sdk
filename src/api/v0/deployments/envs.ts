@@ -1,26 +1,17 @@
 import * as t from 'io-ts'
-import { InstallerEventNames } from '../../constants'
-import { defineSchema, ExtractSchemaTypes } from '../../schemas'
 
-/* UpdateEnvironmentVariables */
+import { InstallerEventNames } from '../../../constants'
+import { defineSchema, ExtractSchemaTypes } from '../../../schemas'
+import { UpdateEnvironmentVariablesSchema } from '../../envs'
 
-export const UpdateEnvironmentVariablesSchema = defineSchema({
-  Event: t.type({
-    name: t.literal(InstallerEventNames.updateEnvironmentVariables),
-    payload: t.type({
-      deploymentId: t.string,
-      userId: t.string,
-      variables: t.record(t.string, t.union([t.string, t.null])),
-    }),
-  }),
-  Result: t.void,
-})
-export type UpdateEnvironmentVariables = ExtractSchemaTypes<typeof UpdateEnvironmentVariablesSchema>
+const Namespace = 'Deployments / Environment variables'
 
 /* SetEnvironmentVariables */
 
 export const SetEnvironmentVariablesSchema = defineSchema({
-  Path: '/deployments/:deploymentId/environment',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/environment',
   Method: 'PUT',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -36,12 +27,15 @@ export const SetEnvironmentVariablesSchema = defineSchema({
     query: {},
   }),
 })
+
 export type SetEnvironmentVariables = ExtractSchemaTypes<typeof SetEnvironmentVariablesSchema>
 
 /* RemoveEnvironmentVariables */
 
 export const RemoveEnvironmentVariablesSchema = defineSchema({
-  Path: '/deployments/:deploymentId/environment',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/environment',
   Method: 'DELETE',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -57,12 +51,15 @@ export const RemoveEnvironmentVariablesSchema = defineSchema({
     query: {},
   }),
 })
+
 export type RemoveEnvironmentVariables = ExtractSchemaTypes<typeof RemoveEnvironmentVariablesSchema>
 
 /* ListEnvironmentVariables */
 
 export const ListEnvironmentVariablesSchema = defineSchema({
-  Path: '/deployments/:deploymentId/environment',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/environment',
   Method: 'GET',
   Mode: 'SYNC',
   Params: t.type({ deploymentId: t.string }),

@@ -1,4 +1,5 @@
 import * as t from 'io-ts'
+
 import { InstallerEventNames } from '../constants'
 import { defineSchema, ExtractSchemaTypes } from '../schemas'
 

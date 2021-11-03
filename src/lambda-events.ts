@@ -1,5 +1,3 @@
-import { LinkDeployment, UnlinkDeployment } from './commands/deployments/event-stores'
-
 import {
   CreateReadModel,
   DropReadModel,
@@ -7,18 +5,16 @@ import {
   PauseReadModel,
   ResetReadModel,
   ResumeReadModel,
-} from './commands/deployments/read-models'
+} from './api/v0/deployments/read-models'
+
+import { PauseSaga, ResetSaga, ResumeSaga, ListSagas } from './api/v0/deployments/sagas'
 
 import {
-  PauseSaga,
-  ResetSaga,
-  ResumeSaga,
-  ListSagas,
   SetSagaProperty,
   GetSagaProperty,
   DeleteSagaProperty,
   ListSagaProperties,
-} from './commands/deployments/sagas'
+} from './api/v0/deployments/saga-properties'
 
 /* Deployments */
 import {
@@ -26,38 +22,38 @@ import {
   ListDeployments,
   CreateDeployment,
   GetDeploymentUploadSignedUrl,
-  GetDeploymentByApplicationName,
-  GetDeploymentByTag,
   DropDeployment,
   BuildDeployment,
   BootstrapDeployment,
   ShutdownDeployment,
-  SetDeploymentDomain,
-  UnsetDeploymentDomain,
-  SetDeploymentTag,
-  UnsetDeploymentTag,
-} from './commands/deployments/lifecycle'
+} from './api/v0/deployments/lifecycle'
+
+/* Domains */
+import { SetDeploymentDomain, UnsetDeploymentDomain } from './api/v0/deployments/domains'
 
 /* Event stores */
 import {
   CloneEventStore,
   CreateEventStore,
   DropEventStore,
-  DescribeEventStore,
   ListEventStores,
   GetEventStore,
   ImportEventStore,
   ExportEventStore,
   GetImportUrls,
   GetExportUrls,
-  UploadEventsToS3,
   ClearEventStore,
   FreezeEventStore,
   UnfreezeEventStore,
-} from './commands/event-stores'
+  LinkDeployment,
+  UnlinkDeployment,
+} from './api/v0/event-stores'
+
+import { DescribeEventStore, UploadEventsToS3 } from './api/event-stores'
 
 /* Envs */
-import { UpdateEnvironmentVariables, ListEnvironmentVariables } from './commands/deployments/envs'
+import { UpdateEnvironmentVariables } from './api/envs'
+import { ListEnvironmentVariables } from './api/v0/deployments/envs'
 
 /* Cognito */
 import {
@@ -68,30 +64,29 @@ import {
   CreateUser,
   DropUser,
   ListUsers,
-} from './commands/cognito'
+} from './api/cognito'
 
 /* Domains */
 import {
   CreateDomain,
   DropDomain,
-  GetDomain,
   ListDomains,
   ReleaseDomain,
-  /* Domain users */
-  AddDomainUser,
-  RemoveDomainUser,
-  SetDomainUsers,
   /* Domain verify */
   VerifyDomain,
   GetVerificationCode,
-  /* Domain Virtual hosts */
-  SetVirtualHost,
-  UnsetVirtualHost,
-  ListVirtualHosts,
-} from './commands/domains'
+} from './api/v0/domains'
+
+import { GetDomain } from './api/domains'
+
+/* Domain users */
+import { AddDomainUser, RemoveDomainUser, SetDomainUsers } from './api/domain-users'
+
+/* Domain Virtual hosts */
+import { SetVirtualHost, UnsetVirtualHost, ListVirtualHosts } from './api/domain-virtual-hosts'
 
 /* DNS */
-import { CreateDnsRecord, DeleteDnsRecord, ListDnsRecords } from './commands/dns'
+import { CreateDnsRecord, DeleteDnsRecord, ListDnsRecords } from './api/dns'
 
 /* Tracing */
 import {
@@ -100,22 +95,18 @@ import {
   GetSummaries,
   GetTracingDetails,
   GetTracingStatus,
-} from './commands/deployments/tracing'
+} from './api/v0/deployments/tracing'
 
 /* Logs */
-import { EnableLogs, DisableLogs, GetLogs, RemoveLogs } from './commands/deployments/logs'
+import { EnableLogs, DisableLogs, GetLogs, RemoveLogs } from './api/v0/deployments/logs'
 
 /* Certificates */
-import {
-  EnsureCertificate,
-  DropCertificate,
-  GetCertificateById,
-  ListCertificates,
-  GetCertificateByDomainName,
-} from './commands/certificates'
+import { EnsureCertificate, DropCertificate, ListCertificates } from './api/v0/certificates'
+
+import { GetCertificateById, GetCertificateByDomainName } from './api/certificates'
 
 /* Install / Uninstall  */
-import { InstallStageResources, UninstallStageResources } from './commands/stage-resources'
+import { InstallStageResources, UninstallStageResources } from './api/stage-resources'
 
 import {
   InstallAssetsBucket,
@@ -125,18 +116,13 @@ import {
   UninstallVersionResources,
   GetAssetsStageBucketUploadSignedUrls,
   GetAssetsVersionBucketUploadSignedUrls,
-} from './commands/version-resources'
+} from './api/version-resources'
 
-import {
-  GetClientAppConfig,
-  Describe,
-  ListVersions,
-  EnsureRdsUser,
-  DescribeExecution,
-} from './commands/cloud'
+import { GetClientAppConfig, ListVersions, DescribeExecution } from './api/v0/cloud'
 
-import { DescribeRDSClusters } from './commands/rds'
+import { DescribeRDSClusters, EnsureRdsUser } from './api/rds'
 
+// TODO remove
 export type InstallerLambdaEvent =
   | GetClientAppConfig['Event']
   | InstallStageResources['Event']
@@ -148,7 +134,6 @@ export type InstallerLambdaEvent =
   | UninstallAssetsBucket['Event']
   | GetAssetsStageBucketUploadSignedUrls['Event']
   | GetAssetsVersionBucketUploadSignedUrls['Event']
-  | Describe['Event']
   | EnsureCertificate['Event']
   | DropCertificate['Event']
   | GetCertificateById['Event']
@@ -190,8 +175,6 @@ export type InstallerLambdaEvent =
   | UnsetDeploymentDomain['Event']
   | BuildDeployment['Event']
   | DropDeployment['Event']
-  | GetDeploymentByApplicationName['Event']
-  | GetDeploymentByTag['Event']
   | ListEventStores['Event']
   | GetEventStore['Event']
   | EnsureRdsUser['Event']
@@ -202,8 +185,6 @@ export type InstallerLambdaEvent =
   | CreateDnsRecord['Event']
   | DeleteDnsRecord['Event']
   | ListDnsRecords['Event']
-  | SetDeploymentTag['Event']
-  | UnsetDeploymentTag['Event']
   | DescribeExecution['Event']
   | DescribeRDSClusters['Event']
   /* Factory */

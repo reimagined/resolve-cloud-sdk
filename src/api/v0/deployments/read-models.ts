@@ -1,11 +1,106 @@
 import * as t from 'io-ts'
-import { FactoryEventNames } from '../../constants'
-import { defineSchema, ExtractSchemaTypes, RDSUserSchema } from '../../schemas'
+
+import { FactoryEventNames } from '../../../constants'
+import { defineSchema, ExtractSchemaTypes, RDSUserSchema } from '../../../schemas'
+
+const Namespace = 'Deployments / Read models'
+
+/* PauseReadModel */
+
+export const PauseReadModelSchema = defineSchema({
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/read-models/:readModelName/pause',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.pauseReadModel),
+    payload: t.type({
+      version: t.string,
+      deploymentId: t.string,
+      userId: t.string,
+      eventListener: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
+    params: { deploymentId, readModelName },
+    body: {},
+    query: {},
+  }),
+})
+
+export type PauseReadModel = ExtractSchemaTypes<typeof PauseReadModelSchema>
+
+/* ResetReadModel */
+
+export const ResetReadModelSchema = defineSchema({
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/read-models/:readModelName/reset',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.resetReadModel),
+    payload: t.type({
+      version: t.string,
+      deploymentId: t.string,
+      userId: t.string,
+      eventListener: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
+    params: { deploymentId, readModelName },
+    body: {},
+    query: {},
+  }),
+})
+
+export type ResetReadModel = ExtractSchemaTypes<typeof ResetReadModelSchema>
+
+/* ResumeReadModel */
+
+export const ResumeReadModelSchema = defineSchema({
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/read-models/:readModelName/resume',
+  Method: 'PATCH',
+  Mode: 'SYNC',
+  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
+  Body: t.type({}),
+  Query: t.type({}),
+  Event: t.type({
+    name: t.literal(FactoryEventNames.resumeReadModel),
+    payload: t.type({
+      version: t.string,
+      deploymentId: t.string,
+      userId: t.string,
+      eventListener: t.string,
+    }),
+  }),
+  Result: t.void,
+  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
+    params: { deploymentId, readModelName },
+    body: {},
+    query: {},
+  }),
+})
+
+export type ResumeReadModel = ExtractSchemaTypes<typeof ResumeReadModelSchema>
 
 /* ListReadModels */
 
 export const ListReadModelsSchema = defineSchema({
-  Path: '/deployments/:deploymentId/read-models',
+  Namespace,
+  Description: '',
+  Path: '/v0/deployments/:deploymentId/read-models',
   Method: 'GET',
   Mode: 'ASYNC',
   Params: t.type({ deploymentId: t.string }),
@@ -43,90 +138,6 @@ export const ListReadModelsSchema = defineSchema({
 
 export type ListReadModels = ExtractSchemaTypes<typeof ListReadModelsSchema>
 
-/* PauseReadModel */
-
-export const PauseReadModelSchema = defineSchema({
-  Path: '/deployments/:deploymentId/read-models/:readModelName/pause',
-  Method: 'PATCH',
-  Mode: 'SYNC',
-  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
-  Body: t.type({}),
-  Query: t.type({}),
-  Event: t.type({
-    name: t.literal(FactoryEventNames.pauseReadModel),
-    payload: t.type({
-      version: t.string,
-      deploymentId: t.string,
-      userId: t.string,
-      eventListener: t.string,
-    }),
-  }),
-  Result: t.void,
-  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
-    params: { deploymentId, readModelName },
-    body: {},
-    query: {},
-  }),
-})
-
-export type PauseReadModel = ExtractSchemaTypes<typeof PauseReadModelSchema>
-
-/* ResetReadModel */
-
-export const ResetReadModelSchema = defineSchema({
-  Path: '/deployments/:deploymentId/read-models/:readModelName/reset',
-  Method: 'PATCH',
-  Mode: 'SYNC',
-  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
-  Body: t.type({}),
-  Query: t.type({}),
-  Event: t.type({
-    name: t.literal(FactoryEventNames.resetReadModel),
-    payload: t.type({
-      version: t.string,
-      deploymentId: t.string,
-      userId: t.string,
-      eventListener: t.string,
-    }),
-  }),
-  Result: t.void,
-  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
-    params: { deploymentId, readModelName },
-    body: {},
-    query: {},
-  }),
-})
-
-export type ResetReadModel = ExtractSchemaTypes<typeof ResetReadModelSchema>
-
-/* ResumeReadModel */
-
-export const ResumeReadModelSchema = defineSchema({
-  Path: '/deployments/:deploymentId/read-models/:readModelName/resume',
-  Method: 'PATCH',
-  Mode: 'SYNC',
-  Params: t.type({ deploymentId: t.string, readModelName: t.string }),
-  Body: t.type({}),
-  Query: t.type({}),
-  Event: t.type({
-    name: t.literal(FactoryEventNames.resumeReadModel),
-    payload: t.type({
-      version: t.string,
-      deploymentId: t.string,
-      userId: t.string,
-      eventListener: t.string,
-    }),
-  }),
-  Result: t.void,
-  ArgumentsTransformer: ({ deploymentId, readModelName }) => ({
-    params: { deploymentId, readModelName },
-    body: {},
-    query: {},
-  }),
-})
-
-export type ResumeReadModel = ExtractSchemaTypes<typeof ResumeReadModelSchema>
-
 /* CreateReadModel */
 
 export const CreateReadModelSchema = defineSchema({
@@ -138,6 +149,10 @@ export const CreateReadModelSchema = defineSchema({
       user: RDSUserSchema,
       readModelsClusterArn: t.string,
       postgresAdminSecretArn: t.string,
+      readModelsClusterEndpoint: t.string,
+      readModelsClusterPort: t.number,
+      postgresAdminUsername: t.string,
+      postgresAdminPassword: t.string,
     }),
   }),
   Result: t.type({
@@ -158,6 +173,10 @@ export const DropReadModelSchema = defineSchema({
       user: RDSUserSchema,
       readModelsClusterArn: t.string,
       postgresAdminSecretArn: t.string,
+      readModelsClusterEndpoint: t.string,
+      readModelsClusterPort: t.number,
+      postgresAdminUsername: t.string,
+      postgresAdminPassword: t.string,
     }),
   }),
   Result: t.void,

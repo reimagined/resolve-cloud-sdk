@@ -1,549 +1,175 @@
-## HEAD: /
+# API
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+- Deployments
+  - [createDeployment](#createdeployment)
+  - [dropDeployment](#dropdeployment)
+  - [listDeployments](#listdeployments)
+  - [describeDeployment](#describedeployment)
+  - [bootstrapDeployment](#bootstrapdeployment)
+  - [shutdownDeployment](#shutdowndeployment)
+  - [buildDeployment](#builddeployment)
+  - [getDeploymentUploadSignedUrl](#getdeploymentuploadsignedurl)
+  - Domains
+    - [setDeploymentDomain](#setdeploymentdomain)
+    - [unsetDeploymentDomain](#unsetdeploymentdomain)
+  - Environment variables
+    - [setEnvironmentVariables](#setenvironmentvariables)
+    - [removeEnvironmentVariables](#removeenvironmentvariables)
+    - [listEnvironmentVariables](#listenvironmentvariables)
+  - Logs
+    - [enableLogs](#enablelogs)
+    - [disableLogs](#disablelogs)
+    - [getLogs](#getlogs)
+    - [removeLogs](#removelogs)
+  - Read models
+    - [pauseReadModel](#pausereadmodel)
+    - [resetReadModel](#resetreadmodel)
+    - [resumeReadModel](#resumereadmodel)
+    - [listReadModels](#listreadmodels)
+  - Sagas
+    - [pauseSaga](#pausesaga)
+    - [resetSaga](#resetsaga)
+    - [resumeSaga](#resumesaga)
+    - [listSagas](#listsagas)
+    - Properties
+      - [setSagaProperty](#setsagaproperty)
+      - [deleteSagaProperty](#deletesagaproperty)
+      - [getSagaProperty](#getsagaproperty)
+      - [listSagaProperties](#listsagaproperties)
+  - Tracing
+    - [disableTracing](#disabletracing)
+    - [enableTracing](#enabletracing)
+    - [getSummaries](#getsummaries)
+    - [getTracingDetails](#gettracingdetails)
+    - [getTracingStatus](#gettracingstatus)
+- Certificates
+  - [ensureCertificate](#ensurecertificate)
+  - [dropCertificate](#dropcertificate)
+  - [listCertificates](#listcertificates)
+- System
+  - [heartbeat](#heartbeat)
+  - [listVersions](#listversions)
+  - [describeExecution](#describeexecution)
+  - [getClientAppConfig](#getclientappconfig)
+- Domains
+  - [createDomain](#createdomain)
+  - [dropDomain](#dropdomain)
+  - [releaseDomain](#releasedomain)
+  - [listDomains](#listdomains)
+  - [verifyDomain](#verifydomain)
+  - [getVerificationCode](#getverificationcode)
+- Event stores
+  - [createEventStore](#createeventstore)
+  - [dropEventStore](#dropeventstore)
+  - [getEventStore](#geteventstore)
+  - [listEventStores](#listeventstores)
+  - [cloneEventStore](#cloneeventstore)
+  - [clearEventStore](#cleareventstore)
+  - [freezeEventStore](#freezeeventstore)
+  - [unfreezeEventStore](#unfreezeeventstore)
+  - [linkDeployment](#linkdeployment)
+  - [unlinkDeployment](#unlinkdeployment)
+  - [importEventStore](#importeventstore)
+  - [exportEventStore](#exporteventstore)
+  - [getImportUrls](#getimporturls)
+  - [getExportUrls](#getexporturls)
 
-```ts
-{}
+---
+
+## setDeploymentDomain
+
+Deserunt minim elit enim amet consectetur ipsum.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/domain
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "heartbeat"
-  payload: void
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PUT: /certificates
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{
-  certificate: string
-  key: string
-} & Partial<{
-  id: string
-  chain: string
-}>
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "ensureCertificate"
-  payload: {
-    userId: string
-    certificate: string
-    key: string
-  } & Partial<{
-    certificateId: string
-    chain: string
-  }>
-}
-```
-
-</td><td>
-
-```ts
-string
-```
-
-</td></tr></table>
-
-## GET: /certificates
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "listCertificates"
-  payload: { userId: string }
-}
-```
-
-</td><td>
-
-```ts
-Array<
-  {
-    CertificateId: string
-    AdditionalNames: Array<string>
-    ResourceARN: string
-  } & Partial<{
-    DomainName: string
-    ImportedAt: string
-    Issuer: string
-    NotBefore: string
-    NotAfter: string
-  }>
->
-```
-
-</td></tr></table>
-
-## DELETE: /certificates/:certificateId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "dropCertificate"
-  payload: {
-    userId: string
-    certificateId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## GET: /client-app-config
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getClientAppConfig"
-  payload: {}
-}
-```
-
-</td><td>
-
-```ts
-{
-  ClientId: string
-  UserPoolId: string
-}
-```
-
-</td></tr></table>
-
-## POST: /deployments
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{
-  applicationName: string
-  version: string
-  eventStoreId: string
-} & Partial<{
-  eventStoreDatabaseName: string
-  eventBusLambdaArn: string
-  domain: string
-  deploymentTag: string
-}>
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "createDeployment"
-  payload: {
-    userId: string
-    applicationName: string
-    version: string
-    eventStoreId: string
-  } & Partial<{
-    domain: string
-    deploymentTag: string
-  }>
-}
-```
-
-</td><td>
-
-```ts
-{
-  deploymentId: string
-  applicationName: string
-  version: string
-  domainName: string
-} & Partial<{
-  eventStoreId: string
-  deploymentTag: string
-}>
-```
-
-</td></tr></table>
-
-## GET: /deployments
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-Partial<{
-  applicationName: string
-  deploymentTag: string
-}>
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "listDeployments"
-  payload: {
-    userId: string
-  } & Partial<{
-    applicationName: string
-  }>
-}
-```
-
-</td><td>
-
-```ts
-Array<
-  {
-    deploymentId: string
-    applicationName: string
-    version: string
-    domainName: string
-  } & Partial<{
-    eventStoreId: string
-    deploymentTag: string
-  }>
->
-```
-
-</td></tr></table>
-
-## DELETE: /deployments/:deploymentId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-Partial<{
-  withEventStore: boolean
-}>
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "dropDeployment"
-  payload: {
-    userId: string
-    deploymentId: string
-  } & Partial<{
-    withEventStore: boolean
-  }>
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "describeDeployment"
-  payload: {
-    userId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-{
-  deploymentId: string
-  applicationName: string
-  version: string
-  domainName: string
-} & Partial<{
-  eventStoreId: string
-  deploymentTag: string
-}>
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/bootstrap
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "bootstrapDeployment"
-  payload: {
-    version: string
-    userId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PUT: /deployments/:deploymentId/domain
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
+#### Body
 
 ```ts
 { domain: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "setDeploymentDomain"
-  payload: {
-    userId: string
-    deploymentId: string
-    domain: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## DELETE: /deployments/:deploymentId/domain
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## unsetDeploymentDomain
 
-```ts
-{}
+Laborum laboris aliqua sunt minim consequat eiusmod Lorem incididunt nisi ea magna.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/domain
 ```
 
-</td><td>
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
 
 ```ts
 { domain: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "unsetDeploymentDomain"
-  payload: {
-    userId: string
-    deploymentId: string
-    domain: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PUT: /deployments/:deploymentId/environment
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## setEnvironmentVariables
 
-```ts
-{}
+Mollit cillum eiusmod sint ipsum laboris amet exercitation fugiat aliquip.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
 ```
 
-</td><td>
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
 
 ```ts
 {
@@ -551,43 +177,37 @@ void
 }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "updateEnvironmentVariables"
-  payload: {
-    deploymentId: string
-    userId: string
-    variables: {
-      [K in string]: string | null
-    }
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## DELETE: /deployments/:deploymentId/environment
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## removeEnvironmentVariables
 
-```ts
-{}
+Velit voluptate sunt laboris cupidatat ea est culpa qui ex nostrud occaecat deserunt non.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
 ```
 
-</td><td>
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
 
 ```ts
 {
@@ -595,209 +215,352 @@ void
 }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "updateEnvironmentVariables"
-  payload: {
-    deploymentId: string
-    userId: string
-    variables: {
-      [K in string]: string | null
-    }
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/environment
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listEnvironmentVariables
 
-```ts
-{}
+Deserunt commodo amet ipsum sunt ex do excepteur cupidatat.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "listEnvironmentVariables"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 { [K in string]: string }
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/logs
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## createDeployment
+
+Do ex amet occaecat aliqua elit.
+
+#### Method
+
+```
+POST
+```
+#### Path
+
+```
+/v0/deployments
+```
+
+#### Body
+
+```ts
+{
+  applicationName: string
+  version: string
+  eventStoreId: string
+} & Partial<{ domain: string }>
+```
+
+#### Result
+
+```ts
+{
+  deploymentId: string
+  applicationName: string
+  version: string
+  domains: Array<string>
+} & Partial<{ eventStoreId: string }>
+```
+
+
+---
+
+## dropDeployment
+
+Lorem sit ullamco fugiat consectetur laborum aliquip veniam sint non.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
 
 ```ts
 Partial<{
-  startTime: string
-  endTime: string
-  filterPattern: string
-  streamLimit: string
+  withEventStore: boolean
 }>
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getLogs"
-  payload: {
-    deploymentId: string
-    userId: string
-  } & Partial<{
-    streamLimit: number
-    startTime: number
-    endTime: number
-    filterPattern: string
-  }>
-}
-```
-
-</td><td>
-
-```ts
-string
-```
-
-</td></tr></table>
-
-## DELETE: /deployments/:deploymentId/logs
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "removeLogs"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/logs/disable
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listDeployments
 
-```ts
-{}
+Irure sit sit sunt ullamco qui.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments
 ```
 
-</td><td>
+#### Query
 
 ```ts
-{}
+Partial<{
+  applicationName: string
+}>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
+
+```ts
+Array<
+  {
+    deploymentId: string
+    applicationName: string
+    version: string
+    domains: Array<string>
+  } & Partial<{ eventStoreId: string }>
+>
+```
+
+
+---
+
+## describeDeployment
+
+Magna minim consectetur deserunt cupidatat nostrud est nostrud ex id commodo in.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
 
 ```ts
 {
-  name: "disableLogs"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
+  deploymentId: string
+  applicationName: string
+  version: string
+  domains: Array<string>
+} & Partial<{ eventStoreId: string }>
 ```
 
-</td><td>
+
+---
+
+## bootstrapDeployment
+
+Exercitation ipsum aliqua nulla amet mollit dolor laboris sunt exercitation ea do in magna aliquip.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/bootstrap
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/logs/enable
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## shutdownDeployment
 
-```ts
-{}
+Officia tempor consectetur exercitation commodo.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/shutdown
 ```
 
-</td><td>
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## buildDeployment
+
+Cillum incididunt irure commodo fugiat.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/upload
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+Partial<{
+  npmRegistry: string
+}>
+```
+
+#### Result
+
+```ts
+{
+  installLog: string
+  files: Array<string>
+}
+```
+
+
+---
+
+## getDeploymentUploadSignedUrl
+
+Qui ad minim ex ea mollit ut do.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/upload
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+{
+  codeUploadUrl: string
+  staticUploadUrl: string
+}
+```
+
+
+---
+
+## enableLogs
+
+Esse quis ut amet cillum eu qui laboris irure mollit irure fugiat nulla ullamco eiusmod.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs/enable
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
 
 ```ts
 Partial<{
@@ -812,71 +575,237 @@ Partial<{
 }>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "enableLogs"
-  payload: {
-    deploymentId: string
-    userId: string
-  } & Partial<{
-    logLevel:
-      | "log"
-      | "error"
-      | "warn"
-      | "debug"
-      | "info"
-      | "verbose"
-    scope: string
-  }>
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/read-models
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## disableLogs
 
-```ts
-{}
+Magna sit Lorem id tempor et commodo duis.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs/disable
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## getLogs
+
+Laborum tempor occaecat in aliquip veniam tempor ex laborum.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Query
+
+```ts
+Partial<{
+  startTime: string
+  endTime: string
+  filterPattern: string
+  streamLimit: string
+}>
+```
+
+#### Result
+
+```ts
+string
+```
+
+
+---
+
+## removeLogs
+
+Ullamco proident ullamco reprehenderit nisi cupidatat quis consequat pariatur elit ex sunt laboris excepteur consectetur.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## pauseReadModel
+
+Consectetur proident officia elit exercitation nostrud adipisicing est in laborum ex esse excepteur.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/pause
+```
+
+#### Params
 
 ```ts
 {
-  name: "listReadModels"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-  }
+  deploymentId: string
+  readModelName: string
 }
 ```
 
-</td><td>
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resetReadModel
+
+Voluptate quis et laborum tempor laboris reprehenderit sint deserunt pariatur.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/reset
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  readModelName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resumeReadModel
+
+Quis ex ex non ullamco voluptate cillum proident cillum consequat sunt amet amet Lorem do.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/resume
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  readModelName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## listReadModels
+
+Enim aute laboris reprehenderit pariatur aliquip nisi et dolore proident qui.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
 
 ```ts
 Array<{
@@ -896,237 +825,34 @@ Array<{
 }>
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/read-models/:readModelName/pause
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## setSagaProperty
 
-```ts
-{}
+Magna enim voluptate commodo ut consequat duis voluptate anim eiusmod in voluptate consequat elit aute.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Params
 
 ```ts
 {
-  name: "pauseReadModel"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
+  deploymentId: string
+  sagaName: string
 }
 ```
 
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/read-models/:readModelName/reset
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "resetReadModel"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/read-models/:readModelName/resume
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "resumeReadModel"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId/sagas
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "listSagas"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-Array<{
-  name: string
-  status: string | null
-  successEvent:
-    | { [K in string]: any }
-    | null
-  failedEvent:
-    | { [K in string]: any }
-    | null
-  errors: Array<{
-    name: string
-    message: string
-    stack: string
-  }>
-}>
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/sagas/:sagaName/pause
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "pauseSaga"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-any
-```
-
-</td></tr></table>
-
-## PUT: /deployments/:deploymentId/sagas/:sagaName/properties
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
+#### Body
 
 ```ts
 {
@@ -1135,523 +861,341 @@ any
 }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "setSagaProperty"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-    key: string
-    value: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/sagas/:sagaName/properties
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## deleteSagaProperty
 
-```ts
-{}
+Ut id cillum magna voluptate ex proident nostrud laboris fugiat adipisicing tempor ipsum.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Params
 
 ```ts
 {
-  name: "listSagaProperties"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
+  deploymentId: string
+  sagaName: string
+  key: string
 }
 ```
 
-</td><td>
-
-```ts
-any
-```
-
-</td></tr></table>
-
-## DELETE: /deployments/:deploymentId/sagas/:sagaName/properties/:key
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "deleteSagaProperty"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-    key: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/sagas/:sagaName/properties/:key
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getSagaProperty
 
-```ts
-{}
+Pariatur ex sint excepteur ipsum.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Params
 
 ```ts
 {
-  name: "getSagaProperty"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-    key: string
-  }
+  deploymentId: string
+  sagaName: string
+  key: string
 }
 ```
 
-</td><td>
+#### Result
 
 ```ts
 { [K in string]: any }
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/sagas/:sagaName/reset
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listSagaProperties
 
-```ts
-{}
+Eiusmod esse nostrud veniam ad pariatur.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Params
 
 ```ts
 {
-  name: "resetSaga"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
+  deploymentId: string
+  sagaName: string
 }
 ```
 
-</td><td>
+#### Result
+
+```ts
+any
+```
+
+
+---
+
+## pauseSaga
+
+Minim velit fugiat consequat consectetur.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/pause
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
+
+```ts
+any
+```
+
+
+---
+
+## resetSaga
+
+Nulla irure dolor officia commodo commodo.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/reset
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/sagas/:sagaName/resume
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## resumeSaga
 
-```ts
-{}
+Dolor adipisicing aute sunt exercitation minim.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/resume
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Params
 
 ```ts
 {
-  name: "resumeSaga"
-  payload: {
-    version: string
-    deploymentId: string
-    userId: string
-    eventListener: string
-  }
+  deploymentId: string
+  sagaName: string
 }
 ```
 
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/shutdown
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listSagas
 
-```ts
-{}
+Ipsum eu sit pariatur exercitation exercitation ullamco dolor laboris ad.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
 
 ```ts
-{
-  name: "shutdownDeployment"
-  payload: {
-    version: string
-    userId: string
-    deploymentId: string
-  }
-}
+Array<{
+  name: string
+  status: string | null
+  successEvent:
+    | { [K in string]: any }
+    | null
+  failedEvent:
+    | { [K in string]: any }
+    | null
+  errors: Array<{
+    name: string
+    message: string
+    stack: string
+  }>
+}>
 ```
 
-</td><td>
+
+---
+
+## disableTracing
+
+Fugiat ad consectetur occaecat adipisicing culpa proident ea in duis ad cillum mollit.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/disable
+```
+
+#### Params
 
 ```ts
-void
+{ deploymentId: string }
 ```
 
-</td></tr></table>
-
-## PUT: /deployments/:deploymentId/tag
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{ deploymentTag: string }
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "setDeploymentTag"
-  payload: {
-    userId: string
-    deploymentId: string
-    deploymentTag: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## DELETE: /deployments/:deploymentId/tag
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## enableTracing
 
-```ts
-{}
+Irure eu nisi nulla voluptate laboris laborum sint do pariatur do adipisicing ad.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/enable
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "unsetDeploymentTag"
-  payload: {
-    userId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /deployments/:deploymentId/tracing/details
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getSummaries
 
-```ts
-{ traceIds: string }
+Irure irure incididunt adipisicing non voluptate minim.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/summary
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getTracingDetails"
-  payload: {
-    deploymentId: string
-    userId: string
-    traceIds: Array<string>
-  }
-}
-```
-
-</td><td>
-
-```ts
-Array<
-  { [K in string]: any }
->
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/tracing/disable
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "disableTracing"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PATCH: /deployments/:deploymentId/tracing/enable
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "enableTracing"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId/tracing/status
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getTracingStatus"
-  payload: {
-    deploymentId: string
-    userId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-"enabled" | "disabled"
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId/tracing/summary
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+#### Query
 
 ```ts
 {
@@ -1662,242 +1206,329 @@ void
 }>
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getSummaries"
-  payload: {
-    deploymentId: string
-    userId: string
-    startTime: number
-    endTime: number
-  } & Partial<{
-    filterExpression: string
-  }>
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 Array<
   Partial<{
-    Id: string
-    ResponseTime: number
-    Http: Partial<{
-      HttpURL: string
-      HttpStatus: number
-      HttpMethod: string
-      UserAgent: string
-      ClientIp: string
+    id: string
+    responseTime: number
+    http: Partial<{
+      httpURL: string
+      httpStatus: number
+      httpMethod: string
+      userAgent: string
+      clientIp: string
     }>
   }> &
     { [K in string]: any }
 >
 ```
 
-</td></tr></table>
 
-## PATCH: /deployments/:deploymentId/upload
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getTracingDetails
 
-```ts
-{}
+Duis aliquip nostrud nostrud exercitation enim pariatur sunt elit mollit ut sint.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/details
 ```
 
-</td><td>
+#### Params
 
 ```ts
-Partial<{
-  npmRegistry: string
+{ deploymentId: string }
+```
+
+#### Query
+
+```ts
+{
+  traceIds: Array<string>
+}
+```
+
+#### Result
+
+```ts
+Array<
+  { [K in string]: any }
+>
+```
+
+
+---
+
+## getTracingStatus
+
+Reprehenderit ad ipsum Lorem elit qui velit est duis do culpa ipsum mollit.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/status
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+"enabled" | "disabled"
+```
+
+
+---
+
+## ensureCertificate
+
+Amet nulla nisi nulla veniam qui commodo non exercitation Lorem nulla elit.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/certificates
+```
+
+#### Body
+
+```ts
+{
+  certificate: string
+  key: string
+} & Partial<{
+  certificateId: string
+  chain: string
 }>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
+
+```ts
+string
+```
+
+
+---
+
+## dropCertificate
+
+Quis nisi dolor sit tempor reprehenderit ullamco esse deserunt in nostrud esse.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/certificates/:certificateId
+```
+
+#### Params
+
+```ts
+{ certificateId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## listCertificates
+
+Adipisicing voluptate nostrud velit ea.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/certificates
+```
+
+#### Result
+
+```ts
+Array<
+  {
+    certificateId: string
+    additionalNames: Array<string>
+    resourceARN: string
+  } & Partial<{
+    domainName: string
+    importedAt: string
+    issuer: string
+    notBefore: string
+    notAfter: string
+  }>
+>
+```
+
+
+---
+
+## heartbeat
+
+Ullamco officia cupidatat reprehenderit irure anim voluptate pariatur proident pariatur.
+
+#### Method
+
+```
+HEAD
+```
+#### Path
+
+```
+/v0/
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## listVersions
+
+Commodo duis voluptate non occaecat mollit cillum sit tempor nostrud minim incididunt culpa.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/runtimes
+```
+
+#### Result
+
+```ts
+Array<string>
+```
+
+
+---
+
+## describeExecution
+
+Ut deserunt amet nostrud elit adipisicing consectetur nostrud sit fugiat ipsum esse.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/describe-execution/:executionId
+```
+
+#### Params
+
+```ts
+{ executionId: string }
+```
+
+#### Result
 
 ```ts
 {
-  name: "buildDeployment"
-  payload: {
-    userId: string
-    deploymentId: string
-  } & Partial<{ npmRegistry: string }>
-}
-```
-
-</td><td>
-
-```ts
-{
-  installLog: string
-  files: Array<string>
-}
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId/upload
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getDeploymentByApplicationName"
-  payload: {
-    userId: string
-    applicationName: string
-  } & Partial<{ version: string }>
-}
-```
-
-</td><td>
-
-```ts
-type Schema =
-  | ({
-      deploymentId: string
-      applicationName: string
-      version: string
-      domainName: string
-    } & Partial<{
-      eventStoreId: string
-      deploymentTag: string
-    }>)
-  | null
-```
-
-</td></tr></table>
-
-## GET: /deployments/:deploymentId/upload
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getDeploymentUploadSignedUrl"
-  payload: {
-    userId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-{
-  codeUploadUrl: string
-  staticUploadUrl: string
-}
-```
-
-</td></tr></table>
-
-## GET: /describe-execution/:executionId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "describeExecution"
-  payload: { executionId: string }
-}
-```
-
-</td><td>
-
-```ts
-{
-  Status:
+  status:
     | "RUNNING"
     | "SUCCEEDED"
     | "FAILED"
     | "TIMED_OUT"
     | "ABORTED"
-  Output: any
+  output: any
 }
 ```
 
-</td></tr></table>
 
-## POST: /domains
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getClientAppConfig
 
-```ts
-{}
+Duis sint elit exercitation consectetur quis ut id mollit mollit incididunt velit.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/client-app-config
 ```
 
-</td><td>
+#### Result
+
+```ts
+{
+  clientId: string
+  userPoolId: string
+}
+```
+
+
+---
+
+## createDomain
+
+Eiusmod fugiat elit in tempor do proident quis est eu.
+
+#### Method
+
+```
+POST
+```
+#### Path
+
+```
+/v0/domains
+```
+
+#### Body
 
 ```ts
 {
@@ -1906,575 +1537,271 @@ type Schema =
 } & Partial<{ domainId: string }>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
 
 ```ts
 {
-  name:
-    | "createStaticDomain"
-    | "createProxyDomain"
-    | "createUploaderDomain"
-  payload: {
-    userId: string
-    certificateId: string
-  } & Partial<{
-    aliases: Array<string>
-    domainId: string
-    customName: string
-    users: "*" | Array<string>
-    verification: boolean
-  }>
-}
-```
-
-</td><td>
-
-```ts
-{
-  DomainId: string
-  DomainType:
+  domainId: string
+  domainType:
     | "proxy"
     | "static"
     | "uploader"
-  DomainName: string
-  ResourceARN: string
-  Aliases: Array<string>
-  Verified: boolean
-  Owner: string
-  Users: "*" | Array<string>
-  VerificationCode: string
-  CertificateId: string
+  domainName: string
+  resourceARN: string
+  aliases: Array<string>
+  verified: boolean
+  owner: string
+  users: "*" | Array<string>
+  verificationCode: string
+  certificateId: string
 }
 ```
 
-</td></tr></table>
 
-## GET: /domains
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## dropDomain
 
-```ts
-{}
+Proident tempor minim non tempor pariatur do nostrud exercitation minim ullamco amet cupidatat exercitation ea.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/domains/:domainId
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ domainId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
 
 ```ts
-{
-  name: "listDomains"
-  payload: {
-    userId: string
-  } & Partial<{ domain: string }>
-}
+void
 ```
 
-</td><td>
 
-```ts
-Array<{
-  DomainId: string
-  DomainType:
-    | "proxy"
-    | "static"
-    | "uploader"
-  DomainName: string
-  ResourceARN: string
-  Aliases: Array<string>
-  Verified: boolean
-  Owner: string
-  Users: "*" | Array<string>
-  VerificationCode: string
-  CertificateId: string
-}>
+---
+
+## releaseDomain
+
+Ullamco exercitation cillum nostrud pariatur veniam aliquip.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/domains
 ```
 
-</td></tr></table>
-
-## DELETE: /domains
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
+#### Body
 
 ```ts
 { domain: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "releaseDomain"
-  payload: {
-    userId: string
-    domain: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## DELETE: /domains/:domainId
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listDomains
 
-```ts
-{}
+Consectetur eiusmod nostrud et Lorem ad cillum.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/domains
 ```
 
-</td><td>
+#### Result
 
 ```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "dropDomain"
-  payload: {
-    userId: string
-    domainId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## POST: /domains/:domainId/users
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{ userId: string }
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "addDomainUser"
-  payload: {
-    userId: string
-    domainId: string
-    user: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PUT: /domains/:domainId/users
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{
+Array<{
+  domainId: string
+  domainType:
+    | "proxy"
+    | "static"
+    | "uploader"
+  domainName: string
+  resourceARN: string
+  aliases: Array<string>
+  verified: boolean
+  owner: string
   users: "*" | Array<string>
-}
+  verificationCode: string
+  certificateId: string
+}>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+
+---
+
+## verifyDomain
+
+Eu aliqua exercitation et reprehenderit ad sint mollit.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/domains/:domainId/verify
+```
+
+#### Params
 
 ```ts
-{
-  name: "setDomainUsers"
-  payload: {
-    userId: string
-    domainId: string
-    users: "*" | Array<string>
-  }
-}
+{ domainId: string }
 ```
 
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## DELETE: /domains/:domainId/users/:userId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "removeDomainUser"
-  payload: {
-    userId: string
-    domainId: string
-    user: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /domains/:domainId/verification-code
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getVerificationCode
 
-```ts
-{}
+Minim adipisicing sit dolore duis adipisicing occaecat magna.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/domains/:domainId/verification-code
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ domainId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getVerificationCode"
-  payload: {
-    userId: string
-    domainId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 {
-  VerificationCode: string
+  verificationCode: string
 }
 ```
 
-</td></tr></table>
 
-## PATCH: /domains/:domainId/verify
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## createEventStore
 
-```ts
-{}
+Consectetur sit excepteur duis voluptate dolor cillum id dolor ipsum ad amet.
+
+#### Method
+
+```
+POST
+```
+#### Path
+
+```
+/v0/event-stores
 ```
 
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "verifyDomain"
-  payload: {
-    userId: string
-    domainId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## POST: /event-stores
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
+#### Body
 
 ```ts
 { version: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Result
 
 ```ts
-{
-  name: "createEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    assetsBucketName: string
-  }
-}
+{ eventStoreId: string }
 ```
 
-</td><td>
+
+---
+
+## dropEventStore
+
+Adipisicing commodo Lorem exercitation tempor consectetur.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId
+```
+
+#### Params
 
 ```ts
-{
-  eventStoreId: string
-  eventStoreDatabaseName: string
-}
+{ eventStoreId: string }
 ```
 
-</td></tr></table>
-
-## GET: /event-stores
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "listEventStores"
-  payload: {
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-Array<{
-  version: string
-  eventStoreId: string
-  linkedDeployments: Array<string>
-  eventStoreDatabaseName: string
-  events: number | null
-  secrets: number | null
-  modifiedAt: number | null
-  createdAt: number | null
-  isFrozen: boolean | null
-}>
-```
-
-</td></tr></table>
-
-## DELETE: /event-stores/:eventStoreId
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "dropEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /event-stores/:eventStoreId
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## getEventStore
 
-```ts
-{}
+Ut dolor enim ex anim nisi nostrud commodo reprehenderit et magna ad eu magna sunt.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ eventStoreId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "getEventStore"
-  payload: {
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 {
@@ -2491,96 +1818,65 @@ void
 }
 ```
 
-</td></tr></table>
 
-## PATCH: /event-stores/:eventStoreId/clear
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## listEventStores
 
-```ts
-{}
+Aliquip cupidatat fugiat deserunt id et elit.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/event-stores
 ```
 
-</td><td>
+#### Result
 
 ```ts
-{}
+Array<{
+  version: string
+  eventStoreId: string
+  linkedDeployments: Array<string>
+  eventStoreDatabaseName: string
+  events: number | null
+  secrets: number | null
+  modifiedAt: number | null
+  createdAt: number | null
+  isFrozen: boolean | null
+}>
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+
+---
+
+## cloneEventStore
+
+Amet in enim nostrud ad cupidatat officia veniam id.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/clone
+```
+
+#### Params
 
 ```ts
-{
-  name: "clearEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-  }
-}
+{ eventStoreId: string }
 ```
 
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PATCH: /event-stores/:eventStoreId/clone
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
-
-```ts
-{}
-```
-
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "cloneEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    assetsBucketName: string
-    eventStoreId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 {
@@ -2589,231 +1885,315 @@ void
 }
 ```
 
-</td></tr></table>
 
-## PATCH: /event-stores/:eventStoreId/freeze
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## clearEventStore
 
-```ts
-{}
+Consequat ea nisi officia laborum culpa minim sunt.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/clear
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ eventStoreId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "freezeEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /event-stores/:eventStoreId/link
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## freezeEventStore
 
-```ts
-{}
+Ullamco quis excepteur ullamco Lorem velit culpa ad.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/freeze
 ```
 
-</td><td>
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## unfreezeEventStore
+
+Ipsum duis in irure officia laborum.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/unfreeze
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## linkDeployment
+
+In laboris veniam laboris mollit commodo aute esse incididunt ea.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/link
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Body
 
 ```ts
 { deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "linkDeployment"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## PATCH: /event-stores/:eventStoreId/unfreeze
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## unlinkDeployment
 
-```ts
-{}
+Ea nisi dolore adipisicing nostrud sint do.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/unlink
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ eventStoreId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "unfreezeEventStore"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-  }
-}
-```
-
-</td><td>
-
-```ts
-void
-```
-
-</td></tr></table>
-
-## PATCH: /event-stores/:eventStoreId/unlink
-
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
-
-```ts
-{}
-```
-
-</td><td>
+#### Body
 
 ```ts
 { deploymentId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
-
-```ts
-{
-  name: "unlinkDeployment"
-  payload: {
-    version: string
-    user: {
-      userId: string
-      password: string
-      secretName: string
-      secretArn: string
-    }
-    eventStoreClusterArn: string
-    postgresAdminSecretArn: string
-    eventStoreId: string
-    deploymentId: string
-  }
-}
-```
-
-</td><td>
+#### Result
 
 ```ts
 void
 ```
 
-</td></tr></table>
 
-## GET: /runtimes
+---
 
-<table><tr><th align="center"><img width="441" height="1px"><p><small>Query
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Body
-</small></p></th></tr><tr><td>
+## importEventStore
 
-```ts
-{}
+Aliqua reprehenderit deserunt ipsum magna nostrud sit commodo minim cupidatat est et commodo.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/import
 ```
 
-</td><td>
+#### Params
 
 ```ts
-{}
+{ eventStoreId: string }
 ```
 
-</td></tr>
-<tr><th align="center"><img width="441" height="1px"><p><small>Event
-</small></p></th><th align="center"><img width="441" height="1"><p><small>Result
-</small></p></th></tr><tr><td>
+#### Body
+
+```ts
+{ partIndex: number }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## exportEventStore
+
+Aliqua deserunt aliquip non aute nisi laboris in ut.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/export
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Query
+
+```ts
+Partial<{
+  cursor: string
+}>
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## getImportUrls
+
+Excepteur nostrud et pariatur ullamco tempor laborum veniam.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/import
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Query
 
 ```ts
 {
-  name: "listVersions"
-  payload: UnknownRecord
+  eventsPartCount: string
+  secretsPartCount: string
 }
 ```
 
-</td><td>
+#### Result
 
 ```ts
-Array<string>
+{
+  eventsImportUrls: Array<string>
+  secretsImportUrls: Array<string>
+}
 ```
 
-</td></tr></table>
+
+---
+
+## getExportUrls
+
+Laborum Lorem excepteur magna pariatur ipsum esse officia deserunt dolore esse incididunt culpa exercitation non.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/export
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Result
+
+```ts
+{
+  eventsExportUrl: string
+  secretsExportUrl: string
+  statusFileUrl: string
+}
+```
 

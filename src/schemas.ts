@@ -1,7 +1,7 @@
 import * as t from 'io-ts'
 
 import { RequestMethod, RequestMode } from './constants'
-import { BuildCode, DeployStatic } from './commands/builder'
+import { BuildCode, DeployStatic } from './api/builder'
 
 export type LambdaContext = {
   functionName: string
@@ -12,8 +12,8 @@ export type LambdaContext = {
 
 export const VirtualHostsSchema = t.array(
   t.type({
-    VirtualHost: t.string,
-    FunctionArn: t.string,
+    virtualHost: t.string,
+    functionArn: t.string,
   })
 )
 export type VirtualHosts = t.TypeOf<typeof VirtualHostsSchema>
@@ -29,16 +29,16 @@ export const DomainTypeSchema = t.union([
 export type DomainType = t.TypeOf<typeof DomainTypeSchema>
 
 export const DomainSchema = t.type({
-  DomainId: t.string,
-  DomainType: DomainTypeSchema,
-  DomainName: t.string,
-  ResourceARN: t.string,
-  Aliases: t.array(t.string),
-  Verified: t.boolean,
-  Owner: t.string,
-  Users: DomainUsersSchema,
-  VerificationCode: t.string,
-  CertificateId: t.string,
+  domainId: t.string,
+  domainType: DomainTypeSchema,
+  domainName: t.string,
+  resourceARN: t.string,
+  aliases: t.array(t.string),
+  verified: t.boolean,
+  owner: t.string,
+  users: DomainUsersSchema,
+  verificationCode: t.string,
+  certificateId: t.string,
 })
 export type Domain = t.TypeOf<typeof DomainSchema>
 
@@ -50,22 +50,21 @@ export const DeploymentSchema = t.intersection([
     deploymentId: t.string,
     applicationName: t.string,
     version: t.string,
-    domainName: t.string,
+    domains: t.array(t.string),
   }),
   t.partial({
     eventStoreId: t.string,
-    deploymentTag: t.string,
   }),
 ])
 
 export type Deployment = t.TypeOf<typeof DeploymentSchema>
 
 export const CognitoUserSchema = t.type({
-  UserId: t.string,
-  Email: t.string,
-  Enabled: t.boolean,
-  UserStatus: t.string,
-  IsAdmin: t.boolean,
+  userId: t.string,
+  email: t.string,
+  enabled: t.boolean,
+  userStatus: t.string,
+  isAdmin: t.boolean,
 })
 
 export type CognitoUser = t.TypeOf<typeof CognitoUserSchema>
@@ -118,16 +117,16 @@ export type ClientApiResult = t.TypeOf<typeof ClientApiResultSchema>
 
 export const CertificateSchema = t.intersection([
   t.type({
-    CertificateId: t.string,
-    AdditionalNames: t.array(t.string),
-    ResourceARN: t.string,
+    certificateId: t.string,
+    additionalNames: t.array(t.string),
+    resourceARN: t.string,
   }),
   t.partial({
-    DomainName: t.string,
-    ImportedAt: t.string,
-    Issuer: t.string,
-    NotBefore: t.string,
-    NotAfter: t.string,
+    domainName: t.string,
+    importedAt: t.string,
+    issuer: t.string,
+    notBefore: t.string,
+    notAfter: t.string,
   }),
 ])
 
@@ -149,12 +148,25 @@ export declare type RDSUser = t.TypeOf<typeof RDSUserSchema>
 export const defineSchema = <
   EventSchema extends t.Any,
   ResultSchema extends t.Any,
-  Path extends string = never,
+  Namespace extends string | unknown = unknown,
+  Description extends string | unknown = unknown,
+  Path extends string | unknown = unknown,
   Method extends RequestMethod = never,
   Mode extends RequestMode = never,
-  ParamsSchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never,
-  BodySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never,
-  QuerySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> = never
+  ParamsSchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> | unknown = unknown,
+  BodySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> | unknown = unknown,
+  QuerySchema extends t.TypeC<any> | t.PartialC<any> | t.IntersectionC<any> | unknown = unknown,
+  ArgumentsTransformerSchema = ParamsSchema extends t.Any
+    ? BodySchema extends t.Any
+      ? QuerySchema extends t.Any
+        ? (args: t.TypeOf<ParamsSchema> & t.TypeOf<BodySchema> & t.TypeOf<QuerySchema>) => {
+            params: t.TypeOf<ParamsSchema>
+            body: t.TypeOf<BodySchema>
+            query: t.TypeOf<QuerySchema>
+          }
+        : unknown
+      : unknown
+    : unknown
 >(
   route:
     | {
@@ -164,21 +176,19 @@ export const defineSchema = <
     | {
         Event: EventSchema
         Result: ResultSchema
+        Namespace: Namespace
+        Description: Description
         Path: Path
         Method: Method
         Mode: Mode
         Params: ParamsSchema
         Body: BodySchema
         Query: QuerySchema
-        ArgumentsTransformer: (
-          args: t.TypeOf<ParamsSchema> & t.TypeOf<BodySchema> & t.TypeOf<QuerySchema>
-        ) => {
-          params: t.TypeOf<ParamsSchema>
-          body: t.TypeOf<BodySchema>
-          query: t.TypeOf<QuerySchema>
-        }
+        ArgumentsTransformer: ArgumentsTransformerSchema
       }
 ): {
+  Namespace: Namespace
+  Description: Description
   Path: Path
   Method: Method
   Mode: Mode
@@ -187,17 +197,7 @@ export const defineSchema = <
   Query: QuerySchema
   Event: EventSchema
   Result: ResultSchema
-  ArgumentsTransformer: ParamsSchema extends never
-    ? never
-    : BodySchema extends never
-    ? never
-    : QuerySchema extends never
-    ? never
-    : (args: t.TypeOf<ParamsSchema> & t.TypeOf<BodySchema> & t.TypeOf<QuerySchema>) => {
-        params: t.TypeOf<ParamsSchema>
-        body: t.TypeOf<BodySchema>
-        query: t.TypeOf<QuerySchema>
-      }
+  ArgumentsTransformer: ArgumentsTransformerSchema
 } => {
   Object.assign(route, { [IS_RESOLVE_CLOUD_SDK_SCHEMA]: true })
   return route as any
@@ -207,21 +207,25 @@ export type ExtractSchemaTypes<
   T extends {
     Event: t.Any
     Result: t.Any
-    Path: string | never
+    Namespace: string | unknown
+    Description: string | unknown
+    Path: string | unknown
     Method: RequestMethod | never
     Mode: RequestMode | never
-    Params: t.Any | never
-    Body: t.Any | never
-    Query: t.Any | never
-    ArgumentsTransformer: any | never
+    Params: t.Any | unknown
+    Body: t.Any | unknown
+    Query: t.Any | unknown
+    ArgumentsTransformer: ((args: any) => any) | unknown
   }
 > = {
+  Namespace: T['Namespace']
+  Description: T['Description']
   Path: T['Path']
-  Method: T['Method']
-  Mode: T['Mode']
-  Params: T['Params'] extends never ? never : t.TypeOf<T['Params']>
-  Body: T['Body'] extends never ? never : t.TypeOf<T['Body']>
-  Query: T['Query'] extends never ? never : t.TypeOf<T['Query']>
+  Method: T['Method'] extends RequestMethod ? T['Method'] : unknown
+  Mode: T['Mode'] extends RequestMode ? T['Mode'] : unknown
+  Params: T['Params'] extends t.Any ? t.TypeOf<T['Params']> : unknown
+  Body: T['Body'] extends t.Any ? t.TypeOf<T['Body']> : unknown
+  Query: T['Query'] extends t.Any ? t.TypeOf<T['Query']> : unknown
   Event: t.TypeOf<T['Event']>
   Result: t.TypeOf<T['Result']>
 }

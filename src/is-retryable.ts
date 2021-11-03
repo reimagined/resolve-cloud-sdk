@@ -1,5 +1,4 @@
 const ipV4RegExp = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/
-// const timeoutRegExp = /timeout of (\d+)ms exceeded/
 const rateExceededRegExp = /Rate exceeded/
 const throttledRegExp =
   /The Lambda function associated with the CloudFront distribution was throttled/
@@ -9,6 +8,8 @@ const eTimedOutRegExp = /ETIMEDOUT/
 const eConnectionResetRegExp = /ECONNRESET/
 const eNotFoundRegExp = /ENOTFOUND/
 const eProtoRegExp = /EPROTO/
+const eHostUnreach = /EHOSTUNREACH/
+const cloudFrontError = `<?xml version="1.0" encoding="UTF-8"?>`
 
 type Params = { baseUrl: string; method: string; errorText: string }
 
@@ -16,10 +17,11 @@ export const isNetworkError = ({ errorText }: Pick<Params, 'errorText'>) =>
   eTimedOutRegExp.test(errorText) ||
   eConnectionResetRegExp.test(errorText) ||
   eNotFoundRegExp.test(errorText) ||
-  eProtoRegExp.test(errorText)
+  eProtoRegExp.test(errorText) ||
+  eHostUnreach.test(errorText) ||
+  errorText.includes(cloudFrontError)
 
 export const isLambdaError = ({ errorText }: Pick<Params, 'errorText'>) =>
-  // timeoutRegExp.test(errorText) ||
   rateExceededRegExp.test(errorText) ||
   throttledRegExp.test(errorText) ||
   requiredPermissionsRegExp.test(errorText)
