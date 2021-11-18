@@ -16,6 +16,9 @@ import {
   ListSagaProperties,
 } from './api/v0/deployments/saga-properties'
 
+/* Auth */
+import { AuthAuthWhoAmI, AuthLogin, AuthLogout, AuthRefreshToken } from './api/v0/auth'
+
 /* Deployments */
 import {
   DescribeDeployment,
@@ -124,6 +127,10 @@ import { DescribeRDSClusters, EnsureRdsUser } from './api/rds'
 
 // TODO remove
 export type InstallerLambdaEvent =
+  | AuthLogin['Event']
+  | AuthLogout['Event']
+  | AuthRefreshToken['Event']
+  | AuthAuthWhoAmI['Event']
   | GetClientAppConfig['Event']
   | InstallStageResources['Event']
   | UninstallStageResources['Event']

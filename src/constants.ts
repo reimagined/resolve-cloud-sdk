@@ -89,6 +89,10 @@ export enum BuilderEventNames {
 
 export enum InstallerEventNames {
   heartbeat = 'heartbeat',
+  authLogin = 'authLogin',
+  authLogout = 'authLogout',
+  authRefreshToken = 'authRefreshToken',
+  authWhoAmI = 'authWhoAmI',
   installStageResources = 'installStageResources',
   uninstallStageResources = 'uninstallStageResources',
   installVersionResources = 'installVersionResources',
