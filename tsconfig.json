@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "UMD",
+    "module": "ESNext",
     "target": "ES2015",
     "lib": ["ES2015", "DOM"],
     "rootDir": "src",
@@ -11,6 +11,7 @@
     "noImplicitThis": false,
     "esModuleInterop": true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",

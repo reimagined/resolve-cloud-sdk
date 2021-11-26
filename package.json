@@ -1,14 +1,16 @@
 {
   "name": "resolve-cloud-sdk",
-  "version": "0.33.2",
+  "version": "0.33.4",
   "description": "",
-  "main": "./lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "./lib/index.cjs.js",
+  "module": "./lib/index.es.js",
+  "types": "./lib/index.d.ts",
+  "typings": "./lib/index.d.ts",
   "bugs": {
     "url": "https://github.com/reimagined/resolve-cloud-sdk/issues"
   },
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "tsc --emitDeclarationOnly && rollup -c rollup.config.js",
     "build": "echo || exit 0",
     "test": "jest --config jest.config.unit.js --passWithNoTests",
     "test:w": "jest --config ./jest.config.unit.js --passWithNoTests --watch",

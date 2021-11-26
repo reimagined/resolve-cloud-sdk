@@ -31,7 +31,7 @@ const request = async (
     method,
     token,
     headers: customHeaders = {},
-    retryTimeout = 60000,
+    retryTimeout = 15 * 60 * 1000,
     mode = 'SYNC',
   } = params
 
@@ -109,7 +109,7 @@ const request = async (
             if (
               !(describeExecutionResponse.status >= 200 && describeExecutionResponse.status < 300)
             ) {
-              return Promise.reject(new Error(describeExecutionData))
+              throw new Error(describeExecutionData)
             }
 
             if (`${describeExecutionData}`.includes(`<?xml version="1.0" encoding="UTF-8"?>`)) {
