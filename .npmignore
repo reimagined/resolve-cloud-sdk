@@ -1,0 +1,9 @@
+.rollup.cache/
+src/__tests__/
+node_modules/
+jest.config.func.js
+jest.config.unit.js
+rollup.config.js
+tsconfig.json
+tsconfig.tsbuildinfo
+.npmignore
