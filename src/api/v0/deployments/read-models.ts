@@ -9,7 +9,7 @@ const Namespace = 'Deployments / Read models'
 
 export const PauseReadModelSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Pause read model updates.',
   Path: '/v0/deployments/:deploymentId/read-models/:readModelName/pause',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -39,7 +39,7 @@ export type PauseReadModel = ExtractSchemaTypes<typeof PauseReadModelSchema>
 
 export const ResetReadModelSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Reset a read model's persistent state.",
   Path: '/v0/deployments/:deploymentId/read-models/:readModelName/reset',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -69,7 +69,7 @@ export type ResetReadModel = ExtractSchemaTypes<typeof ResetReadModelSchema>
 
 export const ResumeReadModelSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Resume read model updates.',
   Path: '/v0/deployments/:deploymentId/read-models/:readModelName/resume',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -99,7 +99,7 @@ export type ResumeReadModel = ExtractSchemaTypes<typeof ResumeReadModelSchema>
 
 export const ListReadModelsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Obtain the list of a deployment's read models.",
   Path: '/v0/deployments/:deploymentId/read-models',
   Method: 'GET',
   Mode: 'ASYNC',

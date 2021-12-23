@@ -9,7 +9,7 @@ const Namespace = 'System'
 
 export const HeartbeatSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Check if the service is available.',
   Path: '/v0/',
   Method: 'HEAD',
   Mode: 'SYNC',
@@ -33,7 +33,7 @@ export type Heartbeat = ExtractSchemaTypes<typeof HeartbeatSchema>
 
 export const ListVersionsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a list of the available reSolve versions.',
   Path: '/v0/runtimes',
   Method: 'GET',
   Mode: 'SYNC',
@@ -58,7 +58,7 @@ export type ListVersions = ExtractSchemaTypes<typeof ListVersionsSchema>
 
 export const DescribeExecutionSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get the status of a long-running operation specified by its ID.',
   Path: '/v0/describe-execution/:executionId',
   Method: 'GET',
   Mode: 'SYNC',
@@ -97,7 +97,7 @@ export type DescribeExecution = ExtractSchemaTypes<typeof DescribeExecutionSchem
 
 export const GetClientAppConfigSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get reSolve Cloud's app client ID and user pool ID on Amazon Cognito.",
   Path: '/v0/client-app-config',
   Method: 'GET',
   Mode: 'SYNC',

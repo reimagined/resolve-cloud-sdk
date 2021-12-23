@@ -18,7 +18,7 @@ const LogLevelSchema = t.union([
 
 export const EnableLogsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Enable logs for a deployment.',
   Path: '/v0/deployments/:deploymentId/logs/enable',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -55,7 +55,7 @@ export type EnableLogs = ExtractSchemaTypes<typeof EnableLogsSchema>
 
 export const DisableLogsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Disable logs for a deployment.',
   Path: '/v0/deployments/:deploymentId/logs/disable',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -83,7 +83,7 @@ export type DisableLogs = ExtractSchemaTypes<typeof DisableLogsSchema>
 
 export const GetLogsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get logs for a time interval.',
   Path: '/v0/deployments/:deploymentId/logs',
   Method: 'GET',
   Mode: 'SYNC',
@@ -129,7 +129,7 @@ export type GetLogs = ExtractSchemaTypes<typeof GetLogsSchema>
 
 export const RemoveLogsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Remove a deployment's logs.",
   Path: '/v0/deployments/:deploymentId/logs',
   Method: 'DELETE',
   Mode: 'SYNC',

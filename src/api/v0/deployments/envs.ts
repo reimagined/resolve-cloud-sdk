@@ -10,7 +10,7 @@ const Namespace = 'Deployments / Environment variables'
 
 export const SetEnvironmentVariablesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Set environment variables for a deployment.',
   Path: '/v0/deployments/:deploymentId/environment',
   Method: 'PUT',
   Mode: 'SYNC',
@@ -34,7 +34,7 @@ export type SetEnvironmentVariables = ExtractSchemaTypes<typeof SetEnvironmentVa
 
 export const RemoveEnvironmentVariablesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Remove environment variables.',
   Path: '/v0/deployments/:deploymentId/environment',
   Method: 'DELETE',
   Mode: 'SYNC',
@@ -58,7 +58,7 @@ export type RemoveEnvironmentVariables = ExtractSchemaTypes<typeof RemoveEnviron
 
 export const ListEnvironmentVariablesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get a list of a deployment's environment variables.",
   Path: '/v0/deployments/:deploymentId/environment',
   Method: 'GET',
   Mode: 'SYNC',

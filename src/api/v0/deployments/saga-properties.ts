@@ -9,7 +9,7 @@ const Namespace = 'Deployments / Sagas / Properties'
 
 export const SetSagaPropertySchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Assign a value to a saga property.',
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/properties',
   Method: 'PUT',
   Mode: 'SYNC',
@@ -44,7 +44,7 @@ export type SetSagaProperty = ExtractSchemaTypes<typeof SetSagaPropertySchema>
 
 export const DeleteSagaPropertySchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Delete a saga property.',
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key',
   Method: 'DELETE',
   Mode: 'SYNC',
@@ -75,7 +75,7 @@ export type DeleteSagaProperty = ExtractSchemaTypes<typeof DeleteSagaPropertySch
 
 export const GetSagaPropertySchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get a saga property's value.",
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key',
   Method: 'GET',
   Mode: 'SYNC',
@@ -106,7 +106,7 @@ export type GetSagaProperty = ExtractSchemaTypes<typeof GetSagaPropertySchema>
 
 export const ListSagaPropertiesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get the list of assigned saga properties.',
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/properties',
   Method: 'GET',
   Mode: 'SYNC',

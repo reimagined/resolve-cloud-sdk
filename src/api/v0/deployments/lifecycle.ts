@@ -9,7 +9,7 @@ const Namespace = 'Deployments'
 
 export const CreateDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Create a new deployment.',
   Path: '/v0/deployments',
   Method: 'POST',
   Mode: 'ASYNC',
@@ -54,7 +54,7 @@ export type CreateDeployment = ExtractSchemaTypes<typeof CreateDeploymentSchema>
 
 export const DropDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Remove an existing deployment.',
   Path: '/v0/deployments/:deploymentId',
   Method: 'DELETE',
   Mode: 'ASYNC',
@@ -87,7 +87,7 @@ export type DropDeployment = ExtractSchemaTypes<typeof DropDeploymentSchema>
 
 export const ListDeploymentsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a list of existing deployments.',
   Path: '/v0/deployments',
   Method: 'GET',
   Mode: 'SYNC',
@@ -119,7 +119,7 @@ export type ListDeployments = ExtractSchemaTypes<typeof ListDeploymentsSchema>
 
 export const DescribeDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Obtain information about a deployment.',
   Path: '/v0/deployments/:deploymentId',
   Method: 'GET',
   Mode: 'SYNC',
@@ -147,7 +147,7 @@ export type DescribeDeployment = ExtractSchemaTypes<typeof DescribeDeploymentSch
 
 export const BootstrapDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Run the specified deployment.',
   Path: '/v0/deployments/:deploymentId/bootstrap',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -176,7 +176,7 @@ export type BootstrapDeployment = ExtractSchemaTypes<typeof BootstrapDeploymentS
 
 export const ShutdownDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Shut down a deployment.',
   Path: '/v0/deployments/:deploymentId/shutdown',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -205,7 +205,7 @@ export type ShutdownDeployment = ExtractSchemaTypes<typeof ShutdownDeploymentSch
 
 export const BuildDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Build an uploaded application on the cloud.',
   Path: '/v0/deployments/:deploymentId/upload',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -243,7 +243,7 @@ export type BuildDeployment = ExtractSchemaTypes<typeof BuildDeploymentSchema>
 
 export const GetDeploymentUploadSignedUrlSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get URLs used to upload an application's source code and static resources.",
   Path: '/v0/deployments/:deploymentId/upload',
   Method: 'GET',
   Mode: 'SYNC',

@@ -9,7 +9,7 @@ const Namespace = 'Deployments / Domains'
 
 export const SetDeploymentDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Assigns a domain to a deployment.',
   Path: '/v0/deployments/:deploymentId/domain',
   Method: 'PUT',
   Mode: 'ASYNC',
@@ -38,7 +38,7 @@ export type SetDeploymentDomain = ExtractSchemaTypes<typeof SetDeploymentDomainS
 
 export const UnsetDeploymentDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Detach a domain from a deployment.',
   Path: '/v0/deployments/:deploymentId/domain',
   Method: 'DELETE',
   Mode: 'ASYNC',

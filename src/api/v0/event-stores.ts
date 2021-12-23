@@ -9,6 +9,7 @@ const Namespace = 'Event stores'
 
 export const CreateEventStoreSchema = defineSchema({
   Namespace,
+  Description: 'Create a new event store.',
   Path: '/v0/event-stores',
   Method: 'POST',
   Mode: 'ASYNC',
@@ -46,6 +47,7 @@ export type CreateEventStore = ExtractSchemaTypes<typeof CreateEventStoreSchema>
 
 export const DropEventStoreSchema = defineSchema({
   Namespace,
+  Description: 'Remove an existing event store.',
   Path: '/v0/event-stores/:eventStoreId',
   Method: 'DELETE',
   Mode: 'ASYNC',
@@ -80,7 +82,7 @@ export type DropEventStore = ExtractSchemaTypes<typeof DropEventStoreSchema>
 
 export const GetEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get information about the specified event store.',
   Path: '/v0/event-stores/:eventStoreId',
   Method: 'GET',
   Mode: 'ASYNC',
@@ -125,7 +127,7 @@ export type GetEventStore = ExtractSchemaTypes<typeof GetEventStoreSchema>
 
 export const ListEventStoresSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a list of objects that describe available event stores.',
   Path: '/v0/event-stores',
   Method: 'GET',
   Mode: 'ASYNC',
@@ -170,7 +172,7 @@ export type ListEventStores = ExtractSchemaTypes<typeof ListEventStoresSchema>
 
 export const CloneEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Create a new event store based on the specified event store.',
   Path: '/v0/event-stores/:eventStoreId/clone',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -208,7 +210,7 @@ export type CloneEventStore = ExtractSchemaTypes<typeof CloneEventStoreSchema>
 
 export const ClearEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Remove all events from an event store.',
   Path: '/v0/event-stores/:eventStoreId/clear',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -242,7 +244,7 @@ export type ClearEventStore = ExtractSchemaTypes<typeof ClearEventStoreSchema>
 
 export const FreezeEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Disable event store updates.',
   Path: '/v0/event-stores/:eventStoreId/freeze',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -276,7 +278,7 @@ export type FreezeEventStore = ExtractSchemaTypes<typeof FreezeEventStoreSchema>
 
 export const UnfreezeEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Resume event store updates.',
   Path: '/v0/event-stores/:eventStoreId/unfreeze',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -310,7 +312,7 @@ export type UnfreezeEventStore = ExtractSchemaTypes<typeof UnfreezeEventStoreSch
 
 export const LinkDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Connect an existing application deployment to the specified event store.',
   Path: '/v0/event-stores/:eventStoreId/link',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -342,7 +344,7 @@ export type LinkDeployment = ExtractSchemaTypes<typeof LinkDeploymentSchema>
 
 export const UnlinkDeploymentSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Disconnect an application deployment from the specified event store.',
   Path: '/v0/event-stores/:eventStoreId/unlink',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -374,7 +376,7 @@ export type UnlinkDeployment = ExtractSchemaTypes<typeof UnlinkDeploymentSchema>
 
 export const ImportEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Import events into the specified event store.',
   Path: '/v0/event-stores/:eventStoreId/import',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -411,7 +413,7 @@ export type ImportEventStore = ExtractSchemaTypes<typeof ImportEventStoreSchema>
 
 export const ExportEventStoreSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Export events from the specified event store.',
   Path: '/v0/event-stores/:eventStoreId/export',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -450,7 +452,7 @@ export type ExportEventStore = ExtractSchemaTypes<typeof ExportEventStoreSchema>
 
 export const GetImportUrlsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get URLs used to upload files that contain events and secrets to import.',
   Path: '/v0/event-stores/:eventStoreId/import',
   Method: 'GET',
   Mode: 'SYNC',
@@ -492,7 +494,8 @@ export type GetImportUrls = ExtractSchemaTypes<typeof GetImportUrlsSchema>
 
 export const GetExportUrlsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description:
+    'Get URLs used to download files that contain events and secrets to import as well as a file that contains information about the status of the export process.',
   Path: '/v0/event-stores/:eventStoreId/export',
   Method: 'GET',
   Mode: 'SYNC',

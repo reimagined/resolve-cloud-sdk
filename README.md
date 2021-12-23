@@ -1,232 +1,89 @@
 # API
 
+- Auth
+  - [authAuthWhoAmI](#authauthwhoami)
+  - [authLogin](#authlogin)
+  - [authLogout](#authlogout)
+  - [authRefreshToken](#authrefreshtoken)
 - Deployments
-  - [createDeployment](#createdeployment)
-  - [dropDeployment](#dropdeployment)
-  - [listDeployments](#listdeployments)
-  - [describeDeployment](#describedeployment)
   - [bootstrapDeployment](#bootstrapdeployment)
-  - [shutdownDeployment](#shutdowndeployment)
   - [buildDeployment](#builddeployment)
+  - [createDeployment](#createdeployment)
+  - [describeDeployment](#describedeployment)
+  - [dropDeployment](#dropdeployment)
   - [getDeploymentUploadSignedUrl](#getdeploymentuploadsignedurl)
-  - Domains
-    - [setDeploymentDomain](#setdeploymentdomain)
-    - [unsetDeploymentDomain](#unsetdeploymentdomain)
-  - Environment variables
-    - [setEnvironmentVariables](#setenvironmentvariables)
-    - [removeEnvironmentVariables](#removeenvironmentvariables)
-    - [listEnvironmentVariables](#listenvironmentvariables)
-  - Logs
-    - [enableLogs](#enablelogs)
-    - [disableLogs](#disablelogs)
-    - [getLogs](#getlogs)
-    - [removeLogs](#removelogs)
-  - Read models
-    - [pauseReadModel](#pausereadmodel)
-    - [resetReadModel](#resetreadmodel)
-    - [resumeReadModel](#resumereadmodel)
-    - [listReadModels](#listreadmodels)
+  - [listDeployments](#listdeployments)
+  - [shutdownDeployment](#shutdowndeployment)
   - Sagas
+    - [listSagas](#listsagas)
     - [pauseSaga](#pausesaga)
     - [resetSaga](#resetsaga)
     - [resumeSaga](#resumesaga)
-    - [listSagas](#listsagas)
     - Properties
-      - [setSagaProperty](#setsagaproperty)
       - [deleteSagaProperty](#deletesagaproperty)
       - [getSagaProperty](#getsagaproperty)
       - [listSagaProperties](#listsagaproperties)
+      - [setSagaProperty](#setsagaproperty)
+  - Logs
+    - [disableLogs](#disablelogs)
+    - [enableLogs](#enablelogs)
+    - [getLogs](#getlogs)
+    - [removeLogs](#removelogs)
   - Tracing
     - [disableTracing](#disabletracing)
     - [enableTracing](#enabletracing)
     - [getSummaries](#getsummaries)
     - [getTracingDetails](#gettracingdetails)
     - [getTracingStatus](#gettracingstatus)
-- Certificates
-  - [ensureCertificate](#ensurecertificate)
-  - [dropCertificate](#dropcertificate)
-  - [listCertificates](#listcertificates)
-- System
-  - [heartbeat](#heartbeat)
-  - [listVersions](#listversions)
-  - [describeExecution](#describeexecution)
-  - [getClientAppConfig](#getclientappconfig)
+  - Environment variables
+    - [listEnvironmentVariables](#listenvironmentvariables)
+    - [removeEnvironmentVariables](#removeenvironmentvariables)
+    - [setEnvironmentVariables](#setenvironmentvariables)
+  - Read models
+    - [listReadModels](#listreadmodels)
+    - [pauseReadModel](#pausereadmodel)
+    - [resetReadModel](#resetreadmodel)
+    - [resumeReadModel](#resumereadmodel)
+  - Domains
+    - [setDeploymentDomain](#setdeploymentdomain)
+    - [unsetDeploymentDomain](#unsetdeploymentdomain)
+- Event stores
+  - [clearEventStore](#cleareventstore)
+  - [cloneEventStore](#cloneeventstore)
+  - [createEventStore](#createeventstore)
+  - [dropEventStore](#dropeventstore)
+  - [exportEventStore](#exporteventstore)
+  - [freezeEventStore](#freezeeventstore)
+  - [getEventStore](#geteventstore)
+  - [getExportUrls](#getexporturls)
+  - [getImportUrls](#getimporturls)
+  - [importEventStore](#importeventstore)
+  - [linkDeployment](#linkdeployment)
+  - [listEventStores](#listeventstores)
+  - [unfreezeEventStore](#unfreezeeventstore)
+  - [unlinkDeployment](#unlinkdeployment)
 - Domains
   - [createDomain](#createdomain)
   - [dropDomain](#dropdomain)
-  - [releaseDomain](#releasedomain)
-  - [listDomains](#listdomains)
-  - [verifyDomain](#verifydomain)
   - [getVerificationCode](#getverificationcode)
-- Event stores
-  - [createEventStore](#createeventstore)
-  - [dropEventStore](#dropeventstore)
-  - [getEventStore](#geteventstore)
-  - [listEventStores](#listeventstores)
-  - [cloneEventStore](#cloneeventstore)
-  - [clearEventStore](#cleareventstore)
-  - [freezeEventStore](#freezeeventstore)
-  - [unfreezeEventStore](#unfreezeeventstore)
-  - [linkDeployment](#linkdeployment)
-  - [unlinkDeployment](#unlinkdeployment)
-  - [importEventStore](#importeventstore)
-  - [exportEventStore](#exporteventstore)
-  - [getImportUrls](#getimporturls)
-  - [getExportUrls](#getexporturls)
+  - [listDomains](#listdomains)
+  - [releaseDomain](#releasedomain)
+  - [verifyDomain](#verifydomain)
+- System
+  - [describeExecution](#describeexecution)
+  - [getClientAppConfig](#getclientappconfig)
+  - [heartbeat](#heartbeat)
+  - [listVersions](#listversions)
+- Certificates
+  - [dropCertificate](#dropcertificate)
+  - [ensureCertificate](#ensurecertificate)
+  - [listCertificates](#listcertificates)
 
 ---
 
-## setDeploymentDomain
+## authAuthWhoAmI
 
-Deserunt minim elit enim amet consectetur ipsum.
-
-#### Method
-
-```
-PUT
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/domain
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-{ domain: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## unsetDeploymentDomain
-
-Laborum laboris aliqua sunt minim consequat eiusmod Lorem incididunt nisi ea magna.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/domain
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-{ domain: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## setEnvironmentVariables
-
-Mollit cillum eiusmod sint ipsum laboris amet exercitation fugiat aliquip.
-
-#### Method
-
-```
-PUT
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/environment
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-{
-  variables: { [K in string]: string }
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## removeEnvironmentVariables
-
-Velit voluptate sunt laboris cupidatat ea est culpa qui ex nostrud occaecat deserunt non.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/environment
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-{
-  variables: Array<string>
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listEnvironmentVariables
-
-Deserunt commodo amet ipsum sunt ex do excepteur cupidatat.
+Get the current user's profile information.
 
 #### Method
 
@@ -236,27 +93,25 @@ GET
 #### Path
 
 ```
-/v0/deployments/:deploymentId/environment
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
+/v0/auth/whoami
 ```
 
 #### Result
 
 ```ts
-{ [K in string]: string }
+{
+  userId: string
+  userName: string
+  isAdmin: boolean
+}
 ```
 
 
 ---
 
-## createDeployment
+## authLogin
 
-Do ex amet occaecat aliqua elit.
+Log in to reSolve Cloud.
 
 #### Method
 
@@ -266,60 +121,16 @@ POST
 #### Path
 
 ```
-/v0/deployments
+/v0/auth/login
 ```
 
 #### Body
 
 ```ts
 {
-  applicationName: string
-  version: string
-  eventStoreId: string
-} & Partial<{ domain: string }>
-```
-
-#### Result
-
-```ts
-{
-  deploymentId: string
-  applicationName: string
-  version: string
-  domains: Array<string>
-} & Partial<{ eventStoreId: string }>
-```
-
-
----
-
-## dropDeployment
-
-Lorem sit ullamco fugiat consectetur laborum aliquip veniam sint non.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-Partial<{
-  withEventStore: boolean
-}>
+  userName: string
+  password: string
+}
 ```
 
 #### Result
@@ -331,75 +142,49 @@ void
 
 ---
 
-## listDeployments
+## authLogout
 
-Irure sit sit sunt ullamco qui.
+Log out of reSolve Cloud.
 
 #### Method
 
 ```
-GET
+POST
 ```
 #### Path
 
 ```
-/v0/deployments
-```
-
-#### Query
-
-```ts
-Partial<{
-  applicationName: string
-}>
+/v0/auth/logout
 ```
 
 #### Result
 
 ```ts
-Array<
-  {
-    deploymentId: string
-    applicationName: string
-    version: string
-    domains: Array<string>
-  } & Partial<{ eventStoreId: string }>
->
+void
 ```
 
 
 ---
 
-## describeDeployment
+## authRefreshToken
 
-Magna minim consectetur deserunt cupidatat nostrud est nostrud ex id commodo in.
+Refresh your authentication token on reSolve Cloud.
 
 #### Method
 
 ```
-GET
+POST
 ```
 #### Path
 
 ```
-/v0/deployments/:deploymentId
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
+/v0/auth/refreshToken
 ```
 
 #### Result
 
 ```ts
-{
-  deploymentId: string
-  applicationName: string
-  version: string
-  domains: Array<string>
-} & Partial<{ eventStoreId: string }>
+void
 ```
 
 
@@ -407,7 +192,7 @@ GET
 
 ## bootstrapDeployment
 
-Exercitation ipsum aliqua nulla amet mollit dolor laboris sunt exercitation ea do in magna aliquip.
+Run the specified deployment.
 
 #### Method
 
@@ -435,39 +220,9 @@ void
 
 ---
 
-## shutdownDeployment
-
-Officia tempor consectetur exercitation commodo.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/shutdown
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
 ## buildDeployment
 
-Cillum incididunt irure commodo fugiat.
+Build an uploaded application on the cloud.
 
 #### Method
 
@@ -506,42 +261,9 @@ Partial<{
 
 ---
 
-## getDeploymentUploadSignedUrl
+## clearEventStore
 
-Qui ad minim ex ea mollit ut do.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/upload
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-{
-  codeUploadUrl: string
-  staticUploadUrl: string
-}
-```
-
-
----
-
-## enableLogs
-
-Esse quis ut amet cillum eu qui laboris irure mollit irure fugiat nulla ullamco eiusmod.
+Remove all events from an event store.
 
 #### Method
 
@@ -551,28 +273,13 @@ PATCH
 #### Path
 
 ```
-/v0/deployments/:deploymentId/logs/enable
+/v0/event-stores/:eventStoreId/clear
 ```
 
 #### Params
 
 ```ts
-{ deploymentId: string }
-```
-
-#### Body
-
-```ts
-Partial<{
-  logLevel:
-    | "log"
-    | "error"
-    | "warn"
-    | "debug"
-    | "info"
-    | "verbose"
-  scope: string
-}>
+{ eventStoreId: string }
 ```
 
 #### Result
@@ -584,9 +291,9 @@ void
 
 ---
 
-## disableLogs
+## cloneEventStore
 
-Magna sit Lorem id tempor et commodo duis.
+Create a new event store based on the specified event store.
 
 #### Method
 
@@ -596,918 +303,61 @@ PATCH
 #### Path
 
 ```
-/v0/deployments/:deploymentId/logs/disable
+/v0/event-stores/:eventStoreId/clone
 ```
 
 #### Params
 
 ```ts
-{ deploymentId: string }
+{ eventStoreId: string }
 ```
 
 #### Result
-
-```ts
-void
-```
-
-
----
-
-## getLogs
-
-Laborum tempor occaecat in aliquip veniam tempor ex laborum.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/logs
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Query
-
-```ts
-Partial<{
-  startTime: string
-  endTime: string
-  filterPattern: string
-  streamLimit: string
-}>
-```
-
-#### Result
-
-```ts
-string
-```
-
-
----
-
-## removeLogs
-
-Ullamco proident ullamco reprehenderit nisi cupidatat quis consequat pariatur elit ex sunt laboris excepteur consectetur.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/logs
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## pauseReadModel
-
-Consectetur proident officia elit exercitation nostrud adipisicing est in laborum ex esse excepteur.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/read-models/:readModelName/pause
-```
-
-#### Params
 
 ```ts
 {
-  deploymentId: string
-  readModelName: string
+  eventStoreId: string
+  eventStoreDatabaseName: string
 }
-```
-
-#### Result
-
-```ts
-void
 ```
 
 
 ---
 
-## resetReadModel
+## createDeployment
 
-Voluptate quis et laborum tempor laboris reprehenderit sint deserunt pariatur.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/read-models/:readModelName/reset
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  readModelName: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## resumeReadModel
-
-Quis ex ex non ullamco voluptate cillum proident cillum consequat sunt amet amet Lorem do.
+Create a new deployment.
 
 #### Method
 
 ```
-PATCH
+POST
 ```
 #### Path
 
 ```
-/v0/deployments/:deploymentId/read-models/:readModelName/resume
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  readModelName: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listReadModels
-
-Enim aute laboris reprehenderit pariatur aliquip nisi et dolore proident qui.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/read-models
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-Array<{
-  name: string
-  status: string | null
-  successEvent:
-    | { [K in string]: any }
-    | null
-  failedEvent:
-    | { [K in string]: any }
-    | null
-  errors: Array<{
-    name: string
-    message: string
-    stack: string
-  }>
-}>
-```
-
-
----
-
-## setSagaProperty
-
-Magna enim voluptate commodo ut consequat duis voluptate anim eiusmod in voluptate consequat elit aute.
-
-#### Method
-
-```
-PUT
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/properties
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-}
+/v0/deployments
 ```
 
 #### Body
 
 ```ts
 {
-  key: string
-  value: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## deleteSagaProperty
-
-Ut id cillum magna voluptate ex proident nostrud laboris fugiat adipisicing tempor ipsum.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-  key: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## getSagaProperty
-
-Pariatur ex sint excepteur ipsum.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-  key: string
-}
-```
-
-#### Result
-
-```ts
-{ [K in string]: any }
-```
-
-
----
-
-## listSagaProperties
-
-Eiusmod esse nostrud veniam ad pariatur.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/properties
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-}
-```
-
-#### Result
-
-```ts
-any
-```
-
-
----
-
-## pauseSaga
-
-Minim velit fugiat consequat consectetur.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/pause
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-}
-```
-
-#### Result
-
-```ts
-any
-```
-
-
----
-
-## resetSaga
-
-Nulla irure dolor officia commodo commodo.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/reset
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## resumeSaga
-
-Dolor adipisicing aute sunt exercitation minim.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas/:sagaName/resume
-```
-
-#### Params
-
-```ts
-{
-  deploymentId: string
-  sagaName: string
-}
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listSagas
-
-Ipsum eu sit pariatur exercitation exercitation ullamco dolor laboris ad.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/sagas
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-Array<{
-  name: string
-  status: string | null
-  successEvent:
-    | { [K in string]: any }
-    | null
-  failedEvent:
-    | { [K in string]: any }
-    | null
-  errors: Array<{
-    name: string
-    message: string
-    stack: string
-  }>
-}>
-```
-
-
----
-
-## disableTracing
-
-Fugiat ad consectetur occaecat adipisicing culpa proident ea in duis ad cillum mollit.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/tracing/disable
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## enableTracing
-
-Irure eu nisi nulla voluptate laboris laborum sint do pariatur do adipisicing ad.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/tracing/enable
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## getSummaries
-
-Irure irure incididunt adipisicing non voluptate minim.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/tracing/summary
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Query
-
-```ts
-{
-  startTime: string
-  endTime: string
-} & Partial<{
-  filterExpression: string
-}>
-```
-
-#### Result
-
-```ts
-Array<
-  Partial<{
-    id: string
-    responseTime: number
-    http: Partial<{
-      httpURL: string
-      httpStatus: number
-      httpMethod: string
-      userAgent: string
-      clientIp: string
-    }>
-  }> &
-    { [K in string]: any }
->
-```
-
-
----
-
-## getTracingDetails
-
-Duis aliquip nostrud nostrud exercitation enim pariatur sunt elit mollit ut sint.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/tracing/details
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Query
-
-```ts
-{
-  traceIds: Array<string>
-}
-```
-
-#### Result
-
-```ts
-Array<
-  { [K in string]: any }
->
-```
-
-
----
-
-## getTracingStatus
-
-Reprehenderit ad ipsum Lorem elit qui velit est duis do culpa ipsum mollit.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/deployments/:deploymentId/tracing/status
-```
-
-#### Params
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-"enabled" | "disabled"
-```
-
-
----
-
-## ensureCertificate
-
-Amet nulla nisi nulla veniam qui commodo non exercitation Lorem nulla elit.
-
-#### Method
-
-```
-PUT
-```
-#### Path
-
-```
-/v0/certificates
-```
-
-#### Body
-
-```ts
-{
-  certificate: string
-  key: string
-} & Partial<{
-  certificateId: string
-  chain: string
-}>
-```
-
-#### Result
-
-```ts
-string
-```
-
-
----
-
-## dropCertificate
-
-Quis nisi dolor sit tempor reprehenderit ullamco esse deserunt in nostrud esse.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/certificates/:certificateId
-```
-
-#### Params
-
-```ts
-{ certificateId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listCertificates
-
-Adipisicing voluptate nostrud velit ea.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/certificates
-```
-
-#### Result
-
-```ts
-Array<
-  {
-    certificateId: string
-    additionalNames: Array<string>
-    resourceARN: string
-  } & Partial<{
-    domainName: string
-    importedAt: string
-    issuer: string
-    notBefore: string
-    notAfter: string
-  }>
->
-```
-
-
----
-
-## heartbeat
-
-Ullamco officia cupidatat reprehenderit irure anim voluptate pariatur proident pariatur.
-
-#### Method
-
-```
-HEAD
-```
-#### Path
-
-```
-/v0/
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listVersions
-
-Commodo duis voluptate non occaecat mollit cillum sit tempor nostrud minim incididunt culpa.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/runtimes
-```
-
-#### Result
-
-```ts
-Array<string>
-```
-
-
----
-
-## describeExecution
-
-Ut deserunt amet nostrud elit adipisicing consectetur nostrud sit fugiat ipsum esse.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/describe-execution/:executionId
-```
-
-#### Params
-
-```ts
-{ executionId: string }
+  applicationName: string
+  version: string
+  eventStoreId: string
+} & Partial<{ domain: string }>
 ```
 
 #### Result
 
 ```ts
 {
-  status:
-    | "RUNNING"
-    | "SUCCEEDED"
-    | "FAILED"
-    | "TIMED_OUT"
-    | "ABORTED"
-  output: any
-}
-```
-
-
----
-
-## getClientAppConfig
-
-Duis sint elit exercitation consectetur quis ut id mollit mollit incididunt velit.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/client-app-config
-```
-
-#### Result
-
-```ts
-{
-  clientId: string
-  userPoolId: string
-}
+  deploymentId: string
+  applicationName: string
+  version: string
+  domains: Array<string>
+} & Partial<{ eventStoreId: string }>
 ```
 
 
@@ -1515,7 +365,7 @@ GET
 
 ## createDomain
 
-Eiusmod fugiat elit in tempor do proident quis est eu.
+Create a new domain with the specified certificate based on a list of aliases.
 
 #### Method
 
@@ -1560,169 +410,9 @@ POST
 
 ---
 
-## dropDomain
-
-Proident tempor minim non tempor pariatur do nostrud exercitation minim ullamco amet cupidatat exercitation ea.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/domains/:domainId
-```
-
-#### Params
-
-```ts
-{ domainId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## releaseDomain
-
-Ullamco exercitation cillum nostrud pariatur veniam aliquip.
-
-#### Method
-
-```
-DELETE
-```
-#### Path
-
-```
-/v0/domains
-```
-
-#### Body
-
-```ts
-{ domain: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## listDomains
-
-Consectetur eiusmod nostrud et Lorem ad cillum.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/domains
-```
-
-#### Result
-
-```ts
-Array<{
-  domainId: string
-  domainType:
-    | "proxy"
-    | "static"
-    | "uploader"
-  domainName: string
-  resourceARN: string
-  aliases: Array<string>
-  verified: boolean
-  owner: string
-  users: "*" | Array<string>
-  verificationCode: string
-  certificateId: string
-}>
-```
-
-
----
-
-## verifyDomain
-
-Eu aliqua exercitation et reprehenderit ad sint mollit.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/domains/:domainId/verify
-```
-
-#### Params
-
-```ts
-{ domainId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## getVerificationCode
-
-Minim adipisicing sit dolore duis adipisicing occaecat magna.
-
-#### Method
-
-```
-GET
-```
-#### Path
-
-```
-/v0/domains/:domainId/verification-code
-```
-
-#### Params
-
-```ts
-{ domainId: string }
-```
-
-#### Result
-
-```ts
-{
-  verificationCode: string
-}
-```
-
-
----
-
 ## createEventStore
 
-Consectetur sit excepteur duis voluptate dolor cillum id dolor ipsum ad amet.
+Create a new event store.
 
 #### Method
 
@@ -1750,9 +440,274 @@ POST
 
 ---
 
+## deleteSagaProperty
+
+Delete a saga property.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+  key: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## describeDeployment
+
+Obtain information about a deployment.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+{
+  deploymentId: string
+  applicationName: string
+  version: string
+  domains: Array<string>
+} & Partial<{ eventStoreId: string }>
+```
+
+
+---
+
+## describeExecution
+
+Get the status of a long-running operation specified by its ID.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/describe-execution/:executionId
+```
+
+#### Params
+
+```ts
+{ executionId: string }
+```
+
+#### Result
+
+```ts
+{
+  status:
+    | "RUNNING"
+    | "SUCCEEDED"
+    | "FAILED"
+    | "TIMED_OUT"
+    | "ABORTED"
+  output: any
+}
+```
+
+
+---
+
+## disableLogs
+
+Disable logs for a deployment.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs/disable
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## disableTracing
+
+Disable performance tracing for a deployment.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/disable
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## dropCertificate
+
+Remove the specified certificate.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/certificates/:certificateId
+```
+
+#### Params
+
+```ts
+{ certificateId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## dropDeployment
+
+Remove an existing deployment.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+Partial<{
+  withEventStore: boolean
+}>
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## dropDomain
+
+Remove the specified domain.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/domains/:domainId
+```
+
+#### Params
+
+```ts
+{ domainId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
 ## dropEventStore
 
-Adipisicing commodo Lorem exercitation tempor consectetur.
+Remove an existing event store.
 
 #### Method
 
@@ -1780,9 +735,248 @@ void
 
 ---
 
+## enableLogs
+
+Enable logs for a deployment.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs/enable
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+Partial<{
+  logLevel:
+    | "log"
+    | "error"
+    | "warn"
+    | "debug"
+    | "info"
+    | "verbose"
+  scope: string
+}>
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## enableTracing
+
+Enable performance tracing for a deployment.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/enable
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## ensureCertificate
+
+Check an SSL certificate's validity.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/certificates
+```
+
+#### Body
+
+```ts
+{
+  certificate: string
+  key: string
+} & Partial<{
+  certificateId: string
+  chain: string
+}>
+```
+
+#### Result
+
+```ts
+string
+```
+
+
+---
+
+## exportEventStore
+
+Export events from the specified event store.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/export
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Query
+
+```ts
+Partial<{
+  cursor: string
+}>
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## freezeEventStore
+
+Disable event store updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/freeze
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## getClientAppConfig
+
+Get reSolve Cloud's app client ID and user pool ID on Amazon Cognito.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/client-app-config
+```
+
+#### Result
+
+```ts
+{
+  clientId: string
+  userPoolId: string
+}
+```
+
+
+---
+
+## getDeploymentUploadSignedUrl
+
+Get URLs used to upload an application's source code and static resources.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/upload
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+{
+  codeUploadUrl: string
+  staticUploadUrl: string
+}
+```
+
+
+---
+
 ## getEventStore
 
-Ut dolor enim ex anim nisi nostrud commodo reprehenderit et magna ad eu magna sunt.
+Get information about the specified event store.
 
 #### Method
 
@@ -1821,279 +1015,14 @@ GET
 
 ---
 
-## listEventStores
+## getExportUrls
 
-Aliquip cupidatat fugiat deserunt id et elit.
+Get URLs used to download files that contain events and secrets to import as well as a file that contains information about the status of the export process.
 
 #### Method
 
 ```
 GET
-```
-#### Path
-
-```
-/v0/event-stores
-```
-
-#### Result
-
-```ts
-Array<{
-  version: string
-  eventStoreId: string
-  linkedDeployments: Array<string>
-  eventStoreDatabaseName: string
-  events: number | null
-  secrets: number | null
-  modifiedAt: number | null
-  createdAt: number | null
-  isFrozen: boolean | null
-}>
-```
-
-
----
-
-## cloneEventStore
-
-Amet in enim nostrud ad cupidatat officia veniam id.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/clone
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Result
-
-```ts
-{
-  eventStoreId: string
-  eventStoreDatabaseName: string
-}
-```
-
-
----
-
-## clearEventStore
-
-Consequat ea nisi officia laborum culpa minim sunt.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/clear
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## freezeEventStore
-
-Ullamco quis excepteur ullamco Lorem velit culpa ad.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/freeze
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## unfreezeEventStore
-
-Ipsum duis in irure officia laborum.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/unfreeze
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## linkDeployment
-
-In laboris veniam laboris mollit commodo aute esse incididunt ea.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/link
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Body
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## unlinkDeployment
-
-Ea nisi dolore adipisicing nostrud sint do.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/unlink
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Body
-
-```ts
-{ deploymentId: string }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## importEventStore
-
-Aliqua reprehenderit deserunt ipsum magna nostrud sit commodo minim cupidatat est et commodo.
-
-#### Method
-
-```
-PATCH
-```
-#### Path
-
-```
-/v0/event-stores/:eventStoreId/import
-```
-
-#### Params
-
-```ts
-{ eventStoreId: string }
-```
-
-#### Body
-
-```ts
-{ partIndex: number }
-```
-
-#### Result
-
-```ts
-void
-```
-
-
----
-
-## exportEventStore
-
-Aliqua deserunt aliquip non aute nisi laboris in ut.
-
-#### Method
-
-```
-PATCH
 ```
 #### Path
 
@@ -2107,18 +1036,14 @@ PATCH
 { eventStoreId: string }
 ```
 
-#### Query
-
-```ts
-Partial<{
-  cursor: string
-}>
-```
-
 #### Result
 
 ```ts
-void
+{
+  eventsExportUrl: string
+  secretsExportUrl: string
+  statusFileUrl: string
+}
 ```
 
 
@@ -2126,7 +1051,7 @@ void
 
 ## getImportUrls
 
-Excepteur nostrud et pariatur ullamco tempor laborum veniam.
+Get URLs used to upload files that contain events and secrets to import.
 
 #### Method
 
@@ -2166,9 +1091,9 @@ GET
 
 ---
 
-## getExportUrls
+## getLogs
 
-Laborum Lorem excepteur magna pariatur ipsum esse officia deserunt dolore esse incididunt culpa exercitation non.
+Get logs for a time interval.
 
 #### Method
 
@@ -2178,7 +1103,1097 @@ GET
 #### Path
 
 ```
-/v0/event-stores/:eventStoreId/export
+/v0/deployments/:deploymentId/logs
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Query
+
+```ts
+Partial<{
+  startTime: string
+  endTime: string
+  filterPattern: string
+  streamLimit: string
+}>
+```
+
+#### Result
+
+```ts
+string
+```
+
+
+---
+
+## getSagaProperty
+
+Get a saga property's value.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties/:key
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+  key: string
+}
+```
+
+#### Result
+
+```ts
+{ [K in string]: any }
+```
+
+
+---
+
+## getSummaries
+
+Get the list of a deployment's performance tracing summaries for the specified time interval.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/summary
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Query
+
+```ts
+{
+  startTime: string
+  endTime: string
+} & Partial<{
+  filterExpression: string
+}>
+```
+
+#### Result
+
+```ts
+Array<
+  Partial<{
+    id: string
+    responseTime: number
+    http: Partial<{
+      httpURL: string
+      httpStatus: number
+      httpMethod: string
+      userAgent: string
+      clientIp: string
+    }>
+  }> & { [K in string]: any }
+>
+```
+
+
+---
+
+## getTracingDetails
+
+Get details on the specified performance trace.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/details
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Query
+
+```ts
+{
+  traceIds: Array<string>
+}
+```
+
+#### Result
+
+```ts
+Array<{
+  [K in string]: any
+}>
+```
+
+
+---
+
+## getTracingStatus
+
+Check whether performance tracing is enabled for a deployment.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/tracing/status
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+"enabled" | "disabled"
+```
+
+
+---
+
+## getVerificationCode
+
+Get a code to add to a verification record within your domain zone.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/domains/:domainId/verification-code
+```
+
+#### Params
+
+```ts
+{ domainId: string }
+```
+
+#### Result
+
+```ts
+{
+  verificationCode: string
+}
+```
+
+
+---
+
+## heartbeat
+
+Check if the service is available.
+
+#### Method
+
+```
+HEAD
+```
+#### Path
+
+```
+/v0/
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## importEventStore
+
+Import events into the specified event store.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/import
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Body
+
+```ts
+{ partIndex: number }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## linkDeployment
+
+Connect an existing application deployment to the specified event store.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/link
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Body
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## listCertificates
+
+Get a list of the available SSL certificates.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/certificates
+```
+
+#### Result
+
+```ts
+Array<
+  {
+    certificateId: string
+    additionalNames: Array<string>
+    resourceARN: string
+  } & Partial<{
+    domainName: string
+    importedAt: string
+    issuer: string
+    notBefore: string
+    notAfter: string
+  }>
+>
+```
+
+
+---
+
+## listDeployments
+
+Get a list of existing deployments.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments
+```
+
+#### Query
+
+```ts
+Partial<{
+  applicationName: string
+}>
+```
+
+#### Result
+
+```ts
+Array<
+  {
+    deploymentId: string
+    applicationName: string
+    version: string
+    domains: Array<string>
+  } & Partial<{ eventStoreId: string }>
+>
+```
+
+
+---
+
+## listDomains
+
+Get a list of the available domains.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/domains
+```
+
+#### Result
+
+```ts
+Array<{
+  domainId: string
+  domainType:
+    | "proxy"
+    | "static"
+    | "uploader"
+  domainName: string
+  resourceARN: string
+  aliases: Array<string>
+  verified: boolean
+  owner: string
+  users: "*" | Array<string>
+  verificationCode: string
+  certificateId: string
+}>
+```
+
+
+---
+
+## listEnvironmentVariables
+
+Get a list of a deployment's environment variables.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+{ [K in string]: string }
+```
+
+
+---
+
+## listEventStores
+
+Get a list of objects that describe available event stores.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/event-stores
+```
+
+#### Result
+
+```ts
+Array<{
+  version: string
+  eventStoreId: string
+  linkedDeployments: Array<string>
+  eventStoreDatabaseName: string
+  events: number | null
+  secrets: number | null
+  modifiedAt: number | null
+  createdAt: number | null
+  isFrozen: boolean | null
+}>
+```
+
+
+---
+
+## listReadModels
+
+Obtain the list of a deployment's read models.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+Array<{
+  name: string
+  status: string | null
+  successEvent:
+    | { [K in string]: any }
+    | null
+  failedEvent:
+    | { [K in string]: any }
+    | null
+  errors: Array<{
+    name: string
+    message: string
+    stack: string
+  }>
+}>
+```
+
+
+---
+
+## listSagaProperties
+
+Get the list of assigned saga properties.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
+
+```ts
+any
+```
+
+
+---
+
+## listSagas
+
+Get the list of a deployment's sagas.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+Array<{
+  name: string
+  status: string | null
+  successEvent:
+    | { [K in string]: any }
+    | null
+  failedEvent:
+    | { [K in string]: any }
+    | null
+  errors: Array<{
+    name: string
+    message: string
+    stack: string
+  }>
+}>
+```
+
+
+---
+
+## listVersions
+
+Get a list of the available reSolve versions.
+
+#### Method
+
+```
+GET
+```
+#### Path
+
+```
+/v0/runtimes
+```
+
+#### Result
+
+```ts
+Array<string>
+```
+
+
+---
+
+## pauseReadModel
+
+Pause read model updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/pause
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  readModelName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## pauseSaga
+
+Pause saga updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/pause
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
+
+```ts
+any
+```
+
+
+---
+
+## releaseDomain
+
+Release a domain from the associated application deployments.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/domains
+```
+
+#### Body
+
+```ts
+{ domain: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## removeEnvironmentVariables
+
+Remove environment variables.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+{
+  variables: Array<string>
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## removeLogs
+
+Remove a deployment's logs.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/logs
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resetReadModel
+
+Reset a read model's persistent state.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/reset
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  readModelName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resetSaga
+
+Reset a saga's persistent state.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/reset
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resumeReadModel
+
+Resume read model updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/read-models/:readModelName/resume
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  readModelName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## resumeSaga
+
+Resume saga updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/resume
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## setDeploymentDomain
+
+Assigns a domain to a deployment.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/domain
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+{ domain: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## setEnvironmentVariables
+
+Set environment variables for a deployment.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/environment
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+{
+  variables: { [K in string]: string }
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## setSagaProperty
+
+Assign a value to a saga property.
+
+#### Method
+
+```
+PUT
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/sagas/:sagaName/properties
+```
+
+#### Params
+
+```ts
+{
+  deploymentId: string
+  sagaName: string
+}
+```
+
+#### Body
+
+```ts
+{
+  key: string
+  value: string
+}
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## shutdownDeployment
+
+Shut down a deployment.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/shutdown
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## unfreezeEventStore
+
+Resume event store updates.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/unfreeze
 ```
 
 #### Params
@@ -2190,10 +2205,108 @@ GET
 #### Result
 
 ```ts
-{
-  eventsExportUrl: string
-  secretsExportUrl: string
-  statusFileUrl: string
-}
+void
+```
+
+
+---
+
+## unlinkDeployment
+
+Disconnect an application deployment from the specified event store.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/event-stores/:eventStoreId/unlink
+```
+
+#### Params
+
+```ts
+{ eventStoreId: string }
+```
+
+#### Body
+
+```ts
+{ deploymentId: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## unsetDeploymentDomain
+
+Detach a domain from a deployment.
+
+#### Method
+
+```
+DELETE
+```
+#### Path
+
+```
+/v0/deployments/:deploymentId/domain
+```
+
+#### Params
+
+```ts
+{ deploymentId: string }
+```
+
+#### Body
+
+```ts
+{ domain: string }
+```
+
+#### Result
+
+```ts
+void
+```
+
+
+---
+
+## verifyDomain
+
+Verify a domain after a verification record was added to the domain zone.
+
+#### Method
+
+```
+PATCH
+```
+#### Path
+
+```
+/v0/domains/:domainId/verify
+```
+
+#### Params
+
+```ts
+{ domainId: string }
+```
+
+#### Result
+
+```ts
+void
 ```
 

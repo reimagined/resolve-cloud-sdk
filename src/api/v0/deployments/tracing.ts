@@ -9,7 +9,7 @@ const Namespace = 'Deployments / Tracing'
 
 export const DisableTracingSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Disable performance tracing for a deployment.',
   Path: '/v0/deployments/:deploymentId/tracing/disable',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -37,7 +37,7 @@ export type DisableTracing = ExtractSchemaTypes<typeof DisableTracingSchema>
 
 export const EnableTracingSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Enable performance tracing for a deployment.',
   Path: '/v0/deployments/:deploymentId/tracing/enable',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -65,7 +65,8 @@ export type EnableTracing = ExtractSchemaTypes<typeof EnableTracingSchema>
 
 export const GetSummariesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description:
+    "Get the list of a deployment's performance tracing summaries for the specified time interval.",
   Path: '/v0/deployments/:deploymentId/tracing/summary',
   Method: 'GET',
   Mode: 'SYNC',
@@ -118,7 +119,7 @@ export type GetSummaries = ExtractSchemaTypes<typeof GetSummariesSchema>
 
 export const GetTracingDetailsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get details on the specified performance trace.',
   Path: '/v0/deployments/:deploymentId/tracing/details',
   Method: 'GET',
   Mode: 'SYNC',
@@ -149,7 +150,7 @@ export type GetTracingDetails = ExtractSchemaTypes<typeof GetTracingDetailsSchem
 
 export const GetTracingStatusSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Check whether performance tracing is enabled for a deployment.',
   Path: '/v0/deployments/:deploymentId/tracing/status',
   Method: 'GET',
   Mode: 'SYNC',

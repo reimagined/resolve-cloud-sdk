@@ -9,7 +9,7 @@ const Namespace = 'Certificates'
 
 export const EnsureCertificateSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Check an SSL certificate's validity.",
   Path: '/v0/certificates',
   Method: 'PUT',
   Mode: 'ASYNC',
@@ -53,7 +53,7 @@ export type EnsureCertificate = ExtractSchemaTypes<typeof EnsureCertificateSchem
 
 export const DropCertificateSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Remove the specified certificate.',
   Path: '/v0/certificates/:certificateId',
   Method: 'DELETE',
   Mode: 'ASYNC',
@@ -81,7 +81,7 @@ export type DropCertificate = ExtractSchemaTypes<typeof DropCertificateSchema>
 
 export const ListCertificatesSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a list of the available SSL certificates.',
   Path: '/v0/certificates',
   Method: 'GET',
   Mode: 'SYNC',

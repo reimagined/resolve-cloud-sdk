@@ -9,7 +9,7 @@ const Namespace = 'Domains'
 
 export const CreateDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Create a new domain with the specified certificate based on a list of aliases.',
   Path: '/v0/domains',
   Method: 'POST',
   Mode: 'ASYNC',
@@ -58,7 +58,7 @@ export type CreateDomain = ExtractSchemaTypes<typeof CreateDomainSchema>
 
 export const DropDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Remove the specified domain.',
   Path: '/v0/domains/:domainId',
   Method: 'DELETE',
   Mode: 'ASYNC',
@@ -86,7 +86,7 @@ export type DropDomain = ExtractSchemaTypes<typeof DropDomainSchema>
 
 export const ReleaseDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Release a domain from the associated application deployments.',
   Path: '/v0/domains',
   Method: 'DELETE',
   Mode: 'ASYNC',
@@ -114,7 +114,7 @@ export type ReleaseDomain = ExtractSchemaTypes<typeof ReleaseDomainSchema>
 
 export const ListDomainsSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a list of the available domains.',
   Path: '/v0/domains',
   Method: 'GET',
   Mode: 'SYNC',
@@ -146,7 +146,7 @@ export type ListDomains = ExtractSchemaTypes<typeof ListDomainsSchema>
 
 export const VerifyDomainSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Verify a domain after a verification record was added to the domain zone.',
   Path: '/v0/domains/:domainId/verify',
   Method: 'PATCH',
   Mode: 'ASYNC',
@@ -176,7 +176,7 @@ export type VerifyDomain = ExtractSchemaTypes<typeof VerifyDomainSchema>
 
 export const GetVerificationCodeSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Get a code to add to a verification record within your domain zone.',
   Path: '/v0/domains/:domainId/verification-code',
   Method: 'GET',
   Mode: 'SYNC',

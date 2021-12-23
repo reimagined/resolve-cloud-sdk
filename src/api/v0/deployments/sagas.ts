@@ -9,7 +9,7 @@ const Namespace = 'Deployments / Sagas'
 
 export const PauseSagaSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Pause saga updates.',
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/pause',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -39,7 +39,7 @@ export type PauseSaga = ExtractSchemaTypes<typeof PauseSagaSchema>
 
 export const ResetSagaSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Reset a saga's persistent state.",
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/reset',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -69,7 +69,7 @@ export type ResetSaga = ExtractSchemaTypes<typeof ResetSagaSchema>
 
 export const ResumeSagaSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Resume saga updates.',
   Path: '/v0/deployments/:deploymentId/sagas/:sagaName/resume',
   Method: 'PATCH',
   Mode: 'SYNC',
@@ -99,7 +99,7 @@ export type ResumeSaga = ExtractSchemaTypes<typeof ResumeSagaSchema>
 
 export const ListSagasSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get the list of a deployment's sagas.",
   Path: '/v0/deployments/:deploymentId/sagas',
   Method: 'GET',
   Mode: 'ASYNC',

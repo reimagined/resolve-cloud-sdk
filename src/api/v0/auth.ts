@@ -9,7 +9,7 @@ const Namespace = 'Auth'
 
 export const AuthLoginSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Log in to reSolve Cloud.',
   Path: '/v0/auth/login',
   Method: 'POST',
   Mode: 'SYNC',
@@ -37,7 +37,7 @@ export type AuthLogin = ExtractSchemaTypes<typeof AuthLoginSchema>
 
 export const AuthLogoutSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Log out of reSolve Cloud.',
   Path: '/v0/auth/logout',
   Method: 'POST',
   Mode: 'SYNC',
@@ -62,7 +62,7 @@ export type AuthLogout = ExtractSchemaTypes<typeof AuthLogoutSchema>
 
 export const AuthRefreshTokenSchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: 'Refresh your authentication token on reSolve Cloud.',
   Path: '/v0/auth/refreshToken',
   Method: 'POST',
   Mode: 'SYNC',
@@ -87,7 +87,7 @@ export type AuthRefreshToken = ExtractSchemaTypes<typeof AuthRefreshTokenSchema>
 
 export const AuthAuthWhoAmISchema = defineSchema({
   Namespace,
-  Description: '',
+  Description: "Get the current user's profile information.",
   Path: '/v0/auth/whoami',
   Method: 'GET',
   Mode: 'SYNC',
