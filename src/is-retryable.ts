@@ -9,8 +9,9 @@ const eConnectionResetRegExp = /ECONNRESET/
 const eNotFoundRegExp = /ENOTFOUND/
 const eProtoRegExp = /EPROTO/
 const eHostUnreach = /EHOSTUNREACH/
-const eConnrefused = /ECONNREFUSED/
+const eConnRefused = /ECONNREFUSED/
 const cloudFrontError = `<?xml version="1.0" encoding="UTF-8"?>`
+const lambdaEdgeTimeout = 'lambda@edge timeout'
 
 type Params = { baseUrl: string; method: string; errorText: string }
 
@@ -20,7 +21,8 @@ export const isNetworkError = ({ errorText }: Pick<Params, 'errorText'>) =>
   eNotFoundRegExp.test(errorText) ||
   eProtoRegExp.test(errorText) ||
   eHostUnreach.test(errorText) ||
-  eConnrefused.test(errorText) ||
+  eConnRefused.test(errorText) ||
+  errorText.includes(lambdaEdgeTimeout) ||
   errorText.includes(cloudFrontError)
 
 export const isLambdaError = ({ errorText }: Pick<Params, 'errorText'>) =>
