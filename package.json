@@ -1,6 +1,6 @@
 {
   "name": "resolve-cloud-sdk",
-  "version": "0.33.13",
+  "version": "0.33.14",
   "description": "",
   "main": "./lib/index.cjs.js",
   "module": "./lib/index.es.js",
