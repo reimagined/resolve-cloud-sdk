@@ -125,6 +125,9 @@ import { GetClientAppConfig, ListVersions, DescribeExecution } from './api/v0/cl
 
 import { DescribeRDSClusters, EnsureRdsUser } from './api/rds'
 
+/* Runtimes */
+import { EnsureRuntime, SwitchApplicationsRuntime, FindRuntime } from './api/runtimes'
+
 // TODO remove
 export type InstallerLambdaEvent =
   | AuthLogin['Event']
@@ -194,6 +197,9 @@ export type InstallerLambdaEvent =
   | ListDnsRecords['Event']
   | DescribeExecution['Event']
   | DescribeRDSClusters['Event']
+  | EnsureRuntime['Event']
+  | SwitchApplicationsRuntime['Event']
+  | FindRuntime['Event']
   /* Factory */
   | DescribeEventStore['Event']
   | CreateEventStore['Event']

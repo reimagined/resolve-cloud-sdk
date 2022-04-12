@@ -83,12 +83,12 @@ const request = async (
 
   const describeRequest = async (data: any) => {
     const { executionId } = data
-    const describeUrl = `/v0/describe-execution/${executionId}`
+    const describePath = `/v0/describe-execution/${executionId}`
 
     const { [HEADER_EXECUTION_MODE]: headerExec, ...describeHeaders } = headers
     void headerExec
 
-    const describeExecutionResponse = await fetch(getApiRouteUrl(baseUrl, describeUrl), {
+    const describeExecutionResponse = await fetch(getApiRouteUrl(baseUrl, describePath), {
       method: 'GET',
       credentials: 'same-origin',
       ...(describeHeaders == null || Object.keys(describeHeaders).length === 0
@@ -113,9 +113,7 @@ const request = async (
     const executionStatus = describeExecutionData?.result?.status
     const Output = describeExecutionData?.result?.output
 
-    logger.trace(
-      `<< [${executionStatus}] ${describeExecutionResponseMethod}: ${baseUrl}${describeUrl}`
-    )
+    logger.trace(`>> [${executionStatus}] ${method}: https://${headers.Host}${describePath}`)
 
     if (Output?.errorType != null && Output?.errorMessage != null && Output?.trace != null) {
       const error = new Error()
@@ -130,7 +128,7 @@ const request = async (
         return Output
       }
       case 'RUNNING': {
-        logger.trace('Execution status "RUNNING". Retrying...')
+        logger.debug('Execution status "RUNNING". Retrying...')
         await new Promise((resolve) => setTimeout(resolve, 3000))
         return 'running'
       }
@@ -143,6 +141,8 @@ const request = async (
   }
 
   const apiRequest = async () => {
+    logger.trace(`< [${mode}] ${method}: https://${headers.Host}${path}`)
+
     const response = await fetch(
       `${getApiRouteUrl(baseUrl, path)}${
         query == null || Object.keys(query).length === 0
@@ -162,6 +162,7 @@ const request = async (
     const data = await response[responseMethod]()
 
     if (!(response.status >= 200 && response.status < 300)) {
+      logger.trace(`> [${response.status}] ${method}: https://${headers.Host}${path}`)
       throw new Error(data)
     }
 
@@ -169,11 +170,15 @@ const request = async (
       const { result } = data
 
       if (mode === 'SYNC') {
+        logger.trace(`> [${response.status}] ${method}: https://${headers.Host}${path}`)
         return result
       } else {
-        return await executeRequest(describeRequest, data)
+        const describeResult = await executeRequest(describeRequest, data)
+        logger.trace(`> [${response.status}] ${method}: https://${headers.Host}${path}`)
+        return describeResult
       }
     } else {
+      logger.trace(`> [${response.status}] ${method}: https://${headers.Host}${path}`)
       if (`${data}`.includes(`<?xml version="1.0" encoding="UTF-8"?>`)) {
         throw new Error(data)
       }

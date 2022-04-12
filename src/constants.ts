@@ -168,6 +168,9 @@ export enum InstallerEventNames {
   addNotificationsWebhook = 'addNotificationsWebhook',
   deleteNotificationsWebhook = 'deleteNotificationsWebhook',
   listNotificationsWebhooks = 'listNotificationsWebhooks',
+  ensureRuntime = 'ensureRuntime',
+  switchApplicationsRuntime = 'switchApplicationsRuntime',
+  findRuntime = 'findRuntime',
 }
 
 export type RequestMode = 'SYNC' | 'ASYNC'

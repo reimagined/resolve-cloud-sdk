@@ -25,6 +25,7 @@ export * from './api/monitoring'
 export * from './api/rds'
 export * from './api/stage-resources'
 export * from './api/version-resources'
+export * from './api/runtimes'
 
 /* API v0 */
 

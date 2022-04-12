@@ -10,7 +10,7 @@ const Namespace = 'System'
 export const HeartbeatSchema = defineSchema({
   Namespace,
   Description: 'Check if the service is available.',
-  Path: '/v0/',
+  Path: '/v0',
   Method: 'HEAD',
   Mode: 'SYNC',
   Params: t.type({}),

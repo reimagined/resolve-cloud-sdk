@@ -1,5 +1,6 @@
 const ipV4RegExp = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/
 const rateExceededRegExp = /Rate exceeded/
+const socketHangUpRegExp = /socket hang up/
 const throttledRegExp =
   /The Lambda function associated with the CloudFront distribution was throttled/
 const requiredPermissionsRegExp =
@@ -12,6 +13,7 @@ const eHostUnreach = /EHOSTUNREACH/
 const eConnRefused = /ECONNREFUSED/
 const cloudFrontError = `<?xml version="1.0" encoding="UTF-8"?>`
 const lambdaEdgeTimeout = 'lambda@edge timeout'
+const failedToSetupAuthentication = 'Failed to setup authentication'
 
 type Params = { baseUrl: string; method: string; errorText: string }
 
@@ -22,7 +24,9 @@ export const isNetworkError = ({ errorText }: Pick<Params, 'errorText'>) =>
   eProtoRegExp.test(errorText) ||
   eHostUnreach.test(errorText) ||
   eConnRefused.test(errorText) ||
+  socketHangUpRegExp.test(errorText) ||
   errorText.includes(lambdaEdgeTimeout) ||
+  errorText.includes(failedToSetupAuthentication) ||
   errorText.includes(cloudFrontError)
 
 export const isLambdaError = ({ errorText }: Pick<Params, 'errorText'>) =>
